@@ -1,10 +1,10 @@
-FROM node:lts-slim AS build
-WORKDIR /src
+FROM node:20-slim AS build
+WORKDIR /app
 RUN npm install -g @angular/cli
-COPY . ./
-RUN npm ci
+COPY ride-sharing-frontend/ .
+RUN npm install
 RUN ng build --configuration=production
 
 FROM nginx:stable AS final
 EXPOSE 80
-COPY --from=build src/dist/ride-sharing-frontend/browser /usr/share/nginx/html/
+COPY --from=build /app/dist/ride-sharing-frontend/browser /usr/share/nginx/html/
