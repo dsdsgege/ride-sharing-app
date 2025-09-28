@@ -1,0 +1,30 @@
+name: ride-sharing-app
+
+services:
+  backend:
+    ports:
+      - "8080:8080"
+    build:
+      context: ./ride-sharing-backend
+      dockerfile: Dockerfile
+
+  frontend:
+    image: frontend
+    ports:
+      - "80:80"
+    build:
+      context: ./ride-sharing-frontend
+      dockerfile: Dockerfile
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
