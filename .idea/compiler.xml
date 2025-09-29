@@ -6,13 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ride-sharing-app" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ride-sharing-app (1)" target="1.8" />
+      <module name="ride-sharing-frontend" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ride-sharing-app" options="-parameters" />
+      <module name="ride-sharing-app" options="" />
+      <module name="ride-sharing-frontend" options="-parameters" />
     </option>
   </component>
 </project>

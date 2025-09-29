@@ -7,6 +7,9 @@ services:
     build:
       context: .
       dockerfile: ./ride-sharing-backend/Dockerfile
+    networks:
+      - default
+      - keycloak_dev_network
 
   frontend:
     ports:
@@ -14,9 +17,12 @@ services:
     build:
       context: .
       dockerfile: ./ride-sharing-frontend/Dockerfile
+    networks:
+      - default
+      - keycloak_dev_network
 
   db:
-    image: postgres
+    image: postgres:17-alpine
     restart: unless-stopped
     ports:
       - "5432:5432"
@@ -25,5 +31,50 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  keycloak_db:
+    image: postgres:17-alpine
+    container_name: keycloak-db
+    ports:
+      - "5436:5432"
+    environment:
+      POSTGRES_DB: keycloak_db_name
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak_password
+    volumes:
+      - keycloak_pgdata:/var/lib/postgresql/data
+    networks:
+      - keycloak_dev_network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    restart: unless-stopped
+    command:
+      - start-dev
+      - --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak_db
+      KC_DB_URL_DATABASE: keycloak_db_name
+      KC_DB_USER: keycloak
+      KC_DB_PASSWORD: keycloak_password
+      KC_DB_SCHEMA: public
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: "true"
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./keycloak/import:/opt/keycloak/data/import
+    depends_on:
+      keycloak_db:
+        condition: service_started
+    networks:
+      - keycloak_dev_network
+
 volumes:
   pgdata:
+  keycloak_pgdata:
+
+networks:
+  keycloak_dev_network:
+    driver: bridge
