@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'sass:meta';
+@include meta.load-css("tailwindcss");
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
+
+$color-light-bg: #e3e2e2;
+$color-dark-bg: #00304a;
+
+$color-light-text: #00304a;
+$color-dark-text: #e3e2e2;
+
+$color-light-card: #009689;
+
+$color-primary: #10b981;       // Primary accent color (emerald-500)
+$transition-speed: 0.3s ease;
+
+:root {
+  --bg-color: #{$color-light-bg};
+  --text-color: #{$color-light-text};
+  --card-bg-color: #{$color-light-card};
+
+  --primary-color: #{$color-primary};
+  --primary-hover-color: #096848;
+
+  color-scheme: light;
+}
+
+body.dark-theme {
+  --bg-color: #{$color-dark-bg};
+  --text-color: #{$color-dark-text};
+  --card-bg-color: #{$color-light-card};
+
+  color-scheme: dark;
+}
+
+body {
+  // Apply the theme background/text colors
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+
+  // Smooth transition for a better user experience when toggling the theme
+  transition: background-color #{$transition-speed}, color #{$transition-speed};
+}

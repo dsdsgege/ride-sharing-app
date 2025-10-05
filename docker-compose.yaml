@@ -10,6 +10,8 @@ services:
     networks:
       - default
       - keycloak_dev_network
+    depends_on:
+      - db
 
   frontend:
     ports:
@@ -30,6 +32,8 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - default
 
   keycloak_db:
     image: postgres:17-alpine
