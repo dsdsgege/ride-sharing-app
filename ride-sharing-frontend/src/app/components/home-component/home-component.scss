@@ -1,0 +1,100 @@
+img {
+  opacity: 1;
+}
+
+.banner {
+  box-shadow: 0 5px 10px var(--text-color);
+}
+
+button {
+  transition: all 0.3s ease-in;
+}
+
+.join-button {
+  color: #e3e2e2;
+  background-color: var(--card-bg-color);
+  border: 1px #e3e2e2 solid;
+  border-radius: 24px;
+}
+
+.join-button:hover {
+  cursor: pointer;
+  color: var(--card-bg-color);
+  background-color: #e3e2e2;
+  border: 1px var(--card-bg-color) solid;
+}
+
+.share-button {
+  color: #e3e2e2;
+  background-color: #035480;
+  border: 1px #e3e2e2 solid;
+  border-radius: 24px;
+}
+
+.share-button:hover {
+  color: #035480;
+  background-color: #e3e2e2;
+  border: 1px #035480 solid;
+  cursor: pointer;
+}
+
+.banner-wrapper {
+  position: absolute;
+  inset: 0;
+}
+
+.banner-wrapper h1 {
+  user-select: none;
+  position:absolute;
+  animation: disappear linear;
+  animation-timeline: scroll();
+  animation-range: exit -1;
+  color:#fff;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.9);
+
+  font-size: clamp(4rem, 12vw, 12rem); //Min, Preferred, Max
+
+  z-index: 10;
+  text-align: center;
+}
+
+.mat-card {
+  color: var(--text-color);
+  border-radius:0.375rem;
+  box-shadow: 5px 5px 10px var(--card-bg-color)
+}
+
+.mat-card-content {
+  color: var(--text-color) !important;
+}
+
+@keyframes disappear {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.2;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.mat-card {
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0;
+}

@@ -4,25 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="304f6aa7-e922-4b6c-bbc8-bb0fcc95f5f2" name="Changes" comment="add: add keycloak service and readme file">
-      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/IntelliLang.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/.postcssrc.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/public/car-dark.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/tailwind.config.js" afterDir="false" />
+    <list default="true" id="304f6aa7-e922-4b6c-bbc8-bb0fcc95f5f2" name="Changes" comment="add: add landing page, navbar and correct docker-compose">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/auth.guard.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/home-component/home-component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/home-component/home-component.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/home-component/home-component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/home-component/home-component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/theme-service.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/theme-service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-backend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-backend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-backend/src/main/java/hu/ridesharing/thesis/RideSharingAppApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-backend/src/main/java/hu/ridesharing/RideSharingAppApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/package-lock.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/target/ride-sharing-frontend-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +35,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Dockerfile" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -55,12 +58,12 @@
     <option name="currentCommit" value="1" />
     <option name="onto" value="206a17d79a80bb2689050c4748b76f5f59551f41" />
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/dsdsgege/ride-sharing-app.git",
-    "accountId": "09031fa6-0a39-4256-8514-4bf6295fd7f4"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/dsdsgege/ride-sharing-app.git&quot;,
+    &quot;accountId&quot;: &quot;09031fa6-0a39-4256-8514-4bf6295fd7f4&quot;
   }
-}]]></component>
+}</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -79,37 +82,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose.yaml.db: Compose Deployment.executor": "Run",
-    "Docker.ride-sharing-frontend/Dockerfile build.executor": "Run",
-    "Maven.ride-sharing-app [clean,install].executor": "Run",
-    "Maven.ride-sharing-app [clean,package].executor": "Run",
-    "Maven.ride-sharing-app [clean].executor": "Run",
-    "Maven.ride-sharing-app [package].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "17",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Admin/IdeaProjects/ride-sharing-app/ride-sharing-frontend/public",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.21875",
-    "project.structure.side.proportion": "0.45682102",
-    "settings.editor.selected.configurable": "settings.sync",
-    "ts.external.directory.path": "C:\\Users\\Admin\\IdeaProjects\\ride-sharing-app\\ride-sharing-frontend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker-compose.yaml.db: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.ride-sharing-frontend/Dockerfile build.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ride-sharing-app [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ride-sharing-app [clean,package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ride-sharing-app [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ride-sharing-app [package].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/IdeaProjects/ride-sharing-app/ride-sharing-frontend/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.21875&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.45682102&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Admin\\IdeaProjects\\ride-sharing-app\\ride-sharing-frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Admin\IdeaProjects\ride-sharing-app\ride-sharing-frontend\public" />
@@ -130,7 +133,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Docker.ride-sharing-frontend/Dockerfile build">
+  <component name="RunManager" selected="Docker.docker-compose.yaml.db: Compose Deployment">
     <configuration name="RideSharingAppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="ride-sharing-app" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="hu.ridesharing.thesis.RideSharingAppApplication" />
@@ -174,17 +177,12 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Docker.docker-compose.yaml.db: Compose Deployment" />
-        <item itemvalue="Docker.ride-sharing-frontend/Dockerfile build" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
@@ -214,7 +212,10 @@
       <workItem from="1759090945016" duration="358000" />
       <workItem from="1759091329781" duration="491000" />
       <workItem from="1759092389497" duration="5133000" />
-      <workItem from="1759583398910" duration="32442000" />
+      <workItem from="1759583398910" duration="42559000" />
+      <workItem from="1759783340544" duration="3657000" />
+      <workItem from="1760210924829" duration="2739000" />
+      <workItem from="1760785069631" duration="6004000" />
     </task>
     <task id="LOCAL-00001" summary="add: add keycloak service and readme file">
       <option name="closed" value="true" />
@@ -224,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759175627264</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add: add landing page and correct docker-compose">
+      <option name="closed" value="true" />
+      <created>1759687133021</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1759687133021</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,6 +253,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fix: fix project structure and docker files" />
     <MESSAGE value="add: add keycloak service and readme file" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: add keycloak service and readme file" />
+    <MESSAGE value="add: add landing page and correct docker-compose" />
+    <MESSAGE value="add: add landing page, navbar and correct docker-compose" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: add landing page, navbar and correct docker-compose" />
   </component>
 </project>

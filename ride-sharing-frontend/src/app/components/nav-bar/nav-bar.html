@@ -1,0 +1,15 @@
+<div class="h-8 sm:h-12 md:h-16 flex text-2xl sm:text-3xl md:text-5xl items-center text-center font-bold">
+  <div class="flex-1 nav-item"><a routerLink="home">HOME</a></div>
+  <div class="flex-1 nav-item"><a routerLink="profile">PROFILE</a></div>
+  <div class="flex-1 nav-item">
+    @if (themeService.isDarkMode()) {
+      <button (click)="onThemeButtonClick()">
+        <fa-icon [icon]="faSun"></fa-icon>
+      </button>
+    } @else {
+      <button (click)="onThemeButtonClick()">
+        <fa-icon [icon]="faMoon"></fa-icon>
+      </button>
+    }
+  </div>
+</div>

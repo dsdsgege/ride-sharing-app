@@ -1,0 +1,9 @@
+.nav-bar {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item > button:hover {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
