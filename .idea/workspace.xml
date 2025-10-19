@@ -5,26 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="304f6aa7-e922-4b6c-bbc8-bb0fcc95f5f2" name="Changes" comment="add: add landing page, navbar and correct docker-compose">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/auth.guard.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/home-component/home-component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/home-component/home-component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/home-component/home-component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/home-component/home-component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/theme-service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/theme-service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/keycloak-instance-service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/auth.guard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,6 +165,11 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.docker-compose.yaml.db: Compose Deployment" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -215,7 +208,8 @@
       <workItem from="1759583398910" duration="42559000" />
       <workItem from="1759783340544" duration="3657000" />
       <workItem from="1760210924829" duration="2739000" />
-      <workItem from="1760785069631" duration="6004000" />
+      <workItem from="1760785069631" duration="16097000" />
+      <workItem from="1760856143356" duration="10959000" />
     </task>
     <task id="LOCAL-00001" summary="add: add keycloak service and readme file">
       <option name="closed" value="true" />
@@ -233,7 +227,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759687133021</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add: add landing page, navbar and correct docker-compose">
+      <option name="closed" value="true" />
+      <created>1760799843447</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1760799843447</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

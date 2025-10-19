@@ -2,8 +2,12 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChang
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import {KeycloakBearerInterceptor, KeycloakService, provideKeycloak} from 'keycloak-angular';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {
+  INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
+  includeBearerTokenInterceptor,
+  provideKeycloak
+} from 'keycloak-angular';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,18 +18,22 @@ export const appConfig: ApplicationConfig = {
         clientId: "ride-share-client-id"
       },
       initOptions: {
-        onLoad: 'login-required',
+        onLoad: 'check-sso',
         checkLoginIframe: false
       }
     }),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    KeycloakService,
+    provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: KeycloakBearerInterceptor,
-      multi: true
+      provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
+      useValue: [
+        {
+          urlPattern: /^http:\/\/localhost:*/,
+          httpMethods: ['GET', 'POST', 'PUT', 'DELETE']
+        },
+      ],
     }
   ]
 };

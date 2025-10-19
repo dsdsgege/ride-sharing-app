@@ -1,11 +1,22 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home-component/home-component'
-import {createAuthGuard} from 'keycloak-angular';
+import {canActivateAuthRole} from './auth.guard';
 
 export const routes: Routes = [
   {
-    path: "**",
+    path: "home",
     component: HomeComponent,
-    canActivate: [createAuthGuard]
+    canActivate: [canActivateAuthRole],
+    data: {
+      role: 'USER'
+    }
+  },
+  {
+    path: "profile",
+    component: HomeComponent,
+    canActivate: [canActivateAuthRole],
+    data: {
+      role: 'ADMIN'
+    }
   }
 ];

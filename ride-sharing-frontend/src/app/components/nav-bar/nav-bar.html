@@ -1,15 +1,70 @@
-<div class="h-8 sm:h-12 md:h-16 flex text-2xl sm:text-3xl md:text-5xl items-center text-center font-bold">
-  <div class="flex-1 nav-item"><a routerLink="home">HOME</a></div>
-  <div class="flex-1 nav-item"><a routerLink="profile">PROFILE</a></div>
-  <div class="flex-1 nav-item">
-    @if (themeService.isDarkMode()) {
-      <button (click)="onThemeButtonClick()">
-        <fa-icon [icon]="faSun"></fa-icon>
-      </button>
-    } @else {
-      <button (click)="onThemeButtonClick()">
-        <fa-icon [icon]="faMoon"></fa-icon>
-      </button>
-    }
+<div class="flex flex-end flex-col text-2xl items-center text-center font-bold
+            sm:text-3xl
+            md:h-20 md:justify-between md:flex-row md:text-4xl
+            lg:text-5xl">
+
+  <div class="md:hidden">
+    <button type="button"
+            class="relative inline-flex items-center justify-center rounded-md p-2 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500"
+            (click)="toggleMenu()">
+      <span class="absolute -inset-0.5"></span>
+      <span class="sr-only">Open main menu</span>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 in-aria-expanded:hidden">
+        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6 not-in-aria-expanded:hidden">
+        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="flex-col md:hidden"
+        [class.hidden]="!isMenuOpen">
+
+    <div class="flex-1">
+      <a routerLink="home" routerLinkActive="active-mobile">HOME</a>
+    </div>
+
+    <div class="flex-1">
+      <a routerLink="ride" routerLinkActive="active-mobile">RIDE</a>
+    </div>
+
+    <div class="flex-1">
+      <a routerLink="drive" routerLinkActive="active-mobile">DRIVE</a>
+    </div>
+
+    <div class="flex-1">
+      @if (keycloakInstance?.authenticated) {
+        <a (click)="logout()">LOGOUT</a>
+      } @else {
+        <a routerLink="profile" routerLinkActive="active-mobile">PROFILE</a>
+      }
+    </div>
+
+  </div>
+
+  <div class="hidden md:flex flex-2 justify-start">
+    <div class="flex-1 nav-item"><a routerLink="home" routerLinkActive="active">HOME</a></div>
+    <div class="flex-1 nav-item"><a routerLink="ride" routerLinkActive="active">RIDE</a></div>
+    <div class="flex-1 nav-item"><a routerLink="drive" routerLinkActive="active">DRIVE</a></div>
+  </div>
+
+  <div class="flex-1"></div>
+
+  <div class="hidden md:flex flex-1">
+    <div class="flex-1 nav-item">
+      <a routerLink="profile" routerLinkActive="active">PROFILE</a>
+    </div>
+    <div class="flex-1 nav-item">
+      @if (themeService.isDarkMode()) {
+        <button (click)="onThemeButtonClick()">
+          <fa-icon [icon]="faSun"></fa-icon>
+        </button>
+      } @else {
+        <button (click)="onThemeButtonClick()">
+          <fa-icon [icon]="faMoon"></fa-icon>
+        </button>
+      }
+    </div>
   </div>
 </div>

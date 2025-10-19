@@ -1,9 +1,22 @@
-.nav-bar {
-  display: flex;
-  flex-direction: column;
-}
-
 .nav-item > button:hover {
   transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+a {
+  transition: all 0.3s ease;
+}
+
+.active {
+  padding: 5px;
+  border-radius: 16px;
+  box-shadow: 0 0 10px 3px #808080;
+}
+
+.active-mobile {
+  text-decoration: underline;
+}
+
+button {
   cursor: pointer;
 }
