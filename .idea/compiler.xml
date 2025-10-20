@@ -9,7 +9,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ride-sharing-app (1)" target="1.8" />
+      <module name="ride-sharing-app" target="17" />
       <module name="ride-sharing-frontend" target="17" />
     </bytecodeTargetLevel>
   </component>

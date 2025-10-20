@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="304f6aa7-e922-4b6c-bbc8-bb0fcc95f5f2" name="Changes" comment="add: add landing page, navbar and correct docker-compose">
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/keycloak-instance-service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/auth.guard.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/keycloak-instance-service.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +28,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -46,12 +46,12 @@
     <option name="currentCommit" value="1" />
     <option name="onto" value="206a17d79a80bb2689050c4748b76f5f59551f41" />
   </component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/dsdsgege/ride-sharing-app.git&quot;,
-    &quot;accountId&quot;: &quot;09031fa6-0a39-4256-8514-4bf6295fd7f4&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/dsdsgege/ride-sharing-app.git",
+    "accountId": "1b64c0f9-2ab8-4b60-af1a-0478376d4d53"
   }
-}</component>
+}]]></component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -66,6 +66,7 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="33HH87bcDnqP1kPlEGpTPlQwXEj" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -97,7 +98,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.21875&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.45682102&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Admin\\IdeaProjects\\ride-sharing-app\\ride-sharing-frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\IntelliJ IDEA 2024.1.4\\ride-sharing-app\\ride-sharing-frontend\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -174,8 +175,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -210,6 +211,7 @@
       <workItem from="1760210924829" duration="2739000" />
       <workItem from="1760785069631" duration="16097000" />
       <workItem from="1760856143356" duration="10959000" />
+      <workItem from="1760900422597" duration="860000" />
     </task>
     <task id="LOCAL-00001" summary="add: add keycloak service and readme file">
       <option name="closed" value="true" />

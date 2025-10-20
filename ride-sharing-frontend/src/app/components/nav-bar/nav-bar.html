@@ -34,7 +34,7 @@
     </div>
 
     <div class="flex-1">
-      @if (keycloakInstance?.authenticated) {
+      @if (keycloak.authenticated) {
         <a (click)="logout()">LOGOUT</a>
       } @else {
         <a routerLink="profile" routerLinkActive="active-mobile">PROFILE</a>
