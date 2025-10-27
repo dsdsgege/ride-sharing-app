@@ -2,10 +2,19 @@
 @include meta.load-css("tailwindcss");
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
 
-$color-light-bg: #e3e2e2;
-$color-dark-bg: #00304a;
+$input-light-bg: rgb(191, 189, 189);
+$input-dark-bg: #838383;
 
-$color-light-text: #00304a;
+$input-light-text: #000;
+$input-dark-text: #e3e2e2;
+
+$navbar-light-bg: #010203;
+$navbar-dark-bg: #010203;
+
+$color-light-bg: #ededed;
+$color-dark-bg: #071e2b;
+
+$color-light-text: #071e2b;
 $color-dark-text: #e3e2e2;
 
 $color-light-card: #009689;
@@ -14,6 +23,7 @@ $color-primary: #10b981;       // Primary accent color (emerald-500)
 $transition-speed: 0.3s ease;
 
 :root {
+  --navbar-bg: #{$navbar-light-bg};
   --bg-color: #{$color-light-bg};
   --text-color: #{$color-light-text};
   --card-bg-color: #{$color-light-card};
@@ -21,13 +31,17 @@ $transition-speed: 0.3s ease;
   --primary-color: #{$color-primary};
   --primary-hover-color: #096848;
 
+  --input-bg: #{$input-light-bg};
   color-scheme: light;
 }
 
 body.dark-theme {
+  --navbar-bg: #{$navbar-dark-bg};
   --bg-color: #{$color-dark-bg};
   --text-color: #{$color-dark-text};
   --card-bg-color: #{$color-light-card};
+
+  --input-bg: #{$input-dark-bg};
 
   color-scheme: dark;
 }

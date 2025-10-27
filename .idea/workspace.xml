@@ -5,13 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="304f6aa7-e922-4b6c-bbc8-bb0fcc95f5f2" name="Changes" comment="add: add landing page, navbar and correct docker-compose">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025__10__20__16_19_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025__10__20__16_19__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/map-component/map-component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/map-component/map-component.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/map-component/map-component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/map-component/map-component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/model/geocoding-response-model.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/geocoding-service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/environments/environment.development.example.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/auth.guard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/auth.guard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/keycloak-instance-service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/theme-service.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/styles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +69,7 @@
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/dsdsgege/ride-sharing-app.git",
-    "accountId": "1b64c0f9-2ab8-4b60-af1a-0478376d4d53"
+    "accountId": "09031fa6-0a39-4256-8514-4bf6295fd7f4"
   }
 }]]></component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -59,6 +79,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
@@ -66,7 +89,6 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="33HH87bcDnqP1kPlEGpTPlQwXEj" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -98,7 +120,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.21875&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.45682102&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\IntelliJ IDEA 2024.1.4\\ride-sharing-app\\ride-sharing-frontend\\node_modules\\typescript\\lib&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Admin\\IdeaProjects\\ride-sharing-app\\ride-sharing-frontend\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -107,11 +129,11 @@
       <recent name="C:\Users\Admin\IdeaProjects\ride-sharing-app\ride-sharing-frontend\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\IdeaProjects\ride-sharing-app\ride-sharing-frontend\src\app\components" />
+      <recent name="C:\Users\Admin\IdeaProjects\ride-sharing-app\ride-sharing-frontend\src\app" />
       <recent name="C:\Users\Admin\IdeaProjects\ride-sharing-app\ride-sharing-frontend\public" />
       <recent name="C:\Users\Admin\IdeaProjects\ride-sharing-app" />
       <recent name="C:\Users\Admin\IdeaProjects\ride-sharing-app\ride-sharing-backend\src\main\java\hu\ridesharing" />
-      <recent name="C:\Users\Admin\IdeaProjects\ride-sharing-app\keycloak\import" />
-      <recent name="D:\IntelliJ IDEA 2024.1.4\ride-sharing-app\backend" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -175,8 +197,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
@@ -212,6 +234,7 @@
       <workItem from="1760785069631" duration="16097000" />
       <workItem from="1760856143356" duration="10959000" />
       <workItem from="1760900422597" duration="860000" />
+      <workItem from="1761455801521" duration="18428000" />
     </task>
     <task id="LOCAL-00001" summary="add: add keycloak service and readme file">
       <option name="closed" value="true" />

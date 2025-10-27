@@ -8,9 +8,18 @@ import {
   provideKeycloak
 } from 'keycloak-angular';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import {providePrimeNG} from 'primeng/config';
+import Material from '@primeuix/themes/material';
+import {provideAnimations} from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    providePrimeNG({
+      theme: {
+        preset: Material
+      }
+    }),
+    provideAnimations(),
     provideKeycloak({
       config: {
         url: "http://localhost:8090",

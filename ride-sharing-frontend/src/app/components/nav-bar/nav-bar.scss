@@ -1,6 +1,12 @@
+.nav-bar {
+  background-color: var(--navbar-bg);
+  color: #e3e2e2;
+}
+
 .nav-item > button:hover {
   transition: all 0.3s ease;
   cursor: pointer;
+  border-radius: 32px;
 }
 
 a {
@@ -8,9 +14,10 @@ a {
 }
 
 .active {
-  padding: 5px;
-  border-radius: 16px;
-  box-shadow: 0 0 10px 3px #808080;
+  width: 10%;
+  padding: 0.6rem;
+  border-radius: 32px;
+  box-shadow: 0 0 5px 3px #fffcfc;
 }
 
 .active-mobile {
@@ -19,4 +26,8 @@ a {
 
 button {
   cursor: pointer;
+}
+
+.theme-mobile {
+  background-color: var(--input-text)
 }

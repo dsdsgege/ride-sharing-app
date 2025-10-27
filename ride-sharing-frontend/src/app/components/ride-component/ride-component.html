@@ -1,0 +1,59 @@
+
+<h1 class="text-2xl m-3">Your pickup location</h1>
+
+<div class="ride-info">
+  <!-- Form inputs section -->
+  <div class="form-section grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-4 md:align-middle">
+
+    <div class="element md:flex">
+      <p-floatlabel class="custom-form-element">
+        <input id="pickup" pInputText class="w-full md:w-2/3" value="{{ pickupValue }}"/>
+        <label for="pickup">Pickup city</label>
+      </p-floatlabel>
+      @if (!isGetLocation) {
+        <p-button class="custom-form-element location-button" (click)="getLocation()">
+          <fa-icon [icon]='faLocationDot'></fa-icon>
+        </p-button>
+      }
+    </div>
+
+    <div class="element">
+      <p-floatlabel class="custom-form-element">
+        <input id="drop-off" pInputText class="w-full md:w-2/3" />
+        <label for="drop-off">Drop-off city</label>
+      </p-floatlabel>
+    </div>
+
+    <div class="md:w-2/3 element z-100">
+      <p-datepicker
+        class="custom-form-element"
+        [(ngModel)]="date"
+        [iconDisplay]="'input'"
+        [dateFormat]="'yy/mm/dd'"
+        [showIcon]="true"
+        inputId="icondisplay">
+      </p-datepicker>
+    </div>
+
+    <div class="m-5 custom-form-element element z-10">
+      <button class="search-button md:w-2/3 w-full ">
+        <fa-icon [icon]='faSearch'></fa-icon>
+        Available rides
+      </button>
+    </div>
+  </div>
+
+  <div class="map-section">
+    @if (isGetLocation && !position) {
+      <div class="flex justify-center items-center" style="min-height: 300px;">
+        <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+                            [style]="{ width: '50px', height: '50px' }" />
+      </div>
+    }
+    @else if (isGetLocation && position) {
+      <div class="map-container">
+        <app-map-component [position]="position"></app-map-component>
+      </div>
+    }
+  </div>
+</div>

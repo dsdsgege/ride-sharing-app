@@ -18,9 +18,8 @@ to see your passenger's or driver's live location on it.
 docker-compose up --build
 ```
 
-
 #### Accessing the application:
- - Frontend: **localhost:80**
+ - Frontend: **localhost:4200**
  - Keycloak admin console: **localhost:8090** (username: **admin**, password: **admin**)
  - Keycloak ride-sharing-app realm: **localhost:8090/admin/master/console/#/ride-sharing-app**
  - Backend: running on **localhost:8080** *(No need to access it)*

@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start:dev": "ng serve --configuration=development"
   },
   "prettier": {
     "overrides": [
@@ -20,6 +21,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.3.3",
     "@angular/cdk": "^20.2.7",
     "@angular/common": "^20.1.0",
     "@angular/compiler": "^20.1.0",
@@ -30,8 +32,13 @@
     "@angular/router": "^20.1.0",
     "@fortawesome/angular-fontawesome": "^3.0.0",
     "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@ng-web-apis/geolocation": "^4.12.2",
+    "@primeuix/themes": "^1.2.5",
+    "install": "^0.13.0",
     "keycloak-angular": "^20.0.0",
     "keycloak-js": "^26.2.0",
+    "leaflet": "^1.9.4",
+    "primeng": "^20.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -42,6 +49,7 @@
     "@angular/compiler-cli": "^20.1.0",
     "@tailwindcss/postcss": "^4.1.14",
     "@types/jasmine": "~5.1.0",
+    "@types/leaflet": "^1.9.21",
     "autoprefixer": "^10.4.21",
     "jasmine-core": "~5.8.0",
     "karma": "~6.4.0",
