@@ -47,13 +47,31 @@ body.dark-theme {
 }
 
 body {
-  // Apply the theme background/text colors
   background-color: var(--bg-color);
   color: var(--text-color);
   min-height: 100vh;
   margin: 0;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
 
-  // Smooth transition for a better user experience when toggling the theme
+  // setting the prime ng colors
+  --p-inputtext-background: var(--input-bg);
+  --p-inputtext-focus-border-color: var(--text-color);
+  --p-inputtext-focus-ring-shadow: var(--text-color);
+  --p-inputtext-focus-ring-color: var(--text-color);
+  --p-inputtext-placeholder-color: var(--text-color);
+  --p-inputtext-color: var(--text-color);
+
+  --p-floatlabel-focus-color: var(--text-color);
+  --p-floatlable-color: var(--text-color);
+
+  --p-button-primary-background: var(--primary-color);
+
+  --p-listbox-background: var(--input-bg);
+  --p-listbox-option-color: var(--text-color);
+  --p-listbox-border-color: var(--input-bg);
+  --p-listbox-option-focus-background: var(--bg-color);
+  --p-listbox-option-selected-color: var(--bg-color);
+  --p-listbox-option-selected-background: var(--bg-color);
+
   transition: background-color #{$transition-speed}, color #{$transition-speed};
 }

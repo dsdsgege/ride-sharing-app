@@ -1,6 +1,16 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as L from 'leaflet';
 
+L.Marker.prototype.options.icon = L.icon({
+  iconRetinaUrl: 'assets/marker-icon-2x.png',
+  iconUrl: 'assets/marker-icon.png',
+  shadowUrl: 'assets/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
 @Component({
   selector: 'app-map-component',
   imports: [],
@@ -12,7 +22,9 @@ export class MapComponent implements OnChanges {
 
   @Input("position")
   position: GeolocationPosition | null = null;
+
   map!: L.Map;
+
   zoom: number = 16;
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -1,0 +1,100 @@
+.p-datepicker input {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+.custom-form-element {
+  z-index: 10;
+  margin: 0.6rem;
+
+  input:hover {
+    border: 2px solid var(--text-color);
+  }
+
+  input {
+    padding: 0.75rem;
+    border: 2px solid var(--input-bg);
+    border-radius: 8px;
+
+    &:focus {
+      outline: none;
+      border-color: var(--input-bg);
+      background-color: var(--bg-color)
+    }
+  }
+
+  label {
+    color: var(--input-text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+  }
+}
+
+::ng-deep .p-datepicker {
+  p-datepicker:hover {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border-radius: 8px;
+  }
+
+  .p-inputtext:enabled:hover {
+    border: 2px solid var(--text-color);
+  }
+
+  .p-datepicker-input-icon-container {
+    color: var(--text-color);
+  }
+
+  .p-datepicker-input {
+    color: var(--text-color);
+  }
+
+  .p-inputtext:enabled:focus {
+    outline: none;
+    border: 2px solid var(--input-bg);
+    border-radius: 8px;
+  }
+
+  .p-datepicker-input {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    padding: 0.75rem;
+    border: 2px solid var(--input-bg);
+    border-radius: 8px;
+
+    &:focus {
+      outline: none;
+      border-color: var(--input-bg);
+      background-color: var(--bg-color)
+    }
+  }
+
+  input {
+    width: 100%;
+  }
+}
+
+.car-makes-list {
+  margin: 0.6rem;
+}
+
+.drive-info {
+  margin: 1rem;
+}
+
+.p-listbox {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+}
+
+.p-listbox .p-listbox-item {
+  color: var(--text-color);
+}
+
+.car-control-active {
+  border-bottom: none!important;
+  border-bottom-left-radius: 0!important;
+  border-bottom-right-radius: 0!important;
+}

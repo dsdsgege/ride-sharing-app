@@ -1,51 +1,63 @@
-
-<h1 class="text-2xl m-3">Your pickup location</h1>
+<h1 class="text-2xl m-3">Find your ride</h1>
 
 <div class="ride-info">
+
   <div class="form-section grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-4 md:align-middle">
+    <div class="element">
+      <div class="custom-form-element flex flex-row items-center md:w-2/3">
 
-    <div class="element md:flex md:flex-row md:items-center md:align-middle">
+        <p-floatlabel class="flex-1 w-0">
+          <input id="pickup"
+                 class="w-full"
+                 pInputText
+                 [formControl]="pickupControl"/>
+          <label for="pickup">Pickup city</label>
+        </p-floatlabel>
+        <span class="flex-shrink-0 ml-2">
+          <p-button (click)="getLocation()"
+                    pTooltip="Locate me"
+                    tooltipPosition="top">
+              <fa-icon [icon]='faLocationDot'></fa-icon>
+            </p-button>
+        </span>
 
-      <p-floatlabel class=" custom-form-element">
-        <input id="pickup" pInputText class="w-full md:w-2/3" value="{{ pickupValue }}"/>
-        <label for="pickup">Pickup city</label>
-      </p-floatlabel>
-      @if (!isGetLocation) {
-        <p-button class="custom-form-element" (click)="getLocation()">
-          <fa-icon [icon]='faLocationDot'></fa-icon>
-        </p-button>
-      }
+      </div>
     </div>
 
     <div class="element">
-      <p-floatlabel class="custom-form-element">
-        <input id="drop-off" pInputText class="w-full md:w-2/3" />
+      <p-floatlabel class="custom-form-element md:w-2/3">
+        <input id="drop-off"
+               pInputText
+               class="w-full"
+               [formControl]="dropoffControl"/>
         <label for="drop-off">Drop-off city</label>
       </p-floatlabel>
     </div>
 
-    <div class="md:w-2/3 element z-100">
-      <p-datepicker
-        class="custom-form-element" selectionMode="range"
-        [(ngModel)]="date"
-        [iconDisplay]="'input'"
-        [dateFormat]="'yy/mm/dd'"
-        [showIcon]="true"
-        iconDisplay="input"
-        inputId="daterange">
-        Date range
+    <div class="element">
+      <p-datepicker class="custom-form-element md:w-2/3"
+                    selectionMode="range"
+                    [(ngModel)]="this.dateControl"
+                    [iconDisplay]="'input'"
+                    [dateFormat]="'yy/mm/dd'"
+                    [showIcon]="true"
+                    [placeholder]="'Select date range'"
+                    iconDisplay="input">
       </p-datepicker>
     </div>
 
-    <div class="m-5 custom-form-element element z-10">
-      <button class="search-button md:w-2/3 w-full ">
-        <fa-icon [icon]='faSearch'></fa-icon>
-        Available rides
-      </button>
+    <div class="element">
+      <div class="custom-form-element md:w-2/3 flex">
+        <button class="search-button flex-1">
+          <fa-icon [icon]='faSearch'></fa-icon>
+          Available rides
+        </button>
+      </div>
     </div>
   </div>
 
   <div class="map-section">
+    <div>
     @if (isGetLocation && !position) {
       <div class="flex justify-center items-center" style="min-height: 300px;">
         <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
@@ -57,5 +69,6 @@
         <app-map-component [position]="position"></app-map-component>
       </div>
     }
+    </div>
   </div>
 </div>
