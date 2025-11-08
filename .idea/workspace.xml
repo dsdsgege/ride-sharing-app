@@ -4,34 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="304f6aa7-e922-4b6c-bbc8-bb0fcc95f5f2" name="Changes" comment="add: add landing page, navbar and correct docker-compose">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025__10__20__16_19_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025__10__20__16_19__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/map-component/map-component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/map-component/map-component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/map-component/map-component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/map-component/map-component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/model/geocoding-response-model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/geocoding-service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/environments/environment.development.example.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/environments/environment.ts" afterDir="false" />
+    <list default="true" id="304f6aa7-e922-4b6c-bbc8-bb0fcc95f5f2" name="Changes" comment="add: map and geolocation with geocoding">
+      <change afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/model/car-make-response-model.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025__10__20__16_19_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025__10__20__16_19__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/app.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/nav-bar/nav-bar.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/theme-service.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.html" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/components/ride-component/ride-component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/theme-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/ride-sharing-frontend/src/app/services/theme-service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,12 +51,12 @@
     <option name="currentCommit" value="1" />
     <option name="onto" value="206a17d79a80bb2689050c4748b76f5f59551f41" />
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/dsdsgege/ride-sharing-app.git",
-    "accountId": "09031fa6-0a39-4256-8514-4bf6295fd7f4"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/dsdsgege/ride-sharing-app.git&quot;,
+    &quot;accountId&quot;: &quot;09031fa6-0a39-4256-8514-4bf6295fd7f4&quot;
   }
-}]]></component>
+}</component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -110,7 +95,7 @@
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;17&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/IdeaProjects/ride-sharing-app/ride-sharing-frontend/public&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/IdeaProjects/ride-sharing-app&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -234,7 +219,10 @@
       <workItem from="1760785069631" duration="16097000" />
       <workItem from="1760856143356" duration="10959000" />
       <workItem from="1760900422597" duration="860000" />
-      <workItem from="1761455801521" duration="18428000" />
+      <workItem from="1761455801521" duration="24228000" />
+      <workItem from="1762182278512" duration="6302000" />
+      <workItem from="1762282286868" duration="98000" />
+      <workItem from="1762523677900" duration="3755000" />
     </task>
     <task id="LOCAL-00001" summary="add: add keycloak service and readme file">
       <option name="closed" value="true" />
@@ -260,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760799843447</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add: map and geolocation with geocoding">
+      <option name="closed" value="true" />
+      <created>1761596839366</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1761596839366</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -282,6 +278,7 @@
     <MESSAGE value="add: add keycloak service and readme file" />
     <MESSAGE value="add: add landing page and correct docker-compose" />
     <MESSAGE value="add: add landing page, navbar and correct docker-compose" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: add landing page, navbar and correct docker-compose" />
+    <MESSAGE value="add: map and geolocation with geocoding" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: map and geolocation with geocoding" />
   </component>
 </project>

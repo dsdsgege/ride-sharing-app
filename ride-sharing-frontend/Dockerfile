@@ -3,7 +3,7 @@ WORKDIR /app
 RUN npm install -g @angular/cli
 COPY ride-sharing-frontend/ .
 RUN npm install
-RUN ng build --configuration=production
+RUN ng build --configuration=development
 
 FROM nginx:stable AS final
 EXPOSE 80

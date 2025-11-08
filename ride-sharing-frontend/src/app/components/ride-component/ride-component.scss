@@ -55,13 +55,17 @@ button {
   }
 }
 
+.location-button {
+  width: 10% !important;
+}
+
 .custom-form-element {
   z-index: 10;
   margin: 0.6rem;
   width: 90%;
 
   input:hover {
-    border: 2px solid black;
+    border: 2px solid var(--text-color);
   }
   input {
     padding: 0.75rem;
@@ -80,13 +84,6 @@ button {
     font-size: 0.9rem;
     font-weight: 500;
     border: none;
-
-    // When input is focused or has value
-    &[data-p-focus="true"],
-    &[data-p-filled="true"] {
-      color: #007bff;
-      background-color: white !important;
-    }
   }
 }
 
@@ -96,6 +93,15 @@ button {
     color: var(--text-color);
     border-radius: 8px;
   }
+
+  .p-inputtext:enabled:hover {
+    border: 2px solid var(--text-color);
+  }
+
+  .p-datepicker-input-icon-container {
+    color: var(--text-color);
+  }
+
   .p-inputtext:enabled:focus {
     outline: none;
     border: 2px solid var(--input-bg);

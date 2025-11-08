@@ -2,16 +2,16 @@
 <h1 class="text-2xl m-3">Your pickup location</h1>
 
 <div class="ride-info">
-  <!-- Form inputs section -->
   <div class="form-section grid grid-cols-1 gap-1 md:grid-cols-2 md:gap-4 md:align-middle">
 
-    <div class="element md:flex">
-      <p-floatlabel class="custom-form-element">
+    <div class="element md:flex md:flex-row md:items-center md:align-middle">
+
+      <p-floatlabel class=" custom-form-element">
         <input id="pickup" pInputText class="w-full md:w-2/3" value="{{ pickupValue }}"/>
         <label for="pickup">Pickup city</label>
       </p-floatlabel>
       @if (!isGetLocation) {
-        <p-button class="custom-form-element location-button" (click)="getLocation()">
+        <p-button class="custom-form-element" (click)="getLocation()">
           <fa-icon [icon]='faLocationDot'></fa-icon>
         </p-button>
       }
@@ -26,12 +26,14 @@
 
     <div class="md:w-2/3 element z-100">
       <p-datepicker
-        class="custom-form-element"
+        class="custom-form-element" selectionMode="range"
         [(ngModel)]="date"
         [iconDisplay]="'input'"
         [dateFormat]="'yy/mm/dd'"
         [showIcon]="true"
-        inputId="icondisplay">
+        iconDisplay="input"
+        inputId="daterange">
+        Date range
       </p-datepicker>
     </div>
 

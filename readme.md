@@ -14,6 +14,11 @@ to see your passenger's or driver's live location on it.
 #### Starting the application:
     1. git clone https://github.com/dsdsgege/ride-sharing-app.git
     2. cd ride-sharing-app
+    3. Run the following command:
+```sh
+docker-compose up
+```
+If any changes are made, run
 ```sh
 docker-compose up --build
 ```

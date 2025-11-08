@@ -5,12 +5,12 @@ import {FormsModule} from '@angular/forms';
 import {DatePicker} from 'primeng/datepicker';
 import {MapComponent} from '../map-component/map-component';
 import {GeolocationService} from '@ng-web-apis/geolocation';
-import {Button} from 'primeng/button';
 import {ProgressSpinner} from 'primeng/progressspinner';
 import {take} from 'rxjs';
 import {GeocodingService} from '../../services/geocoding-service';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {faLocationDot, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-ride-component',
@@ -20,9 +20,9 @@ import {faLocationDot, faSearch} from '@fortawesome/free-solid-svg-icons';
     FormsModule,
     DatePicker,
     MapComponent,
-    Button,
     ProgressSpinner,
-    FontAwesomeModule
+    FontAwesomeModule,
+    Button
   ],
   templateUrl: './ride-component.html',
   styleUrl: './ride-component.scss'

@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home-component/home-component'
 import {canActivateAuthRole} from './auth.guard';
 import {RideComponent} from './components/ride-component/ride-component';
-import {MapComponent} from './components/map-component/map-component';
+import {DriveComponent} from './components/drive-component/drive-component';
 
 export const routes: Routes = [
   {
@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: "drive",
-    component: MapComponent,
+    component: DriveComponent,
   },
   {
     path: "ride",
