@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 @Component({
   selector: 'app-map-component',
   imports: [],
+  standalone: true,
   templateUrl: './map-component.html',
   styleUrl: './map-component.scss'
 })

@@ -25,6 +25,7 @@ import {Button} from 'primeng/button';
     Button
   ],
   templateUrl: './ride-component.html',
+  standalone: true,
   styleUrl: './ride-component.scss'
 })
 export class RideComponent {

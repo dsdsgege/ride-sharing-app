@@ -11,6 +11,7 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/mat
     MatCardTitle,
     MatCardContent],
   templateUrl: './home-component.html',
+  standalone: true,
   styleUrl: './home-component.scss'
 })
 export class HomeComponent {
