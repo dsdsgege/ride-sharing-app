@@ -62,6 +62,7 @@ body {
   --p-inputtext-focus-ring-color: var(--text-color);
   --p-inputtext-placeholder-color: var(--text-color);
   --p-inputtext-color: var(--text-color);
+  --p-inputtext-border-radius: 8px;
   --p-inputtext-hover-border-color: var(--text-color);
 
   // floatlabel
@@ -87,6 +88,7 @@ body {
   --p-inputnumber-input-focus-ring-shadow: none;
   --p-inputnumber-input-padding: 0.75rem;
   --p-inputnumber-border-radius: 8px;
+  --p-inputnumber-button-border-radius: 8px;
 
   transition: background-color #{$transition-speed}, color #{$transition-speed};
 }

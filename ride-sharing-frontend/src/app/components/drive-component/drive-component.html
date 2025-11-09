@@ -11,15 +11,14 @@
                  pInputText
                  [formControl]="carControl"
                  (input)="this.showCarMakes = true"
-                 (blur)="this.showCarMakes = false"
-                 [class.car-control-active]="showCarMakes"/>
+                 [class.car-control-active]="this.showCarMakes"/>
           <label for="car-make">Enter your car make</label>
         </p-floatlabel>
         @if (showCarMakes) {
           <p-listbox [options]="carMakesFiltered().length > 0 ? carMakesFiltered() : ['No match']"
-                     [formControl]="carControl"
-                     [disabled]="carMakesFiltered().length === 0"
-                     class="w-full" />
+                     (onChange)="onCarMakesChange($event)"
+                     (onBlur)="this.showCarMakes = false"
+                     class="w-full"/>
         }
         </div>
       </div>
@@ -36,21 +35,24 @@
 
     <div class="element">
       <p-inputnumber class="custom-form-element"
-                     [formControl]="consumption"
+                     [formControl]="consumptionControl"
                      mode="decimal"
                      [showButtons]="true"
                      suffix=" liter"
                      inputId="minmax-buttons"
-                     [min]="0" [max]="100"></p-inputnumber>
+                     [min]="0" [max]="100">
+      </p-inputnumber>
     </div>
 
     <div class="element">
       <p-datepicker class="custom-form-element md:w-2/3"
+                    [formControl]="dateControl"
                     [placeholder]="'Select date and time'"
                     [iconDisplay]="'input'"
                     [dateFormat]="'yy/mm/dd'"
                     [showTime]="true"
-                    [hourFormat]="'24'"></p-datepicker>
+                    [hourFormat]="'24'">
+      </p-datepicker>
     </div>
 
     <div class="element">

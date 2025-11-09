@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'primeng/button';
 import { Tooltip } from 'primeng/tooltip';
+import {FormService} from '../../services/form-service';
 
 @Component({
   selector: 'app-ride-component',
@@ -37,11 +38,9 @@ export class RideComponent implements OnInit {
 
   protected dateControl: FormControl<Date[] | null> = new FormControl(null);
 
-  protected pickupControl: FormControl<string | null> =
-    new FormControl(localStorage.getItem('pickup-city') ?? '');
+  protected pickupControl: FormControl<string | null> = new FormControl(null);
 
-  protected dropoffControl: FormControl<string | null> =
-    new FormControl(localStorage.getItem('dropoff-city') ?? '');
+  protected dropoffControl: FormControl<string | null> = new FormControl(null);
 
   protected readonly faLocationDot = faLocationDot;
 
@@ -55,17 +54,24 @@ export class RideComponent implements OnInit {
 
   private readonly geocodingService: GeocodingService = inject(GeocodingService);
 
+  private readonly formService: FormService = inject(FormService);
+
   constructor() {
   }
 
   ngOnInit(): void {
-    this.pickupControl.valueChanges.subscribe(
-      value => localStorage.setItem('pickup-city', value ?? '')
+
+    this.formService.setLocalStorageOnValueChanges('pickup-city', this.pickupControl);
+    this.formService.setLocalStorageOnValueChanges('dropoff-city', this.dropoffControl);
+
+    this.dateControl.valueChanges.subscribe(
+      value => {
+        localStorage.setItem('date-range', JSON.stringify(value) ?? '');
+      }
     );
 
-    this.dropoffControl.valueChanges.subscribe(
-      value => localStorage.setItem('dropoff-city', value ?? '')
-    );
+    this.formService.setValueFromLocalstorage('pickup-city', this.pickupControl);
+    this.formService.setValueFromLocalstorage('dropoff-city', this.dropoffControl);
 
     const storedDateString = localStorage.getItem('date-range');
     if (storedDateString) {
@@ -73,16 +79,10 @@ export class RideComponent implements OnInit {
 
       if (Array.isArray(parsedValue)) {
         const dateObjects = parsedValue.map(dateStr => new Date(dateStr));
-        // emitEven: false stops from valuechanges emit
+        // emitEvent: false stops from valuechanges emit
         this.dateControl.setValue(dateObjects, { emitEvent: false });
       }
     }
-
-    this.dateControl.valueChanges.subscribe(
-      value => {
-        localStorage.setItem('date-range', JSON.stringify(value) ?? '');
-      }
-    )
 
     if (localStorage.getItem('position')) {
       this.isGetLocation = true;
