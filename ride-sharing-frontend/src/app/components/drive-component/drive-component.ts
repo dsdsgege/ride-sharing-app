@@ -2,7 +2,6 @@ import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {CarsService} from '../../services/cars-service';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {DatePicker} from 'primeng/datepicker';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {FloatLabel} from 'primeng/floatlabel';
@@ -37,12 +36,12 @@ export class DriveComponent implements OnInit {
   protected carMakes: string[] = [];
 
   protected carControl: FormControl<string | null> = new FormControl(null);
-
   protected consumptionControl: FormControl<number | null> = new FormControl(0);
-
   protected dateControl: FormControl<string | null> = new FormControl(null)
-
-  protected readonly faSearch = faSearch;
+  protected modelYearControl: FormControl<number | null> = new FormControl(null);
+  protected seatsControl: FormControl<number | null> = new FormControl(null);
+  protected fromCityControl: FormControl<string | null> = new FormControl(null);
+  protected toCityControl: FormControl<string | null> = new FormControl(null);
 
   private readonly carsService: CarsService = inject(CarsService);
 
@@ -64,12 +63,19 @@ export class DriveComponent implements OnInit {
     });
 
     this.formService.setValueFromLocalstorage('car-make', this.carControl);
-
     this.formService.setValueFromLocalstorage('consumption', this.consumptionControl);
+    this.formService.setValueFromLocalstorage('model-year', this.modelYearControl);
+    this.formService.setValueFromLocalstorage('seats', this.seatsControl);
+    this.formService.setValueFromLocalstorage('pickup-city-drive', this.fromCityControl);
+    this.formService.setValueFromLocalstorage('dropoff-city-drive', this.toCityControl);
 
-    this.formService.setValueFromLocalstorage('depart-date', this.dateControl);
+    this.formService.setLocalStorageOnValueChanges('consumption', this.consumptionControl);
+    this.formService.setLocalStorageOnValueChanges('model-year', this.modelYearControl);
+    this.formService.setLocalStorageOnValueChanges('seats', this.seatsControl);
+    this.formService.setLocalStorageOnValueChanges('pickup-city-drive', this.fromCityControl);
+    this.formService.setLocalStorageOnValueChanges('dropoff-city-drive', this.toCityControl);
 
-
+    // TODO: depart-date local storage logic
 
     this.carControl.valueChanges.pipe(
       debounceTime(300),

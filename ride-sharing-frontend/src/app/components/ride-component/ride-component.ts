@@ -37,9 +37,7 @@ export class RideComponent implements OnInit {
   protected isGetLocation: boolean = false;
 
   protected dateControl: FormControl<Date[] | null> = new FormControl(null);
-
   protected pickupControl: FormControl<string | null> = new FormControl(null);
-
   protected dropoffControl: FormControl<string | null> = new FormControl(null);
 
   protected readonly faLocationDot = faLocationDot;
