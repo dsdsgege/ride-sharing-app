@@ -1,4 +1,5 @@
 @use 'sass:meta';
+@use 'sass:color';
 @include meta.load-css("tailwindcss");
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
 
@@ -54,24 +55,38 @@ body {
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
 
   // setting the prime ng colors
+  // input text
   --p-inputtext-background: var(--input-bg);
   --p-inputtext-focus-border-color: var(--text-color);
   --p-inputtext-focus-ring-shadow: var(--text-color);
   --p-inputtext-focus-ring-color: var(--text-color);
   --p-inputtext-placeholder-color: var(--text-color);
   --p-inputtext-color: var(--text-color);
+  --p-inputtext-hover-border-color: var(--text-color);
 
+  // floatlabel
   --p-floatlabel-focus-color: var(--text-color);
   --p-floatlable-color: var(--text-color);
 
   --p-button-primary-background: var(--primary-color);
 
+  // listbox
   --p-listbox-background: var(--input-bg);
   --p-listbox-option-color: var(--text-color);
   --p-listbox-border-color: var(--input-bg);
-  --p-listbox-option-focus-background: var(--bg-color);
-  --p-listbox-option-selected-color: var(--bg-color);
-  --p-listbox-option-selected-background: var(--bg-color);
+  --p-listbox-option-focus-background: lightgray;
+  --p-listbox-option-selected-color: lightgray;
+  --p-listbox-option-selected-background: lightgray;
+
+  // inputnumber
+  --p-inputnumber-input-background: var(--input-bg);
+  --p-inputnumber-input-color: var(--text-color);
+  --p-inputnumber-input-border-color: var(--input-bg);
+  --p-inputnumber-input-hover-border-color: var(--text-color);
+  --p-inputnumber-input-focus-border-color: var(--text-color);
+  --p-inputnumber-input-focus-ring-shadow: none;
+  --p-inputnumber-input-padding: 0.75rem;
+  --p-inputnumber-border-radius: 8px;
 
   transition: background-color #{$transition-speed}, color #{$transition-speed};
 }

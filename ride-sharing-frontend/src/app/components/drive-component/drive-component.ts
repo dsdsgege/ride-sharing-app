@@ -8,6 +8,7 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputText} from 'primeng/inputtext';
 import {Listbox} from 'primeng/listbox';
+import {InputNumber} from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-drive-component',
@@ -17,7 +18,8 @@ import {Listbox} from 'primeng/listbox';
     FaIconComponent,
     FloatLabel,
     InputText,
-    Listbox
+    Listbox,
+    InputNumber
   ],
   templateUrl: './drive-component.html',
   standalone: true,
@@ -33,7 +35,9 @@ export class DriveComponent implements OnInit {
 
   protected carMakes: string[] = [];
 
-  protected carControl: FormControl = new FormControl('');
+  protected carControl: FormControl<string | null> = new FormControl('');
+
+  protected consumption: FormControl<number | null> = new FormControl(0);
 
   protected readonly faSearch = faSearch;
 
@@ -58,7 +62,7 @@ export class DriveComponent implements OnInit {
     this.carControl.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-    ).subscribe(search => this.searchCar(search));
+    ).subscribe(search => this.searchCar(search ?? ''));
   }
 
   private searchCar(search: string) {

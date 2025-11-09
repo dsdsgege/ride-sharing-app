@@ -35,14 +35,22 @@
     </div>
 
     <div class="element">
+      <p-inputnumber class="custom-form-element"
+                     [formControl]="consumption"
+                     mode="decimal"
+                     [showButtons]="true"
+                     suffix=" liter"
+                     inputId="minmax-buttons"
+                     [min]="0" [max]="100"></p-inputnumber>
+    </div>
+
+    <div class="element">
       <p-datepicker class="custom-form-element md:w-2/3"
-                    selectionMode="range"
+                    [placeholder]="'Select date and time'"
                     [iconDisplay]="'input'"
                     [dateFormat]="'yy/mm/dd'"
-                    [showIcon]="true"
-                    [placeholder]="'Select date range'"
-                    iconDisplay="input">
-      </p-datepicker>
+                    [showTime]="true"
+                    [hourFormat]="'24'"></p-datepicker>
     </div>
 
     <div class="element">

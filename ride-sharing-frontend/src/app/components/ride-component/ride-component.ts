@@ -73,7 +73,8 @@ export class RideComponent implements OnInit {
 
       if (Array.isArray(parsedValue)) {
         const dateObjects = parsedValue.map(dateStr => new Date(dateStr));
-        this.dateControl.setValue(dateObjects);
+        // emitEven: false stops from valuechanges emit
+        this.dateControl.setValue(dateObjects, { emitEvent: false });
       }
     }
 
@@ -97,7 +98,11 @@ export class RideComponent implements OnInit {
       localStorage.setItem('position', JSON.stringify(pos));
 
       this.geocodingService.getAddress(pos.coords.latitude, pos.coords.longitude).subscribe({
-        next: res => this.pickupControl = new FormControl(res[0].name ?? ''),
+        next: res => {
+          const pickupCity = res[0].name ?? '';
+          this.pickupControl = new FormControl(pickupCity);
+          localStorage.setItem('pickup-city', pickupCity);
+        },
         error: err => alert('Unexpected error happened while getting address\n' + err.message)
       });
     });

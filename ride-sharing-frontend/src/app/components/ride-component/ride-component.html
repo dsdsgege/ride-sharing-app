@@ -37,7 +37,7 @@
     <div class="element">
       <p-datepicker class="custom-form-element md:w-2/3"
                     selectionMode="range"
-                    [(ngModel)]="this.dateControl"
+                    [formControl]="this.dateControl"
                     [iconDisplay]="'input'"
                     [dateFormat]="'yy/mm/dd'"
                     [showIcon]="true"
@@ -58,17 +58,18 @@
 
   <div class="map-section">
     <div>
-    @if (isGetLocation && !position) {
-      <div class="flex justify-center items-center" style="min-height: 300px;">
-        <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
-                            [style]="{ width: '50px', height: '50px' }" />
-      </div>
-    }
-    @else if (isGetLocation && position) {
-      <div class="map-container">
-        <app-map-component [position]="position"></app-map-component>
-      </div>
-    }
+      @if (isGetLocation && !position) {
+        <div class="flex justify-center items-center" style="min-height: 300px;">
+          <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s"
+                              [style]="{ width: '50px', height: '50px' }" />
+        </div>
+      }
+      @else if (isGetLocation && position) {
+        <div class="map-container">
+          <app-map-component [position]="position"></app-map-component>
+        </div>
+      }
     </div>
   </div>
 </div>
+
