@@ -1,5 +1,5 @@
 module.exports = {
-  darkMode: 'class',
+  darkMode: '.dark-theme', // let tailwind use my own dark-theme class
   content: [
     "./src/**/*.{html,ts}",
   ],

@@ -3,7 +3,6 @@ import {CarsService} from '../../services/cars-service';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
 import {DatePicker} from 'primeng/datepicker';
-import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputText} from 'primeng/inputtext';
 import {Listbox, ListboxChangeEvent} from 'primeng/listbox';
@@ -15,7 +14,6 @@ import {FormService} from '../../services/form-service';
   imports: [
     ReactiveFormsModule,
     DatePicker,
-    FaIconComponent,
     FloatLabel,
     InputText,
     Listbox,
@@ -93,7 +91,7 @@ export class DriveComponent implements OnInit {
 
   private searchCar(search: string) {
     this.carMakesFiltered.set(this.carMakes.filter(
-      make => make.includes(search)
+      make => make.toLowerCase().includes(search.toLowerCase())
     ));
   }
 }

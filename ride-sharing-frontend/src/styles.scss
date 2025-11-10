@@ -19,8 +19,12 @@ $color-light-text: #071e2b;
 $color-dark-text: #e3e2e2;
 
 $color-light-card: #009689;
+$color-dark-card: #009689;
 
-$color-primary: #10b981;       // Primary accent color (emerald-500)
+$color-light-card-bg: #a5cdf766;
+$color-dark-card-bg: #014f6766;
+
+$color-primary: #038f60;       // Primary accent color (emerald-500)
 $transition-speed: 0.3s ease;
 
 :root {
@@ -28,6 +32,8 @@ $transition-speed: 0.3s ease;
   --bg-color: #{$color-light-bg};
   --text-color: #{$color-light-text};
   --card-bg-color: #{$color-light-card};
+
+  --custom-card-bg-color: #{$color-light-card-bg};
 
   --primary-color: #{$color-primary};
   --primary-hover-color: #096848;
@@ -41,6 +47,8 @@ body.dark-theme {
   --bg-color: #{$color-dark-bg};
   --text-color: #{$color-dark-text};
   --card-bg-color: #{$color-light-card};
+
+  --custom-card-bg-color: #{$color-dark-card-bg};
 
   --input-bg: #{$input-dark-bg};
 
@@ -63,6 +71,7 @@ body {
   --p-inputtext-placeholder-color: var(--text-color);
   --p-inputtext-color: var(--text-color);
   --p-inputtext-border-radius: 8px;
+  --p-inputtext-border-color: var(--input-bg);
   --p-inputtext-hover-border-color: var(--text-color);
 
   // floatlabel
@@ -91,4 +100,17 @@ body {
   --p-inputnumber-button-border-radius: 8px;
 
   transition: background-color #{$transition-speed}, color #{$transition-speed};
+}
+
+.card {
+  background-color: var(--custom-card-bg-color);
+  border: none;
+  border-radius: 16px;
+  transition: all ease-in-out 0.2s;
+  box-shadow: 0 0 5px color.change(gray, $alpha: 0.5);
+
+}
+
+.card:hover {
+  box-shadow: 0px 0px 20px color.change(gray, $alpha: 0.5);
 }

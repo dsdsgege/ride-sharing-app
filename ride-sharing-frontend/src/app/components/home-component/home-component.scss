@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 img {
   opacity: 1;
 }
@@ -64,7 +66,7 @@ button {
 .mat-card {
   color: var(--text-color);
   border-radius:0.375rem;
-  box-shadow: 5px 5px 10px var(--card-bg-color)
+  box-shadow: 5px 5px 10px var(--card-bg-color);
 }
 
 .mat-card-content {

@@ -1,5 +1,6 @@
 h1 {
   margin-bottom: 1.2rem;
+  color: var(--text-color);
 }
 
 button {
@@ -21,10 +22,6 @@ button {
   background-color: #e3e2e2;
   border: 1px var(--primary-color) solid;
   cursor: pointer;
-}
-
-.ride-info {
-  margin:1rem;
 }
 
 .map-section {
