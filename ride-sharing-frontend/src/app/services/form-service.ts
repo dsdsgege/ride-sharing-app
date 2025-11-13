@@ -23,4 +23,29 @@ export class FormService {
   public setLocalStorageOnValueChanges(key: string, control: FormControl) {
     control.valueChanges.subscribe( value => localStorage.setItem(key, value ?? ''));
   }
+
+  /**
+   * Checks if all form controls are filled.
+   *
+   * @param forms FormControl array
+   */
+  public areInputsFilled(...forms: FormControl[]): boolean {
+    return forms.every(form => {
+      const formValue = form.value;
+
+      if (typeof formValue === 'string') {
+        return formValue.trim() !== '';
+      }
+
+      if (formValue instanceof Date) {
+        return formValue > new Date();
+      }
+
+      if(typeof formValue === 'number') {
+        return formValue > 0;
+      }
+
+      return false;
+    });
+  }
 }

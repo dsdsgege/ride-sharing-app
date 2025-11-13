@@ -8,6 +8,8 @@ import {InputText} from 'primeng/inputtext';
 import {Listbox, ListboxChangeEvent} from 'primeng/listbox';
 import {InputNumber} from 'primeng/inputnumber';
 import {FormService} from '../../services/form-service';
+import {Button} from 'primeng/button';
+import {Dialog} from 'primeng/dialog';
 
 @Component({
   selector: 'app-drive-component',
@@ -17,7 +19,9 @@ import {FormService} from '../../services/form-service';
     FloatLabel,
     InputText,
     Listbox,
-    InputNumber
+    InputNumber,
+    Button,
+    Dialog
   ],
   templateUrl: './drive-component.html',
   standalone: true,
@@ -29,21 +33,30 @@ export class DriveComponent implements OnInit {
 
   protected carMakesFiltered: WritableSignal<string[]> = signal([]);
 
-  protected showCarMakes = false;
+  protected showCarMakes: boolean = false;
 
   protected carMakes: string[] = [];
 
+  protected dialogVisible: boolean = false;
+
   protected carControl: FormControl<string | null> = new FormControl(null);
   protected consumptionControl: FormControl<number | null> = new FormControl(0);
-  protected dateControl: FormControl<string | null> = new FormControl(null)
+  protected dateControl: FormControl<Date | null> = new FormControl(null)
   protected modelYearControl: FormControl<number | null> = new FormControl(null);
   protected seatsControl: FormControl<number | null> = new FormControl(null);
   protected fromCityControl: FormControl<string | null> = new FormControl(null);
   protected toCityControl: FormControl<string | null> = new FormControl(null);
 
+
+  protected readonly today: Date = new Date();
+
+  protected readonly dateFormat = 'dd/mm/yy';
+
   private readonly carsService: CarsService = inject(CarsService);
 
   private readonly formService: FormService = inject(FormService);
+
+  private everyInputFilled: boolean = false;
 
   constructor() {
     this.carMakes$ = this.carsService.fetchCarMakes();
@@ -66,12 +79,20 @@ export class DriveComponent implements OnInit {
     this.formService.setValueFromLocalstorage('seats', this.seatsControl);
     this.formService.setValueFromLocalstorage('pickup-city-drive', this.fromCityControl);
     this.formService.setValueFromLocalstorage('dropoff-city-drive', this.toCityControl);
+    const storedDateString = localStorage.getItem('depart-date');
+    if (storedDateString) {
+      const date = new Date(storedDateString);
+      if (!isNaN(date.getTime())) {
+        this.dateControl.setValue(date);
+      }
+    }
 
     this.formService.setLocalStorageOnValueChanges('consumption', this.consumptionControl);
     this.formService.setLocalStorageOnValueChanges('model-year', this.modelYearControl);
     this.formService.setLocalStorageOnValueChanges('seats', this.seatsControl);
     this.formService.setLocalStorageOnValueChanges('pickup-city-drive', this.fromCityControl);
     this.formService.setLocalStorageOnValueChanges('dropoff-city-drive', this.toCityControl);
+    this.formService.setLocalStorageOnValueChanges('depart-date', this.dateControl);
 
     // TODO: depart-date local storage logic
 
@@ -87,6 +108,13 @@ export class DriveComponent implements OnInit {
     this.carControl.setValue($event.value, { emitEvent: false });
     localStorage.setItem('car-make', $event.value);
     this.showCarMakes = false;
+  }
+
+  protected showDialog() {
+    this.everyInputFilled = this.formService.areInputsFilled(this.carControl, this.consumptionControl,
+      this.modelYearControl, this.seatsControl, this.fromCityControl, this.toCityControl);
+    console.log(this.everyInputFilled);
+    this.dialogVisible = true;
   }
 
   private searchCar(search: string) {

@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideKeycloak({
       config: {
-        url: "http://192.168.0.37:8090",
+        url: "http://localhost:8090",
         realm: "ride-sharing-app",
         clientId: "ride-share-client-id"
       },

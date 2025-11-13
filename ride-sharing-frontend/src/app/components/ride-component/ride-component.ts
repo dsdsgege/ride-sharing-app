@@ -13,6 +13,9 @@ import { faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'primeng/button';
 import { Tooltip } from 'primeng/tooltip';
 import {FormService} from '../../services/form-service';
+import {Breadcrumb} from 'primeng/breadcrumb';
+import {MenuItem} from 'primeng/api';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-ride-component',
@@ -26,7 +29,9 @@ import {FormService} from '../../services/form-service';
     FontAwesomeModule,
     Button,
     ReactiveFormsModule,
-    Tooltip
+    Tooltip,
+    Breadcrumb,
+    RouterLink
   ],
   templateUrl: './ride-component.html',
   standalone: true,
@@ -53,6 +58,12 @@ export class RideComponent implements OnInit {
   private readonly geocodingService: GeocodingService = inject(GeocodingService);
 
   private readonly formService: FormService = inject(FormService);
+
+  items: MenuItem[] = [
+    {"label": "Find your ride", routerLink: "/ride"},
+    {"label": ""},
+
+  ];
 
   constructor() {
   }
@@ -88,7 +99,10 @@ export class RideComponent implements OnInit {
     }
   }
 
-  getLocation() {
+  protected searchRides() {
+
+  }
+  protected getLocation() {
     this.isGetLocation = true;
     this.geolocation$.pipe(take(1)).subscribe((pos) => {
 

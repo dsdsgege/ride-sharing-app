@@ -7,21 +7,6 @@
   z-index: 10;
   margin: 0.6rem;
 
-  input:hover {
-    border: 2px solid var(--text-color);
-  }
-
-  input {
-    padding: 0.75rem;
-    border: 2px solid var(--input-bg);
-
-    &:focus {
-      outline: none;
-      border-color: var(--input-bg);
-      background-color: var(--bg-color)
-    }
-  }
-
   label {
     color: var(--input-text);
     font-size: 0.9rem;
@@ -30,62 +15,7 @@
   }
 }
 
-::ng-deep .custom-form-element.p-inputnumber .p-inputnumber-input {
-  padding: 0.75rem !important;
-  border: 2px solid var(--input-bg) !important;
-  border-radius: 8px !important;
-
-  &:hover {
-    border: 2px solid var(--text-color) !important;
-  }
-
-  &:focus {
-    outline: none !important;
-    border-color: var(--input-bg) !important;
-    background-color: var(--bg-color) !important;
-    box-shadow: none;
-  }
-}
-
 ::ng-deep .p-datepicker {
-  p-datepicker:hover {
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    border-radius: 8px;
-  }
-
-  .p-inputtext:enabled:hover {
-    border: 2px solid var(--text-color);
-  }
-
-  .p-datepicker-input-icon-container {
-    color: var(--text-color);
-  }
-
-  .p-datepicker-input {
-    color: var(--text-color);
-  }
-
-  .p-inputtext:enabled:focus {
-    outline: none;
-    border: 2px solid var(--input-bg);
-    border-radius: 8px;
-  }
-
-  .p-datepicker-input {
-    background-color: var(--input-bg);
-    color: var(--text-color);
-    padding: 0.75rem;
-    border: 2px solid var(--input-bg);
-    border-radius: 8px;
-
-    &:focus {
-      outline: none;
-      border-color: var(--input-bg);
-      background-color: var(--bg-color)
-    }
-  }
-
   input {
     width: 100%;
   }

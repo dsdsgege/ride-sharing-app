@@ -1,0 +1,35 @@
+@use 'sass:color';
+
+// --- Base Palette ---
+
+// Inputs
+$input-light-bg: rgb(236, 233, 233);
+$input-dark-bg: rgb(115, 114, 114);
+$input-light-text: #000;
+$input-dark-text: #e3e2e2;
+
+// Navbar
+$navbar-light-bg: #010203;
+$navbar-dark-bg: #010203;
+
+// Background
+$color-light-bg: #edeae0;
+$color-dark-bg: #212326;
+
+// Text
+$color-light-text: #071e2b;
+$color-dark-text: #edeae0;
+
+// Cards
+$color-light-card: #009689;
+$color-dark-card: #009689;
+$color-light-card-bg: rgba(117, 131, 123, 0.62);
+$color-dark-card-bg: rgb(56, 75, 73);
+
+$color-primary: #038f60;
+$transition-speed: 0.3s ease;
+
+
+
+$color-light-text-hover: color.adjust($color-light-text, $lightness: 40%);
+$color-dark-text-hover: color.adjust($color-dark-text, $lightness: +20%);

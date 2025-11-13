@@ -3,6 +3,7 @@ import { HomeComponent } from './components/home-component/home-component'
 import {canActivateAuthRole} from './auth.guard';
 import {RideComponent} from './components/ride-component/ride-component';
 import {DriveComponent} from './components/drive-component/drive-component';
+import {RideListComponent} from './components/ride-list-component/ride-list-component';
 
 export const routes: Routes = [
   {
@@ -24,5 +25,9 @@ export const routes: Routes = [
     data: {
       role: 'USER'
     }
+  },
+  {
+    path: "ride-list",
+    component: RideListComponent,
   }
 ];

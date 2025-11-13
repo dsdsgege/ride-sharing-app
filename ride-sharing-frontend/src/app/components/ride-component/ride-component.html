@@ -1,8 +1,10 @@
 <div class="container mx-auto p-4">
 
   <h1 class="text-3xl font-bold text-center mb-6">Find your ride</h1>
-
-  <div class="card w-full max-w-4xl mx-auto p-6 mb-8">
+  <div class="breadcrumb flex max-w-6xl mx-auto">
+    <p-breadcrumb [model]="items" />
+  </div>
+  <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
     <div class="form-section grid grid-cols-1 gap-4 md:grid-cols-2">
       <div class="element">
         <div class="custom-form-element flex flex-row items-center w-full">
@@ -47,18 +49,19 @@
         </p-datepicker>
       </div>
 
-      <div class="element md:col-span-2">
-        <div class="custom-form-element w-full flex">
-          <button class="search-button flex-1">
-            <fa-icon [icon]='faSearch'></fa-icon>
-            Available rides
-          </button>
+      <div class="element md:col-span-1">
+        <div class="custom-form-element w-full justify-end flex">
+          <p-button (click)="searchRides()"
+                    routerLink="/ride-list">
+            <fa-icon [icon]='faSearch'>
+            </fa-icon> Available rides
+          </p-button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="card w-full max-w-4xl mx-auto p-6">
+  <div class="card map w-full max-w-6xl mx-auto p-6">
     <h2 class="text-2xl font-bold mx-auto mb-4">Your Location</h2>
     <div class="map-section">
       <div>

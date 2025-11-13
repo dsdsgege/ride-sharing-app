@@ -1,56 +1,39 @@
 @use 'sass:meta';
-@use 'sass:color';
+@use 'variables';
+
 @include meta.load-css("tailwindcss");
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
 
-$input-light-bg: rgb(191, 189, 189);
-$input-dark-bg: #838383;
-
-$input-light-text: #000;
-$input-dark-text: #e3e2e2;
-
-$navbar-light-bg: #010203;
-$navbar-dark-bg: #010203;
-
-$color-light-bg: #ededed;
-$color-dark-bg: #071e2b;
-
-$color-light-text: #071e2b;
-$color-dark-text: #e3e2e2;
-
-$color-light-card: #009689;
-$color-dark-card: #009689;
-
-$color-light-card-bg: #a5cdf766;
-$color-dark-card-bg: #014f6766;
-
-$color-primary: #038f60;       // Primary accent color (emerald-500)
-$transition-speed: 0.3s ease;
-
 :root {
-  --navbar-bg: #{$navbar-light-bg};
-  --bg-color: #{$color-light-bg};
-  --text-color: #{$color-light-text};
-  --card-bg-color: #{$color-light-card};
+  --navbar-bg: #{variables.$navbar-light-bg};
+  --bg-color: #{variables.$color-light-bg};
+  --text-color: #{variables.$color-light-text};
+  --card-bg-color: #{variables.$color-light-card};
 
-  --custom-card-bg-color: #{$color-light-card-bg};
+  --custom-card-bg-color: #{variables.$color-light-card-bg};
 
-  --primary-color: #{$color-primary};
+  --primary-color: #{variables.$color-primary};
   --primary-hover-color: #096848;
 
-  --input-bg: #{$input-light-bg};
+  --input-bg: #{variables.$input-light-bg};
+  --input-bg-active: rgba(220, 241, 211, 0.62);
+
+  --text-hover-color: #{variables.$color-light-text-hover};
+
   color-scheme: light;
 }
 
 body.dark-theme {
-  --navbar-bg: #{$navbar-dark-bg};
-  --bg-color: #{$color-dark-bg};
-  --text-color: #{$color-dark-text};
-  --card-bg-color: #{$color-light-card};
+  --navbar-bg: #{variables.$navbar-dark-bg};
+  --bg-color: #{variables.$color-dark-bg};
+  --text-color: #{variables.$color-dark-text};
+  --card-bg-color: #{variables.$color-light-card};
 
-  --custom-card-bg-color: #{$color-dark-card-bg};
+  --custom-card-bg-color: #{variables.$color-dark-card-bg};
 
-  --input-bg: #{$input-dark-bg};
+  --input-bg: #{variables.$input-dark-bg};
+
+  --text-hover-color: #{variables.$color-dark-text-hover};
 
   color-scheme: dark;
 }
@@ -62,7 +45,6 @@ body {
   margin: 0;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
 
-  // setting the prime ng colors
   // input text
   --p-inputtext-background: var(--input-bg);
   --p-inputtext-focus-border-color: var(--text-color);
@@ -70,7 +52,6 @@ body {
   --p-inputtext-focus-ring-color: var(--text-color);
   --p-inputtext-placeholder-color: var(--text-color);
   --p-inputtext-color: var(--text-color);
-  --p-inputtext-border-radius: 8px;
   --p-inputtext-border-color: var(--input-bg);
   --p-inputtext-hover-border-color: var(--text-color);
 
@@ -79,6 +60,7 @@ body {
   --p-floatlable-color: var(--text-color);
 
   --p-button-primary-background: var(--primary-color);
+  --p-button-primary-border-color: var(--primary-color);
 
   // listbox
   --p-listbox-background: var(--input-bg);
@@ -96,21 +78,50 @@ body {
   --p-inputnumber-input-focus-border-color: var(--text-color);
   --p-inputnumber-input-focus-ring-shadow: none;
   --p-inputnumber-input-padding: 0.75rem;
-  --p-inputnumber-border-radius: 8px;
-  --p-inputnumber-button-border-radius: 8px;
 
-  transition: background-color #{$transition-speed}, color #{$transition-speed};
+  // datepicker
+  --p-datepicker-input-icon-color: var(--text-color);
+
+  // breadcrumb
+  --p-breadcrumb-background: transparent;
+  --p-breadcrumb-item-color: var(--text-color);
+  --p-breadcrumb-item-hover-color: var(--text-hover-color);
+
+  transition: background-color #{variables.$transition-speed}, color #{variables.$transition-speed};
 }
 
 .card {
+  padding: 2.5rem;
   background-color: var(--custom-card-bg-color);
-  border: none;
-  border-radius: 16px;
+  border-radius: 8px;
   transition: all ease-in-out 0.2s;
-  box-shadow: 0 0 5px color.change(gray, $alpha: 0.5);
-
+  border: solid 0.05rem var(--text-color);
 }
 
-.card:hover {
-  box-shadow: 0px 0px 20px color.change(gray, $alpha: 0.5);
+footer {
+  width: 100%;
+  background-color: var(--custom-card-bg-color);
+  border-top: 1px solid var(--text-color);
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+.breadcrumb {
+  background-color: transparent;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
 }
