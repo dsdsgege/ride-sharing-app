@@ -31,5 +31,7 @@ $transition-speed: 0.3s ease;
 
 
 
-$color-light-text-hover: color.adjust($color-light-text, $lightness: 40%);
-$color-dark-text-hover: color.adjust($color-dark-text, $lightness: +20%);
+$color-light-text-hover: color.adjust($color-light-text, $lightness: 30%);
+$color-dark-text-hover: color.adjust($color-dark-text, $lightness: -20%);
+
+$dialog-bg: color.adjust($color-light-bg, $lightness: -5%);

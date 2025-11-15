@@ -4,9 +4,39 @@
   <div class="breadcrumb flex max-w-6xl mx-auto">
     <p-breadcrumb [model]="items" />
   </div>
-  <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
-    <div class="form-section grid grid-cols-1 gap-4 md:grid-cols-2">
-    </div>
-  </div>
 
+  <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
+
+    <div class="form-section grid grid-cols-1 gap-4">
+      @for (ride of rides; track ride) {
+        <p-card header="{{ ride.departFrom }} &rarr; {{ ride.arriveTo }}"
+                routerLink="your-ride">
+          <div class="flex flex-row justify-between items-center w-full">
+            <div class="flex flex-col gap-1">
+              <div class="font-bold text-sm md:text-xl">
+                {{ ride.passengerPrice | currency:'HUF':'Ft':'1.0-0' }}
+              </div>
+
+              <div class="text-sm md:text-md">
+                <span>{{ ride.departDate | date: this.dateFormat}}</span>
+                <span class="mx-1">&rarr;</span>
+                <span>{{ ride.arriveDate | date: this.dateFormat }}</span>
+              </div>
+            </div>
+
+            <div class="ml-4">
+              <p-button pTooltip="{{ ride.driver.rating }} ★"
+                        tooltipPosition="left">
+                <fa-icon [icon]="faUser"
+                         class="text-2xl text-gray-400 hover:text-gray-600 cursor-pointer">
+                </fa-icon>
+              </p-button>
+            </div>
+
+          </div>
+        </p-card>
+      }
+    </div>
+
+  </div>
 </div>

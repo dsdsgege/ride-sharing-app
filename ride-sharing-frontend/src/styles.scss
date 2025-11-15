@@ -20,6 +20,8 @@
 
   --text-hover-color: #{variables.$color-light-text-hover};
 
+  --dialog-bg: #{variables.$dialog-bg};
+
   color-scheme: light;
 }
 
@@ -78,6 +80,8 @@ body {
   --p-inputnumber-input-focus-border-color: var(--text-color);
   --p-inputnumber-input-focus-ring-shadow: none;
   --p-inputnumber-input-padding: 0.75rem;
+  --p-inputnumber-button-hover-background: var(--text-color);
+  --p-inputnumber-button-active-background: lightgray;
 
   // datepicker
   --p-datepicker-input-icon-color: var(--text-color);
@@ -87,7 +91,14 @@ body {
   --p-breadcrumb-item-color: var(--text-color);
   --p-breadcrumb-item-hover-color: var(--text-hover-color);
 
-  transition: background-color #{variables.$transition-speed}, color #{variables.$transition-speed};
+  // dialog
+  --p-dialog-background: var(--dialog-bg);
+
+  // card
+  --p-card-color: var(--text-color);
+  --p-card-background: var(--bg-color);
+
+  transition: background-color #{variables.$transition-speed};
 }
 
 .card {
@@ -112,8 +123,16 @@ button {
   background-color: transparent;
 }
 
+footer a:hover {
+  text-decoration: underline;
+}
+
 a:hover {
   cursor: pointer;
+}
+
+.element {
+  margin-top: 0.8rem;
 }
 
 app-root {
@@ -124,4 +143,16 @@ app-root {
 
 main {
   flex-grow: 1;
+}
+
+.ng-fa-icon {
+  transition: all 0.2s ease;
+}
+
+.ng-fa-icon:hover {
+  color: var(--text-hover-color);
+}
+
+.p-card:hover {
+  cursor: pointer;
 }

@@ -60,9 +60,8 @@ export class RideComponent implements OnInit {
   private readonly formService: FormService = inject(FormService);
 
   items: MenuItem[] = [
-    {"label": "Find your ride", routerLink: "/ride"},
+    {"label": "Search rides", routerLink: "/ride"},
     {"label": ""},
-
   ];
 
   constructor() {
@@ -99,9 +98,6 @@ export class RideComponent implements OnInit {
     }
   }
 
-  protected searchRides() {
-
-  }
   protected getLocation() {
     this.isGetLocation = true;
     this.geolocation$.pipe(take(1)).subscribe((pos) => {
@@ -119,4 +115,6 @@ export class RideComponent implements OnInit {
       });
     });
   }
+
+  protected readonly Math = Math;
 }

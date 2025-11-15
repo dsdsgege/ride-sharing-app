@@ -2,7 +2,7 @@
 
   <h1 class="text-3xl font-bold text-center mb-6">Find your ride</h1>
   <div class="breadcrumb flex max-w-6xl mx-auto">
-    <p-breadcrumb [model]="items" />
+    <p-breadcrumb [model]="items"/>
   </div>
   <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
     <div class="form-section grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -51,8 +51,10 @@
 
       <div class="element md:col-span-1">
         <div class="custom-form-element w-full justify-end flex">
-          <p-button (click)="searchRides()"
-                    routerLink="/ride-list">
+          <p-button routerLink="ride-list"
+                    [queryParams]="{pickupFrom: this.pickupControl.value,
+                                    dropOffTo: this.dropoffControl.value,
+                                    date: this.dateControl.value ?? []}">
             <fa-icon [icon]='faSearch'>
             </fa-icon> Available rides
           </p-button>
@@ -77,7 +79,9 @@
           </div>
         }
         @else {
-          <p class="font-normal text-gray-700 dark:text-gray-400 text-center">Click the locate me button to see your position on the map.</p>
+          <p class="font-normal text-gray-700 dark:text-gray-400 text-center">
+            Click the locate me button to see your position on the map.
+          </p>
         }
       </div>
     </div>

@@ -1,0 +1,19 @@
+::ng-deep {
+  .p-button {
+    background-color: transparent;
+    border: none;
+  }
+
+  .p-button:not(:disabled):hover {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.p-card {
+  transition: all 0.3s ease;
+}
+
+.p-card:hover {
+  transform: translate(0, -0.3rem)
+}

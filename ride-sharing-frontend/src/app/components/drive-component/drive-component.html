@@ -4,7 +4,7 @@
 
   <div class="card w-full max-w-6xl mx-auto p-6 mb-4">
     <div class="drive-info">
-      <div class="form-section grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="form-section grid grid-cols-1 gap-4 md:grid-cols-2 ">
 
         <h2 class="text-2xl font-semibold md:col-span-2 border-b pb-2 mb-2 mt-3">Car Details</h2>
 
@@ -32,7 +32,7 @@
 
         <div class="element">
           <p-floatlabel class="custom-form-element w-full">
-            <p-inputnumber id="model-year"
+            <p-inputnumber inputId="model-year"
                            class="w-full"
                            [formControl]="modelYearControl"
                            [useGrouping]="false"
@@ -44,14 +44,17 @@
         </div>
 
         <div class="element">
-          <p-inputnumber class="custom-form-element w-full"
-                         [formControl]="consumptionControl"
-                         mode="decimal"
-                         [showButtons]="true"
-                         suffix=" liter"
-                         inputId="minmax-buttons"
-                         [min]="0" [max]="100">
-          </p-inputnumber>
+          <p-floatlabel class="custom-form-element w-full">
+            <p-inputnumber class="w-full"
+                           [formControl]="consumptionControl"
+                           mode="decimal"
+                           [showButtons]="true"
+                           suffix=" liter"
+                           inputId="mileage"
+                           [min]="0" [max]="100">
+            </p-inputnumber>
+            <label for="mileage">Mileage (liter/100km)</label>
+          </p-floatlabel>
         </div>
 
         <div class="element">
@@ -59,9 +62,10 @@
             <p-inputnumber id="seats"
                            class="w-full"
                            [formControl]="seatsControl"
+                           [showButtons]="true"
                            [min]="1"
                            [max]="8"
-                           suffix=" seats">
+                           suffix=" seat(s)">
             </p-inputnumber>
             <label for="seats">Number of free seats</label>
           </p-floatlabel>
@@ -90,15 +94,31 @@
         </div>
 
         <div class="element md:col-span-2">
+
+          <label for="departure_at">Departure at:</label>
           <p-datepicker class="custom-form-element w-full"
-                        [formControl]="dateControl"
+                        [formControl]="departControl"
                         [placeholder]="'Select pickup date and time'"
                         [iconDisplay]="'input'"
                         [dateFormat]="dateFormat"
                         [showTime]="true"
                         [min]="today.getTime()"
-                        [hourFormat]="'24'">
+                        [hourFormat]="'24'"
+                        inputId="departure_at">
           </p-datepicker>
+
+          <label for="arrive_date">Arrive at:</label>
+          <p-datepicker class="custom-form-element w-full"
+                        [formControl]="arriveControl"
+                        [placeholder]="'Select drop-off date and time'"
+                        [iconDisplay]="'input'"
+                        [dateFormat]="dateFormat"
+                        [showTime]="true"
+                        [min]="today.getTime()"
+                        [hourFormat]="'24'"
+                        inputId="arrive_date">
+          </p-datepicker>
+
         </div>
       </div>
     </div>
@@ -107,7 +127,7 @@
 
     </div>
   </div>
-  <p-dialog header="Warning!" [modal]="true" [(visible)]="dialogVisible" [style]="{ width: '50rem' }" >
+  <p-dialog header="Warning!" [modal]="true" [(visible)]="dialogVisible" [style]="{ width: '60%' }" >
     <p>
 
     </p>

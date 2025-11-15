@@ -20,9 +20,25 @@ export class FormService {
     }
   }
 
+  public setValueFromLocastorageForDate(key: string, control: FormControl<Date | null>) {
+    const storedDateString = localStorage.getItem(key);
+    if (storedDateString) {
+      const date = new Date(storedDateString);
+      if (!Number.isNaN(date.getTime())) {
+        control.setValue(date);
+      }
+    }
+  }
+
   public setLocalStorageOnValueChanges(key: string, control: FormControl) {
     control.valueChanges.subscribe( value => localStorage.setItem(key, value ?? ''));
   }
+
+  public setLocalStorageForDateOnValueChanges(key: string, control: FormControl<Date | null>) {
+    control.valueChanges.subscribe(value =>
+      localStorage.setItem(key, JSON.stringify(value ?? '')));
+  }
+
 
   /**
    * Checks if all form controls are filled.
