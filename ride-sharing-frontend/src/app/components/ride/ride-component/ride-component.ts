@@ -3,19 +3,19 @@ import { InputText } from 'primeng/inputtext';
 import { FloatLabel } from 'primeng/floatlabel';
 import { FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
-import { MapComponent } from '../map-component/map-component';
+import { MapComponent } from '../../map-component/map-component';
 import { GeolocationService } from '@ng-web-apis/geolocation';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { take } from 'rxjs';
-import { GeocodingService } from '../../services/geocoding-service';
+import { GeocodingService } from '../../../services/geocoding-service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLocationDot, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'primeng/button';
 import { Tooltip } from 'primeng/tooltip';
-import {FormService} from '../../services/form-service';
+import {FormService} from '../../../services/form-service';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {MenuItem} from 'primeng/api';
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-ride-component',
@@ -31,7 +31,8 @@ import {RouterLink} from '@angular/router';
     ReactiveFormsModule,
     Tooltip,
     Breadcrumb,
-    RouterLink
+    RouterLink,
+    RouterOutlet
   ],
   templateUrl: './ride-component.html',
   standalone: true,

@@ -2,12 +2,12 @@ import {Component, inject, OnChanges, OnInit} from '@angular/core';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {MenuItem} from 'primeng/api';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {RideService} from '../../services/ride-service';
+import {RideService} from '../../../services/ride-service';
 import {Observable} from 'rxjs';
-import {RideModel} from '../../model/ride-model';
-import {RideModelResponse} from '../../model/ride-model-response';
+import {RideModel} from '../../../model/ride-model';
+import {RideModelResponse} from '../../../model/ride-model-response';
 import {Card} from 'primeng/card';
-import {DriverModel} from '../../model/driver-model';
+import {DriverModel} from '../../../model/driver-model';
 import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
@@ -77,8 +77,7 @@ export class RideListComponent implements OnInit, OnChanges {
 
   items: MenuItem[] = [
     {"label": "Search rides", routerLink: "/ride"},
-    {"label": "Choose your ride", routerLink: "/ride-list"},
-
+    {"label": "Choose your ride", routerLink: "/ride/ride-list"},
   ]
 
   constructor(private readonly route: ActivatedRoute) {
