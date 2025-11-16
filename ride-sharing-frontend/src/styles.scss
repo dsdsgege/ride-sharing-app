@@ -19,6 +19,7 @@
   --input-bg-active: rgba(220, 241, 211, 0.62);
 
   --text-hover-color: #{variables.$color-light-text-hover};
+  --card-hover-color: #{variables.$color-light-card-hover};
 
   --dialog-bg: #{variables.$dialog-bg};
 
@@ -26,7 +27,9 @@
 }
 
 body.dark-theme {
+  background: linear-gradient(#0a5e62, #17082a);
   --navbar-bg: #{variables.$navbar-dark-bg};
+
   --bg-color: #{variables.$color-dark-bg};
   --text-color: #{variables.$color-dark-text};
   --card-bg-color: #{variables.$color-light-card};
@@ -36,12 +39,13 @@ body.dark-theme {
   --input-bg: #{variables.$input-dark-bg};
 
   --text-hover-color: #{variables.$color-dark-text-hover};
+  --card-hover-color: #{variables.$color-dark-card-hover};
 
   color-scheme: dark;
 }
 
 body {
-  background-color: var(--bg-color);
+  background: linear-gradient(#9fd1d3, #b5ade3);
   color: var(--text-color);
   min-height: 100vh;
   margin: 0;
@@ -89,14 +93,14 @@ body {
   // breadcrumb
   --p-breadcrumb-background: transparent;
   --p-breadcrumb-item-color: var(--text-color);
-  --p-breadcrumb-item-hover-color: var(--text-hover-color);
+  --p-breadcrumb-item-hover-color: var(--card-hover-color);
 
   // dialog
   --p-dialog-background: var(--dialog-bg);
 
   // card
   --p-card-color: var(--text-color);
-  --p-card-background: var(--bg-color);
+  --p-card-background: var(--input-bg);
 
   transition: background-color #{variables.$transition-speed};
 }
@@ -107,6 +111,8 @@ body {
   border-radius: 8px;
   transition: all ease-in-out 0.2s;
   border: solid 0.05rem var(--text-color);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 footer {
@@ -146,13 +152,14 @@ main {
 }
 
 .ng-fa-icon {
-  transition: all 0.2s ease;
+  transition: all 0.1s ease-in-out;
 }
 
-.ng-fa-icon:hover {
+.p-button .ng-fa-icon:hover {
   color: var(--text-hover-color);
 }
 
 .p-card:hover {
   cursor: pointer;
+  background-color: var(--card-hover-color);
 }

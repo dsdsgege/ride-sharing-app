@@ -13,8 +13,8 @@ $navbar-light-bg: #010203;
 $navbar-dark-bg: #010203;
 
 // Background
-$color-light-bg: #edeae0;
-$color-dark-bg: #212326;
+$color-light-bg: rgba(237, 234, 224, 0.5);
+$color-dark-bg: rgba(50, 50, 70, 0.4);
 
 // Text
 $color-light-text: #071e2b;
@@ -23,15 +23,16 @@ $color-dark-text: #edeae0;
 // Cards
 $color-light-card: #009689;
 $color-dark-card: #009689;
-$color-light-card-bg: rgba(117, 131, 123, 0.62);
-$color-dark-card-bg: rgb(56, 75, 73);
+$color-light-card-bg: rgba(117, 131, 123, 0.5);
+$color-dark-card-bg: rgba(117, 131, 123, 0.3);
 
 $color-primary: #038f60;
 $transition-speed: 0.3s ease;
 
+$color-light-text-hover: #0a2c3f;
+$color-dark-text-hover: #ffffff;
 
-
-$color-light-text-hover: color.adjust($color-light-text, $lightness: 30%);
-$color-dark-text-hover: color.adjust($color-dark-text, $lightness: -20%);
+$color-light-card-hover: #7456bd;
+$color-dark-card-hover: #9fd9ee;
 
 $dialog-bg: color.adjust($color-light-bg, $lightness: -5%);

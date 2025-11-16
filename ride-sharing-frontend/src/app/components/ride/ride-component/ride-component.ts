@@ -15,7 +15,7 @@ import { Tooltip } from 'primeng/tooltip';
 import {FormService} from '../../../services/form-service';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {MenuItem} from 'primeng/api';
-import {RouterLink, RouterOutlet} from '@angular/router';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-ride-component',
@@ -31,9 +31,7 @@ import {RouterLink, RouterOutlet} from '@angular/router';
     ReactiveFormsModule,
     Tooltip,
     Breadcrumb,
-    RouterLink,
-    RouterOutlet
-  ],
+    RouterLink],
   templateUrl: './ride-component.html',
   standalone: true,
   styleUrl: './ride-component.scss'
@@ -116,6 +114,4 @@ export class RideComponent implements OnInit {
       });
     });
   }
-
-  protected readonly Math = Math;
 }

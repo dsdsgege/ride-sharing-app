@@ -15,9 +15,7 @@ h1 {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 0 5px 1px var(--text-color);
-    z-index: 5!important;
     position: relative;
-
 
     @media (min-width: 768px) {
       height: 500px;
@@ -31,7 +29,6 @@ h1 {
 }
 
 .custom-form-element {
-  z-index: 10;
   margin: 0.6rem;
 
   input {
