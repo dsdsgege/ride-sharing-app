@@ -7,7 +7,7 @@ RUN mvn -f ride-sharing-backend/pom.xml package -DskipTests
 
 
 # run stage
-FROM openjdk:17-jdk-alpine
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
 COPY --from=build /app/ride-sharing-backend/target/ride-sharing-backend-0.0.1-SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]

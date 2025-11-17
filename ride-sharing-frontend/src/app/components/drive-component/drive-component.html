@@ -129,7 +129,7 @@
   </div>
   <p-dialog header="Warning!" [modal]="true" [(visible)]="dialogVisible" [style]="{ width: '60%' }" >
     <p>
-
+      The price of your ride is going to be {{ this.passengerPrice | currency:'HUF':'Ft':'1.0-0'}}.
     </p>
   </p-dialog>
 </div>

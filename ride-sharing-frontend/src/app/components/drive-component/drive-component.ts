@@ -10,6 +10,8 @@ import {InputNumber} from 'primeng/inputnumber';
 import {FormService} from '../../services/form-service';
 import {Button} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
+import {RideService} from '../../services/ride-service';
+import {CurrencyPipe} from '@angular/common';
 
 @Component({
   selector: 'app-drive-component',
@@ -21,7 +23,9 @@ import {Dialog} from 'primeng/dialog';
     Listbox,
     InputNumber,
     Button,
-    Dialog],
+    Dialog,
+    CurrencyPipe
+  ],
   templateUrl: './drive-component.html',
   standalone: true,
   styleUrl: './drive-component.scss'
@@ -38,6 +42,8 @@ export class DriveComponent implements OnInit {
 
   protected dialogVisible: boolean = false;
 
+  protected passengerPrice: number | null = null;
+
   protected carControl: FormControl<string | null> = new FormControl(null);
   protected consumptionControl: FormControl<number | null> = new FormControl(0);
   protected departControl: FormControl<Date | null> = new FormControl(null);
@@ -47,12 +53,13 @@ export class DriveComponent implements OnInit {
   protected fromCityControl: FormControl<string | null> = new FormControl(null);
   protected toCityControl: FormControl<string | null> = new FormControl(null);
 
-
   protected readonly today: Date = new Date();
 
   protected readonly dateFormat = 'dd/mm/yy';
 
   private readonly carsService: CarsService = inject(CarsService);
+
+  private readonly rideService = inject(RideService);
 
   private readonly formService: FormService = inject(FormService);
 
@@ -108,7 +115,13 @@ export class DriveComponent implements OnInit {
     this.everyInputFilled = this.formService.areInputsFilled(this.carControl, this.consumptionControl,
       this.modelYearControl, this.seatsControl, this.fromCityControl, this.toCityControl);
     console.log(this.everyInputFilled);
-    this.dialogVisible = true;
+    this.rideService.getPrice(this.fromCityControl.value, this.toCityControl.value,
+      this.seatsControl.value, this.consumptionControl.value).subscribe(
+        price => {
+          this.passengerPrice = price;
+          this.dialogVisible = true;
+        }
+    );
   }
 
   private searchCar(search: string) {
