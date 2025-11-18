@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -25,9 +25,9 @@ public class Ride {
 
     private String arriveTo;
 
-    private LocalDate depart;
+    private LocalDateTime depart;
 
-    private LocalDate arrive;
+    private LocalDateTime arrive;
 
     private double passengerPrice;
 }

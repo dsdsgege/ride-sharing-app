@@ -4,132 +4,147 @@
 
   <div class="card w-full max-w-6xl mx-auto p-6 mb-4">
     <div class="drive-info">
-      <div class="form-section grid grid-cols-1 gap-4 md:grid-cols-2 ">
+      <form [formGroup]="driveForm"
+            (submit)="addRide()"
+            (reset)="resetForm()">
+        <div class="form-section grid grid-cols-1 gap-4 md:grid-cols-2 ">
+          <h2 class="text-2xl font-semibold md:col-span-2 border-b pb-2 mb-2 mt-3">Car Details</h2>
 
-        <h2 class="text-2xl font-semibold md:col-span-2 border-b pb-2 mb-2 mt-3">Car Details</h2>
-
-        <div class="element">
-          <div class="custom-form-element flex flex-row items-center w-full">
-            <div class="flex-1 flex flex-col">
-              <p-floatlabel>
-                <input id="car-make"
-                       class="w-full"
-                       pInputText
-                       [formControl]="carControl"
-                       (input)="this.showCarMakes = true"
-                       [class.car-control-active]="this.showCarMakes"/>
-                <label for="car-make">Enter your car make</label>
-              </p-floatlabel>
-              @if (showCarMakes) {
-                <p-listbox [options]="carMakesFiltered().length > 0 ? carMakesFiltered() : ['No match']"
-                           (onChange)="onCarMakesChange($event)"
-                           (onBlur)="this.showCarMakes = false"
-                           class="w-full"/>
-              }
+          <div class="element">
+            <div class="custom-form-element flex flex-row items-center w-full">
+              <div class="flex-1 flex flex-col">
+                <p-floatlabel>
+                  <input id="car-make"
+                         class="w-full"
+                         pInputText
+                         [formControl]="carControl"
+                         (input)="this.showCarMakes = true"
+                         [class.car-control-active]="this.showCarMakes"/>
+                  <label for="car-make">Enter your car make</label>
+                </p-floatlabel>
+                @if (showCarMakes) {
+                  <p-listbox [options]="carMakesFiltered().length > 0 ? carMakesFiltered() : ['No match']"
+                             (onChange)="onCarMakesChange($event)"
+                             (onBlur)="this.showCarMakes = false"
+                             class="w-full"/>
+                }
+              </div>
             </div>
+          </div>
+
+          <div class="element">
+            <p-floatlabel class="custom-form-element w-full">
+              <p-inputnumber inputId="model-year"
+                             class="w-full"
+                             [formControl]="modelYearControl"
+                             [useGrouping]="false"
+                             [min]="1980"
+                             [max]="2025">
+              </p-inputnumber>
+              <label for="model-year">Model Year</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="element">
+            <p-floatlabel class="custom-form-element w-full">
+              <p-inputnumber class="w-full"
+                             [formControl]="consumptionControl"
+                             mode="decimal"
+                             [showButtons]="true"
+                             suffix=" liter"
+                             inputId="mileage"
+                             [min]="0" [max]="100">
+              </p-inputnumber>
+              <label for="mileage">Mileage (liter/100km)</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="element">
+            <p-floatlabel class="custom-form-element w-full">
+              <p-inputnumber id="seats"
+                             class="w-full"
+                             [formControl]="seatsControl"
+                             [showButtons]="true"
+                             [min]="1"
+                             [max]="8"
+                             suffix=" seat(s)">
+              </p-inputnumber>
+              <label for="seats">Number of free seats</label>
+            </p-floatlabel>
+          </div>
+
+          <h2 class="text-2xl font-semibold md:col-span-2 border-b pb-2 mb-2 mt-6">Ride Details</h2>
+
+          <div class="element">
+            <p-floatlabel class="custom-form-element w-full">
+              <input id="pickup-city"
+                     pInputText
+                     class="w-full"
+                     [formControl]="fromCityControl"/>
+              <label for="pickup-city">Pickup city</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="element">
+            <p-floatlabel class="custom-form-element w-full">
+              <input id="drop-off"
+                     pInputText
+                     class="w-full"
+                     [formControl]="toCityControl"/>
+              <label for="drop-off">Drop-off city</label>
+            </p-floatlabel>
+          </div>
+
+          <div class="element md:col-span-2">
+
+            <label for="departure_at">Departure at:</label>
+            <p-datepicker class="custom-form-element w-full"
+                          [formControl]="departControl"
+                          [placeholder]="'Select pickup date and time'"
+                          [iconDisplay]="'input'"
+                          [dateFormat]="dateFormat"
+                          [showTime]="true"
+                          [min]="today.getTime()"
+                          [hourFormat]="'24'"
+                          inputId="departure_at">
+            </p-datepicker>
+
+            <label for="arrive_date">Arrive at:</label>
+            <p-datepicker class="custom-form-element w-full"
+                          [formControl]="arriveControl"
+                          [placeholder]="'Select drop-off date and time'"
+                          [iconDisplay]="'input'"
+                          [dateFormat]="dateFormat"
+                          [showTime]="true"
+                          [min]="today.getTime()"
+                          [hourFormat]="'24'"
+                          inputId="arrive_date">
+            </p-datepicker>
           </div>
         </div>
 
-        <div class="element">
-          <p-floatlabel class="custom-form-element w-full">
-            <p-inputnumber inputId="model-year"
-                           class="w-full"
-                           [formControl]="modelYearControl"
-                           [useGrouping]="false"
-                           [min]="1980"
-                           [max]="2025">
-            </p-inputnumber>
-            <label for="model-year">Model Year</label>
-          </p-floatlabel>
-        </div>
-
-        <div class="element">
-          <p-floatlabel class="custom-form-element w-full">
-            <p-inputnumber class="w-full"
-                           [formControl]="consumptionControl"
-                           mode="decimal"
-                           [showButtons]="true"
-                           suffix=" liter"
-                           inputId="mileage"
-                           [min]="0" [max]="100">
-            </p-inputnumber>
-            <label for="mileage">Mileage (liter/100km)</label>
-          </p-floatlabel>
-        </div>
-
-        <div class="element">
-          <p-floatlabel class="custom-form-element w-full">
-            <p-inputnumber id="seats"
-                           class="w-full"
-                           [formControl]="seatsControl"
-                           [showButtons]="true"
-                           [min]="1"
-                           [max]="8"
-                           suffix=" seat(s)">
-            </p-inputnumber>
-            <label for="seats">Number of free seats</label>
-          </p-floatlabel>
-        </div>
-
-        <h2 class="text-2xl font-semibold md:col-span-2 border-b pb-2 mb-2 mt-6">Ride Details</h2>
-
-        <div class="element">
-          <p-floatlabel class="custom-form-element w-full">
-            <input id="pickup-city"
-                   pInputText
-                   class="w-full"
-                   [formControl]="fromCityControl"/>
-            <label for="pickup-city">Pickup city</label>
-          </p-floatlabel>
-        </div>
-
-        <div class="element">
-          <p-floatlabel class="custom-form-element w-full">
-            <input id="drop-off"
-                   pInputText
-                   class="w-full"
-                   [formControl]="toCityControl"/>
-            <label for="drop-off">Drop-off city</label>
-          </p-floatlabel>
-        </div>
-
-        <div class="element md:col-span-2">
-
-          <label for="departure_at">Departure at:</label>
-          <p-datepicker class="custom-form-element w-full"
-                        [formControl]="departControl"
-                        [placeholder]="'Select pickup date and time'"
-                        [iconDisplay]="'input'"
-                        [dateFormat]="dateFormat"
-                        [showTime]="true"
-                        [min]="today.getTime()"
-                        [hourFormat]="'24'"
-                        inputId="departure_at">
-          </p-datepicker>
-
-          <label for="arrive_date">Arrive at:</label>
-          <p-datepicker class="custom-form-element w-full"
-                        [formControl]="arriveControl"
-                        [placeholder]="'Select drop-off date and time'"
-                        [iconDisplay]="'input'"
-                        [dateFormat]="dateFormat"
-                        [showTime]="true"
-                        [min]="today.getTime()"
-                        [hourFormat]="'24'"
-                        inputId="arrive_date">
-          </p-datepicker>
-
-        </div>
-      </div>
+        <p-dialog header="Warning!" [modal]="true" [(visible)]="dialogVisible" [style]="{ width: '60%' }" >
+          <div class="flex flex-col">
+            <p>
+              You will get  {{ this.passengerPrice?.["price"] | currency:'HUF':'Ft':'1.0-0'}} per passenger.
+            </p>
+            <div class="flex gap-3 justify-end">
+              <p-button severity="secondary"
+                        type="reset">
+                Cancel
+              </p-button>
+              <p-button type="submit">
+                Share&nbsp;ride
+              </p-button>
+            </div>
+          </div>
+        </p-dialog>
+        <p-toast />
+      </form>
     </div>
     <div class="flex mt-4 justify-end">
       <p-button (click)="showDialog()">Share ride</p-button>
-
     </div>
   </div>
-  <p-dialog header="Warning!" [modal]="true" [(visible)]="dialogVisible" [style]="{ width: '60%' }" >
-    <p>
-      The price of your ride is going to be {{ this.passengerPrice | currency:'HUF':'Ft':'1.0-0'}}.
-    </p>
-  </p-dialog>
+
 </div>

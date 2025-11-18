@@ -2,13 +2,14 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {RideModelResponse} from '../model/ride-model-response';
-import {environment} from '../../environments/environment';
+import {FormGroup} from '@angular/forms';
+import {AddResponseModel} from '../model/add-response-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RideService {
-  private readonly apiUrl = environment.apiUrl;
+  private readonly apiUrl = "/api";
   private readonly httpClient: HttpClient = inject(HttpClient);
 
   public findAll(page: number, pageSize: number, pickupFrom: string, dropOffTo: string,
@@ -21,7 +22,16 @@ export class RideService {
   public getPrice(pickupFrom: string | null, dropOffTo: string | null,
                   seats: number | null, consumption: number | null) {
 
-    return this.httpClient.get<number>(`${this.apiUrl}/rides/price?pickup_from=${pickupFrom}&drop_off_to=${dropOffTo}` +
-    `&seats=${seats}&consumption=${consumption}`);
+    return this.httpClient.get<PassengerPrice>(`${this.apiUrl}/rides/price?pickup_from=${pickupFrom}&drop_off_to=${dropOffTo}` +
+      `&seats=${seats}&consumption=${consumption}`);
+  }
+
+  public addRide(formGroup: FormGroup): Observable<AddResponseModel> {
+    return this.httpClient.post<AddResponseModel>(`${this.apiUrl}/rides/add_ride`, formGroup);
   }
 }
+
+export interface PassengerPrice {
+  price: number;
+}
+//TODO: THIS IS DRIVE-SERVICE (SOME OF IT!!!)

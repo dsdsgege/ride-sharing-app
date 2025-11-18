@@ -1,6 +1,6 @@
 import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {CarsService} from '../../services/cars-service';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
 import {DatePicker} from 'primeng/datepicker';
 import {FloatLabel} from 'primeng/floatlabel';
@@ -10,8 +10,10 @@ import {InputNumber} from 'primeng/inputnumber';
 import {FormService} from '../../services/form-service';
 import {Button} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
-import {RideService} from '../../services/ride-service';
+import {PassengerPrice, RideService} from '../../services/ride-service';
 import {CurrencyPipe} from '@angular/common';
+import { MessageService } from 'primeng/api';
+import {Toast} from 'primeng/toast';
 
 @Component({
   selector: 'app-drive-component',
@@ -24,10 +26,12 @@ import {CurrencyPipe} from '@angular/common';
     InputNumber,
     Button,
     Dialog,
-    CurrencyPipe
+    CurrencyPipe,
+    Toast
   ],
   templateUrl: './drive-component.html',
   standalone: true,
+  providers: [MessageService],
   styleUrl: './drive-component.scss'
 })
 export class DriveComponent implements OnInit {
@@ -42,7 +46,7 @@ export class DriveComponent implements OnInit {
 
   protected dialogVisible: boolean = false;
 
-  protected passengerPrice: number | null = null;
+  protected passengerPrice: PassengerPrice | null = null;
 
   protected carControl: FormControl<string | null> = new FormControl(null);
   protected consumptionControl: FormControl<number | null> = new FormControl(0);
@@ -52,6 +56,14 @@ export class DriveComponent implements OnInit {
   protected seatsControl: FormControl<number | null> = new FormControl(null);
   protected fromCityControl: FormControl<string | null> = new FormControl(null);
   protected toCityControl: FormControl<string | null> = new FormControl(null);
+  protected driveForm: FormGroup = new FormGroup({
+    arrive: this.arriveControl,
+    depart: this.departControl,
+    modelYear: this.modelYearControl,
+    seats: this.seatsControl,
+    from: this.fromCityControl,
+    to: this.toCityControl
+  });
 
   protected readonly today: Date = new Date();
 
@@ -59,9 +71,11 @@ export class DriveComponent implements OnInit {
 
   private readonly carsService: CarsService = inject(CarsService);
 
-  private readonly rideService = inject(RideService);
+  private readonly rideService: RideService = inject(RideService);
 
   private readonly formService: FormService = inject(FormService);
+
+    private readonly messageService = inject(MessageService);
 
   private everyInputFilled: boolean = false;
 
@@ -122,6 +136,24 @@ export class DriveComponent implements OnInit {
           this.dialogVisible = true;
         }
     );
+  }
+
+  protected addRide() {
+    this.rideService.addRide(this.driveForm).subscribe({
+      next: resp => {
+        if (resp["success"]) {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Your ride is shared' })
+        } else {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'We could not share your ride' })
+        }
+      },
+      error: err =>  alert(err.message)
+    });
+  }
+
+  //TODO:
+  protected resetForm() {
+
   }
 
   private searchCar(search: string) {
