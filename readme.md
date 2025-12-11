@@ -33,14 +33,9 @@ New-Item -ItemType File -Path "ride-sharing-frontend/src/environments/environmen
 
 On Linux/macOS:
 ```sh
-touch ride-sharing-frontend/src/environments/environments.development.ts
+cp ride-sharing-frontend/src/environments/environment.development.example.ts ride-sharing-frontend/src/environments/environment.development.ts
 ```
 
-4. Copy the content of the example file
-
-```sh
-cat .\ride-sharing-frontend\src\environments\environment.development.example.ts >> .\ride-sharing-frontend\src\environments\environment.development.ts 
-```
 Now you need to configure the environment.development.ts file. 
 This includes giving an api key for openweathermap's API, 
 further information in the environment file's documentation.

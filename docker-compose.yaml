@@ -4,6 +4,8 @@ services:
   backend:
     ports:
       - "8080:8080"
+    environment:
+      - OPEN_ROUTE_API_KEY=${OPEN_ROUTE_API_KEY}
     build:
       context: .
       dockerfile: ./ride-sharing-backend/Dockerfile

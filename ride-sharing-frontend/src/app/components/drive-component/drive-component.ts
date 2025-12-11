@@ -62,7 +62,7 @@ export class DriveComponent implements OnInit {
     modelYear: this.modelYearControl,
     seats: this.seatsControl,
     from: this.fromCityControl,
-    to: this.toCityControl
+    to: this.toCityControl,
   });
 
   protected readonly today: Date = new Date();
@@ -75,7 +75,7 @@ export class DriveComponent implements OnInit {
 
   private readonly formService: FormService = inject(FormService);
 
-    private readonly messageService = inject(MessageService);
+  private readonly messageService = inject(MessageService);
 
   private everyInputFilled: boolean = false;
 
@@ -127,8 +127,13 @@ export class DriveComponent implements OnInit {
 
   protected showDialog() {
     this.everyInputFilled = this.formService.areInputsFilled(this.carControl, this.consumptionControl,
-      this.modelYearControl, this.seatsControl, this.fromCityControl, this.toCityControl);
+      this.modelYearControl, this.seatsControl, this.fromCityControl, this.toCityControl, this.arriveControl,
+      this.arriveControl, this.departControl);
     console.log(this.everyInputFilled);
+    if (!this.everyInputFilled) {
+      this.messageService.add({ severity: 'contrast', summary: 'Warning', detail: 'Please fill all the fields' });
+      return;
+    }
     this.rideService.getPrice(this.fromCityControl.value, this.toCityControl.value,
       this.seatsControl.value, this.consumptionControl.value).subscribe(
         price => {

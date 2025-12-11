@@ -7,7 +7,7 @@ import java.util.Map;
 
 @RequestMapping("/api/rides")
 @RestController
-public class RideController {
+public class DriveController {
 
     @GetMapping("/price")
     public Map<String, Integer> getPrice(@RequestParam("pickup_from") String from, @RequestParam("drop_off_to") String to,
@@ -17,7 +17,7 @@ public class RideController {
 
     @PostMapping("add_ride")
     public Map<String, Boolean> addRide(@RequestBody RideDTO ride) {
-
+        return Map.of("success", true);
     }
 }
 //TODO: THIS IS DRIVECONTROLLER!!!!!
