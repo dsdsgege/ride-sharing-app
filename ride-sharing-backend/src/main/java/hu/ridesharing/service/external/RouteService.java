@@ -43,6 +43,7 @@ public class RouteService {
      * OpenRouteService Respone object.
      */
     @Getter
+    @Setter
     public static class ORSRespone {
         @JsonProperty("distances")
         double[][] distances;

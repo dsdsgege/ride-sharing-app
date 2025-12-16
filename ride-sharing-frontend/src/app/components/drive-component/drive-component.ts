@@ -103,6 +103,7 @@ export class DriveComponent implements OnInit {
     this.formService.setValueFromLocastorageForDate('depart-date', this.departControl);
     this.formService.setValueFromLocastorageForDate('arrive-date', this.arriveControl);
 
+    this.formService.setLocalStorageOnValueChanges('car-make', this.carControl);
     this.formService.setLocalStorageOnValueChanges('consumption', this.consumptionControl);
     this.formService.setLocalStorageOnValueChanges('model-year', this.modelYearControl);
     this.formService.setLocalStorageOnValueChanges('seats', this.seatsControl);
