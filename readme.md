@@ -12,7 +12,7 @@ to see your passenger's or driver's live location on it.
  - Authentication: Keycloak
 
 ### Preparations
-Run the following commands in one of your folder:
+Run the following commands in one of your folders:
 
 1. Clone the repository
 ```sh

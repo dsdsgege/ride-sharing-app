@@ -18,20 +18,4 @@ export class RideService {
     return this.httpClient.get<RideModelResponse>(`${this.apiUrl}/rides?page=${page}&page_size=${pageSize}` +
       `&pickup_from=${pickupFrom}&drop_off_to=${dropOffTo}&date_from=${dateFrom}&date_to=${dateTo}`);
   }
-
-  public getPrice(pickupFrom: string | null, dropOffTo: string | null,
-                  seats: number | null, consumption: number | null) {
-
-    return this.httpClient.get<PassengerPrice>(`${this.apiUrl}/rides/price?pickup_from=${pickupFrom}&drop_off_to=${dropOffTo}` +
-      `&seats=${seats}&consumption=${consumption}`);
-  }
-
-  public addRide(formGroup: FormGroup): Observable<AddResponseModel> {
-    return this.httpClient.post<AddResponseModel>(`${this.apiUrl}/rides/add_ride`, formGroup);
-  }
 }
-
-export interface PassengerPrice {
-  price: number;
-}
-//TODO: THIS IS DRIVE-SERVICE (SOME OF IT!!!)

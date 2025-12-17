@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-public class RideDTO {
+public class DriveDTO {
     private Driver driver;
     private String from;
     private String to;
