@@ -10,10 +10,11 @@ import {InputNumber} from 'primeng/inputnumber';
 import {FormService} from '../../services/form-service';
 import {Button} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
-import {PassengerPrice, RideService} from '../../services/ride-service';
+import {RideService} from '../../services/ride-service';
 import {CurrencyPipe} from '@angular/common';
 import { MessageService } from 'primeng/api';
 import {Toast} from 'primeng/toast';
+import {PassengerPrice, DriveService} from '../../services/drive-service';
 
 @Component({
   selector: 'app-drive-component',
@@ -56,6 +57,8 @@ export class DriveComponent implements OnInit {
   protected seatsControl: FormControl<number | null> = new FormControl(null);
   protected fromCityControl: FormControl<string | null> = new FormControl(null);
   protected toCityControl: FormControl<string | null> = new FormControl(null);
+  protected carPriceControl: FormControl<number | null> = new FormControl(null);
+
   protected driveForm: FormGroup = new FormGroup({
     arrive: this.arriveControl,
     depart: this.departControl,
@@ -63,6 +66,9 @@ export class DriveComponent implements OnInit {
     seats: this.seatsControl,
     from: this.fromCityControl,
     to: this.toCityControl,
+    carMake: this.carControl,
+    carPrice: this.carPriceControl,
+    consumption: this.consumptionControl
   });
 
   protected readonly today: Date = new Date();
@@ -70,6 +76,8 @@ export class DriveComponent implements OnInit {
   protected readonly dateFormat = 'dd/mm/yy';
 
   private readonly carsService: CarsService = inject(CarsService);
+
+  private readonly driveService: DriveService = inject(DriveService);
 
   private readonly rideService: RideService = inject(RideService);
 
@@ -89,9 +97,7 @@ export class DriveComponent implements OnInit {
         this.carMakes = response.map(make => make.Make_Name)
           .filter(name => name.match(/^[A-Za-z]\S*$/));
       },
-      error: () => {
-        alert("Unexpected error happened while fetching cars");
-      }
+      error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Could not fetch cars' })
     });
 
     this.formService.setValueFromLocalstorage('car-make', this.carControl);
@@ -102,6 +108,7 @@ export class DriveComponent implements OnInit {
     this.formService.setValueFromLocalstorage('dropoff-city-drive', this.toCityControl);
     this.formService.setValueFromLocastorageForDate('depart-date', this.departControl);
     this.formService.setValueFromLocastorageForDate('arrive-date', this.arriveControl);
+    this.formService.setValueFromLocalstorage('car-price', this.carPriceControl);
 
     this.formService.setLocalStorageOnValueChanges('car-make', this.carControl);
     this.formService.setLocalStorageOnValueChanges('consumption', this.consumptionControl);
@@ -111,6 +118,7 @@ export class DriveComponent implements OnInit {
     this.formService.setLocalStorageOnValueChanges('dropoff-city-drive', this.toCityControl);
     this.formService.setLocalStorageForDateOnValueChanges('depart-date', this.departControl);
     this.formService.setLocalStorageForDateOnValueChanges('arrive-date', this.arriveControl);
+    this.formService.setLocalStorageOnValueChanges('car-price', this.carPriceControl);
 
     this.carControl.valueChanges.pipe(
       debounceTime(300),
@@ -129,14 +137,16 @@ export class DriveComponent implements OnInit {
   protected showDialog() {
     this.everyInputFilled = this.formService.areInputsFilled(this.carControl, this.consumptionControl,
       this.modelYearControl, this.seatsControl, this.fromCityControl, this.toCityControl, this.arriveControl,
-      this.arriveControl, this.departControl);
-    console.log(this.everyInputFilled);
+      this.departControl, this.carPriceControl
+    );
+
     if (!this.everyInputFilled) {
       this.messageService.add({ severity: 'contrast', summary: 'Warning', detail: 'Please fill all the fields' });
       return;
     }
-    this.rideService.getPrice(this.fromCityControl.value, this.toCityControl.value,
-      this.seatsControl.value, this.consumptionControl.value).subscribe(
+
+    this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
+      this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe(
         price => {
           this.passengerPrice = price;
           this.dialogVisible = true;
@@ -144,16 +154,14 @@ export class DriveComponent implements OnInit {
     );
   }
 
-  protected addRide() {
-    this.rideService.addRide(this.driveForm).subscribe({
+  protected addDrive() {
+    this.driveService.addDrive(this.driveForm.value).subscribe({
       next: resp => {
-        if (resp["success"]) {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Your ride is shared' })
-        } else {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'We could not share your ride' })
-        }
+        const severity = resp.success ? 'success' : 'error';
+        const detail = resp.success ? 'Your ride is shared' : 'Could not share ride';
+        this.messageService.add({ severity, summary: resp.success ? 'Success' : 'Error', detail });
       },
-      error: err =>  alert(err.message)
+      error: err => alert(err.message)
     });
   }
 

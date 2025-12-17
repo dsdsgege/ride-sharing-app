@@ -8,10 +8,14 @@ import lombok.Data;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"latitudeFrom", "longitudeFrom", "latitudeTo", "longitudeTo"})
 })
+@IdClass(RouteId.class)
 public class Route {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String cityA;
+
+    @Id
+    private String cityB;
 
     private double latitudeFrom;
 

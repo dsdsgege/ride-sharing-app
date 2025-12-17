@@ -16,7 +16,7 @@ export class CarsService {
     return this.httpClient.get<CarMakeResponseModel>(this.apiUrl).pipe(
       map(response => {
         if (response?.Results) {
-          return response.Results; // ...akkor adjuk vissza az autók tömbjét.
+          return response.Results;
         }
 
         console.warn("API response was missing 'Results' property. Returning empty array.");

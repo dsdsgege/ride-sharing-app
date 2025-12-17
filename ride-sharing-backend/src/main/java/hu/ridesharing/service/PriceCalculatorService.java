@@ -1,8 +1,7 @@
 package hu.ridesharing.service;
 
-import hu.ridesharing.entity.Car;
-import hu.ridesharing.entity.CarId;
 import hu.ridesharing.entity.Route;
+import hu.ridesharing.entity.RouteId;
 import hu.ridesharing.repository.CarRepository;
 import hu.ridesharing.repository.RouteRepository;
 import hu.ridesharing.service.external.RouteService;
@@ -30,52 +29,44 @@ public class PriceCalculatorService {
         this.routeRepository = routeRepository;
     }
 
-    public int getPrice(double longitudeFrom, double latitudeFrom, double longitudeTo, double latitudeTo, int seats,
-                        String make, String model, int makeYear, int consumption) {
+    public int getPrice(String cityA, String cityB, double longitudeFrom, double latitudeFrom, double longitudeTo,
+                        double latitudeTo, int seats, int consumption, int price, int make_year) {
         // the average km driven per year is 10800km in EU
+        int carAge = Year.now().getValue() - make_year;
 
-        CarId id = new CarId();
-        id.setMake(make);
-        id.setModel(model);
-        id.setYear(makeYear);
-        Car car = carRepository.findById(id).orElseThrow();
-
-        double valueNow = car.getPrice() * (1 - getDeprecation(car.getYear()));
-        double valueNextYear = car.getPrice() * (1 - getDeprecation(car.getYear() - 1));
+        double valueNow = price * (1 - getDeprecation(carAge));
+        double valueNextYear = price * (1 - getDeprecation(carAge + 1));
 
         double loss = valueNow - valueNextYear;
 
         double costPerKm = loss / AVG_KM_PER_YEAR;
 
-        double distanceInKm = getORSResponse(longitudeFrom, latitudeFrom, longitudeTo, latitudeTo).getDistances()[0][1]
-                / 1000;
+        RouteId routeId = RouteId.normalizeId(cityA, cityB);
 
-        return (int) Math.round((costPerKm * distanceInKm + (distanceInKm / 100) * consumption * GAS_PRICE_IN_HUF) / seats);
-    }
-    private RouteService.ORSRespone getORSResponse(double longitudeFrom, double latitudeFrom, double longitudeTo,
-                                                   double latitudeTo) {
-
-        // if we have this coordinate saved in the db, just return the saved data
-        Optional<Route> route = routeRepository.findByCoordinate(longitudeFrom, latitudeFrom, longitudeTo, latitudeTo);
+        // Trying to cache the
+        double distanceInKm;
+        Optional<Route> route = routeRepository.findById(routeId);
         if (route.isPresent()) {
-            RouteService.ORSRespone respone = new RouteService.ORSRespone();
-            respone.setDistances(new double[][]{{0, route.get().getDistance()}});
-            respone.setDurations(new double[][]{{0, route.get().getDuration()}});
-            return respone;
+            distanceInKm = route.get().getDistance();
+        } else {
+            RouteService.ORSRespone response = routeService.
+                    getDistance(longitudeFrom, latitudeFrom, longitudeTo, latitudeTo);
+
+            distanceInKm = response.getDistances()[0][1] / 1000;
+            double duration = response.getDurations()[0][1];
+
+            RouteId newRouteId = RouteId.normalizeId(cityA, cityB);
+            Route newRoute = new Route();
+            newRoute.setCityA(newRouteId.getCityA());
+            newRoute.setCityB(newRouteId.getCityB());
+            newRoute.setDistance(distanceInKm);
+            newRoute.setDuration(duration);
+            routeRepository.save(newRoute);
         }
 
-        // otherwise we make the api call and save the data
-        Route routeToSave = new Route();
-        routeToSave.setLatitudeFrom(latitudeFrom);
-        routeToSave.setLongitudeFrom(longitudeFrom);
-        routeToSave.setLatitudeTo(latitudeTo);
-        routeToSave.setLongitudeTo(longitudeTo);
-
-        RouteService.ORSRespone response = routeService.getDistance(longitudeFrom, latitudeFrom, longitudeTo, latitudeTo);
-        routeToSave.setDistance(response.getDistances()[0][1]);
-        routeToSave.setDuration(response.getDurations()[0][1]);
-        routeRepository.save(routeToSave);
-        return response;
+        return (int) Math.round(
+                (costPerKm * distanceInKm + (distanceInKm / 100) * consumption * GAS_PRICE_IN_HUF) / seats
+        );
     }
 
     /**
@@ -86,12 +77,11 @@ public class PriceCalculatorService {
      * After 3 Years	42%	$27,744
      * After 4 Years	51%	$23,582
      * After 5 Years	60%	$19,200
-     * @param year
+     * @param age age of the car
      * @return
      */
-    private double getDeprecation(int year) {
-        int thisYear = Year.now().getValue();
-        return switch (thisYear-year) {
+    private double getDeprecation(int age) {
+        return switch (age) {
             case 0 -> 0.1;
             case 1 -> 0.2;
             case 2 -> 0.32;

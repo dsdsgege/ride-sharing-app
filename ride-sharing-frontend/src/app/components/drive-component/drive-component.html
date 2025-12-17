@@ -5,7 +5,7 @@
   <div class="card w-full max-w-6xl mx-auto p-6 mb-4">
     <div class="drive-info">
       <form [formGroup]="driveForm"
-            (submit)="addRide()"
+            (submit)="addDrive()"
             (reset)="resetForm()">
         <div class="form-section grid grid-cols-1 gap-4 md:grid-cols-2 ">
           <h2 class="text-2xl font-semibold md:col-span-2 border-b pb-2 mb-2 mt-3">Car Details</h2>
@@ -30,6 +30,20 @@
                 }
               </div>
             </div>
+          </div>
+
+          <div class="element">
+            <p-floatlabel class="custom-form-element w-full">
+              <p-inputnumber id="car-price"
+                             class="w-full"
+                             [formControl]="carPriceControl"
+                             mode="currency"
+                             currency="HUF"
+                             locale="hu-HU"
+                             [min]="0">
+              </p-inputnumber>
+              <label for="car-price">Price of your car</label>
+            </p-floatlabel>
           </div>
 
           <div class="element">
