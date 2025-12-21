@@ -5,6 +5,7 @@ import hu.ridesharing.entity.RouteId;
 import hu.ridesharing.repository.CarRepository;
 import hu.ridesharing.repository.RouteRepository;
 import hu.ridesharing.service.external.RouteService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,25 +13,24 @@ import java.time.Year;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class PriceCalculatorService {
     private static final int AVG_KM_PER_YEAR = 10_800;
     private static final int GAS_PRICE_IN_HUF = 590;
 
     private final RouteService routeService;
-    private final CarRepository carRepository;
     private final RouteRepository routeRepository;
 
     @Autowired
-    public PriceCalculatorService(RouteService routeService, CarRepository carRepository,
-                                  RouteRepository routeRepository) {
+    public PriceCalculatorService(RouteService routeService, RouteRepository routeRepository) {
 
         this.routeService = routeService;
-        this.carRepository = carRepository;
         this.routeRepository = routeRepository;
     }
 
-    public int getPrice(String cityA, String cityB, double longitudeFrom, double latitudeFrom, double longitudeTo,
-                        double latitudeTo, int seats, int consumption, int price, int make_year) {
+    public int getPrice(String cityA, String cityB, double latitudeFrom, double longitudeFrom, double latitudeTo,
+                        double longitudeTo, int seats, int consumption, int price, int make_year) {
+
         // the average km driven per year is 10800km in EU
         int carAge = Year.now().getValue() - make_year;
 
@@ -48,9 +48,10 @@ public class PriceCalculatorService {
         Optional<Route> route = routeRepository.findById(routeId);
         if (route.isPresent()) {
             distanceInKm = route.get().getDistance();
+            log.debug("Found in cache: {}", route.get());
         } else {
-            RouteService.ORSRespone response = routeService.
-                    getDistance(longitudeFrom, latitudeFrom, longitudeTo, latitudeTo);
+            RouteService.ORSRespone response = routeService
+                    .getDistance(longitudeFrom, latitudeFrom, longitudeTo, latitudeTo);
 
             distanceInKm = response.getDistances()[0][1] / 1000;
             double duration = response.getDurations()[0][1];
@@ -72,7 +73,7 @@ public class PriceCalculatorService {
     /**
      * Initial Value	0%	$48,000
      * After 1 Month	10%	$43,200
-     * After 1 Year	20%	$38,400
+     * After 1 Year	    20%	$38,400
      * After 2 Years	32%	$32,640
      * After 3 Years	42%	$27,744
      * After 4 Years	51%	$23,582

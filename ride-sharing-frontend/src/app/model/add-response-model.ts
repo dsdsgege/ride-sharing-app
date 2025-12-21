@@ -1,6 +1,7 @@
 /**
  * This model is a response to from an add (post) method.
  */
-export interface AddResponseModel {
-  success: boolean;
+export class AddResponseModel {
+  constructor(public success: boolean) {
+  }
 }

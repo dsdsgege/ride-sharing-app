@@ -22,5 +22,5 @@ public class Driver {
     private double rating;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
-    private Set<Ride> rides;
+    private Set<Drive> drives;
 }

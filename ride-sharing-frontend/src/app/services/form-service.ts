@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +39,27 @@ export class FormService {
       localStorage.setItem(key, JSON.stringify(value ?? '')));
   }
 
+  public persistForm(form: FormGroup, key: string): void {
+    form.valueChanges.subscribe(value => {
+      localStorage.setItem(key, JSON.stringify(value));
+    });
+  }
+
+  public loadForm(form: FormGroup, key: string): void {
+    const storedValue = localStorage.getItem(key);
+    if (storedValue) {
+      try {
+        const parsedValue = JSON.parse(storedValue);
+
+        if (parsedValue.depart) parsedValue.depart = new Date(parsedValue.depart);
+        if (parsedValue.arrive) parsedValue.arrive = new Date(parsedValue.arrive);
+
+        form.patchValue(parsedValue, { emitEvent: false });
+      } catch (e) {
+        console.error("Error loading local storage", e);
+      }
+    }
+  }
 
   /**
    * Checks if all form controls are filled.

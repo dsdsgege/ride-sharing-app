@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {RideModelResponse} from '../model/ride-model-response';
 import {FormGroup} from '@angular/forms';
-import {AddResponseModel} from '../model/add-response-model';
 
 @Injectable({
   providedIn: 'root'

@@ -3,12 +3,14 @@ package hu.ridesharing.controller;
 import hu.ridesharing.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("/api/car")
+@RestController
+@RequestMapping("/api/car")
 public class CarController {
 
     private CarService carService;

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { AddResponseModel } from '../model/add-response-model';
 
 export interface PassengerPrice {
@@ -29,7 +29,13 @@ export class DriveService {
     return this.httpClient.get<PassengerPrice>(`${this.apiUrl}/price`, {params});
   }
 
-  public addDrive(driveData: any): Observable<AddResponseModel> {
+  public addDrive(driveData: any, passengerPrice: PassengerPrice | null): Observable<AddResponseModel> {
+    if (!passengerPrice?.price) {
+      let response = new AddResponseModel(false);
+      return of(response);
+    }
+
+    driveData.passengerPrice = passengerPrice.price;
     return this.httpClient.post<AddResponseModel>(`${this.apiUrl}/add_drive`, driveData);
   }
 }

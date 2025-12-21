@@ -87,6 +87,8 @@ export class DriveComponent implements OnInit {
 
   private everyInputFilled: boolean = false;
 
+  private static readonly STORAGE_KEY = 'drive-form';
+
   constructor() {
     this.carMakes$ = this.carsService.fetchCarMakes();
   }
@@ -100,25 +102,10 @@ export class DriveComponent implements OnInit {
       error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Could not fetch cars' })
     });
 
-    this.formService.setValueFromLocalstorage('car-make', this.carControl);
-    this.formService.setValueFromLocalstorage('consumption', this.consumptionControl);
-    this.formService.setValueFromLocalstorage('model-year', this.modelYearControl);
-    this.formService.setValueFromLocalstorage('seats', this.seatsControl);
-    this.formService.setValueFromLocalstorage('pickup-city-drive', this.fromCityControl);
-    this.formService.setValueFromLocalstorage('dropoff-city-drive', this.toCityControl);
-    this.formService.setValueFromLocastorageForDate('depart-date', this.departControl);
-    this.formService.setValueFromLocastorageForDate('arrive-date', this.arriveControl);
-    this.formService.setValueFromLocalstorage('car-price', this.carPriceControl);
+    this.formService.loadForm(this.driveForm, DriveComponent.STORAGE_KEY);
 
-    this.formService.setLocalStorageOnValueChanges('car-make', this.carControl);
-    this.formService.setLocalStorageOnValueChanges('consumption', this.consumptionControl);
-    this.formService.setLocalStorageOnValueChanges('model-year', this.modelYearControl);
-    this.formService.setLocalStorageOnValueChanges('seats', this.seatsControl);
-    this.formService.setLocalStorageOnValueChanges('pickup-city-drive', this.fromCityControl);
-    this.formService.setLocalStorageOnValueChanges('dropoff-city-drive', this.toCityControl);
-    this.formService.setLocalStorageForDateOnValueChanges('depart-date', this.departControl);
-    this.formService.setLocalStorageForDateOnValueChanges('arrive-date', this.arriveControl);
-    this.formService.setLocalStorageOnValueChanges('car-price', this.carPriceControl);
+    // subscribe to changes to save
+    this.formService.persistForm(this.driveForm, DriveComponent.STORAGE_KEY);
 
     this.carControl.valueChanges.pipe(
       debounceTime(300),
@@ -155,7 +142,8 @@ export class DriveComponent implements OnInit {
   }
 
   protected addDrive() {
-    this.driveService.addDrive(this.driveForm.value).subscribe({
+    console.log(this.driveForm.value);
+    this.driveService.addDrive(this.driveForm.value, this.passengerPrice).subscribe({
       next: resp => {
         const severity = resp.success ? 'success' : 'error';
         const detail = resp.success ? 'Your ride is shared' : 'Could not share ride';
