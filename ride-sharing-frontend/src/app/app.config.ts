@@ -39,7 +39,7 @@ export const appConfig: ApplicationConfig = {
       provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
       useValue: [
         {
-          urlPattern: /^http:\/\/localhost:*/,
+          urlPattern: /^(http:\/\/localhost|\/api).*/,
           httpMethods: ['GET', 'POST', 'PUT', 'DELETE']
         },
       ],

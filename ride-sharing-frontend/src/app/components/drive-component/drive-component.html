@@ -26,6 +26,7 @@
                   <p-listbox [options]="carMakesFiltered().length > 0 ? carMakesFiltered() : ['No match']"
                              (onChange)="onCarMakesChange($event)"
                              (onBlur)="this.showCarMakes = false"
+                             (keydown.esc)="this.showCarMakes = false"
                              class="w-full"/>
                 }
               </div>

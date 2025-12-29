@@ -1,6 +1,6 @@
 package hu.ridesharing.service.external;
 
-import hu.ridesharing.dto.response.GeocodingReverseResponse;
+import hu.ridesharing.dto.response.incoming.GeocodingReverseResponse;
 import hu.ridesharing.entity.GeocodingResponse;
 import hu.ridesharing.repository.GeocodingResponseRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class GeocodingApiService {
     private final RestClient restClient;
     private final GeocodingResponseRepository geocodingResponseRepository;
 
-    private String API_KEY;
+    private final String API_KEY;
 
     public GeocodingApiService(@Value("${geocoding.api.key}") String apiKey, GeocodingResponseRepository geocodingResponseRepository) {
         this.API_KEY = apiKey;

@@ -1,6 +1,6 @@
 package hu.ridesharing.controller;
 
-import hu.ridesharing.dto.response.GeocodingReverseResponse;
+import hu.ridesharing.dto.response.incoming.GeocodingReverseResponse;
 import hu.ridesharing.service.external.GeocodingApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

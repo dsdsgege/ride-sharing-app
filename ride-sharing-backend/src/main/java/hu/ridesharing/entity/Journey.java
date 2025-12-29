@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Data
-public class Drive {
+public class Journey {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +21,17 @@ public class Drive {
     @ManyToOne
     @JoinColumn(name = "driver_name")
     private Driver driver;
+
+    @ManyToMany
+    @JoinTable(
+            name = "passenger_journey",
+            joinColumns = @JoinColumn(name = "journey_id"),
+            inverseJoinColumns = @JoinColumn(name = "passenger_id")
+    )
+    private Set<Passenger> passengers;
+
+    @OneToMany(mappedBy = "journey")
+    private Set<Rating> ratings;
 
     private LocalDateTime depart;
 

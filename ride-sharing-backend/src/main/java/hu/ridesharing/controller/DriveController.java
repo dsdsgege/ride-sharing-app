@@ -1,9 +1,8 @@
 package hu.ridesharing.controller;
 
-import hu.ridesharing.dto.DriveDTO;
-import hu.ridesharing.entity.Drive;
+import hu.ridesharing.entity.Journey;
 import hu.ridesharing.entity.GeocodingResponse;
-import hu.ridesharing.service.DriveService;
+import hu.ridesharing.service.JourneyService;
 import hu.ridesharing.service.PriceCalculatorService;
 import hu.ridesharing.service.external.GeocodingApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +12,18 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/drive")
-
 public class DriveController {
 
     private final PriceCalculatorService priceCalculatorService;
     private final GeocodingApiService geocodingApiService;
-    private final DriveService driveService;
+    private final JourneyService journeyService;
 
     @Autowired
     public DriveController(PriceCalculatorService priceCalculatorService, GeocodingApiService geocodingApiService,
-                           DriveService driveService) {
+                           JourneyService journeyService) {
         this.priceCalculatorService = priceCalculatorService;
         this.geocodingApiService = geocodingApiService;
-        this.driveService = driveService;
+        this.journeyService = journeyService;
     }
 
     @GetMapping("/price")
@@ -44,7 +42,7 @@ public class DriveController {
     }
 
     @PostMapping("add_drive")
-    public Map<String, Boolean> addDrive(@RequestBody Drive drive) {
-        return driveService.addDrive(drive) == null ? Map.of("success", false) : Map.of("success", true);
+    public Map<String, Boolean> addDrive(@RequestBody Journey drive) {
+        return journeyService.addDrive(drive) == null ? Map.of("success", false) : Map.of("success", true);
     }
 }

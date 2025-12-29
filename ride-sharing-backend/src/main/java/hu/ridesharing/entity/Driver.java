@@ -1,9 +1,6 @@
 package hu.ridesharing.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,10 +14,14 @@ import java.util.Set;
 public class Driver {
 
     @Id
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private double rating;
+    private String fullName;
+
+    @OneToMany(mappedBy = "driver")
+    private Set<Rating> ratings;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
-    private Set<Drive> drives;
+    private Set<Journey> drives;
 }

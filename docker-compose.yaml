@@ -73,6 +73,7 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HEALTH_ENABLED: "true"
+      KC_HOSTNAME_URL: http://localhost:8090
     ports:
       - "8090:8080"
     volumes:

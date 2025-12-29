@@ -1,8 +1,5 @@
 package hu.ridesharing.entity;
 
-
-
-import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,8 +18,8 @@ public class RouteId implements Serializable {
     private String cityB;
 
     /**
-     * We don't care if the city is the destination or the start point. We only care about the distance or duration between
-     * the two cities.
+     * We don't care if the city is the destination or the start point. We only care about the distance or duration
+     * between the two cities.
      *
      * @param cityA
      * @param cityB

@@ -15,6 +15,7 @@ import {CurrencyPipe} from '@angular/common';
 import { MessageService } from 'primeng/api';
 import {Toast} from 'primeng/toast';
 import {PassengerPrice, DriveService} from '../../services/drive-service';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-drive-component',
@@ -79,11 +80,11 @@ export class DriveComponent implements OnInit {
 
   private readonly driveService: DriveService = inject(DriveService);
 
-  private readonly rideService: RideService = inject(RideService);
-
   private readonly formService: FormService = inject(FormService);
 
   private readonly messageService = inject(MessageService);
+
+  private readonly keycloak: Keycloak = inject(Keycloak);
 
   private everyInputFilled: boolean = false;
 
@@ -122,6 +123,9 @@ export class DriveComponent implements OnInit {
   }
 
   protected showDialog() {
+    console.log('Keycloak state:', this.keycloak);
+    console.log('Is authenticated:', this.keycloak.authenticated);
+
     this.everyInputFilled = this.formService.areInputsFilled(this.carControl, this.consumptionControl,
       this.modelYearControl, this.seatsControl, this.fromCityControl, this.toCityControl, this.arriveControl,
       this.departControl, this.carPriceControl
@@ -132,17 +136,33 @@ export class DriveComponent implements OnInit {
       return;
     }
 
+    if (!this.keycloak.authenticated) {
+      setTimeout(() => {
+        console.log("Not authenticated, redirecting to login")
+      }, 3000)
+      this.keycloak.login({
+        redirectUri: window.location.origin + window.location.pathname
+      }).then(() => {
+        this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
+          this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe(
+          price => {
+            this.passengerPrice = price;
+            this.dialogVisible = true;
+          }
+        );
+      });
+    }
+
     this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
       this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe(
-        price => {
-          this.passengerPrice = price;
-          this.dialogVisible = true;
-        }
+      price => {
+        this.passengerPrice = price;
+        this.dialogVisible = true;
+      }
     );
   }
 
   protected addDrive() {
-    console.log(this.driveForm.value);
     this.driveService.addDrive(this.driveForm.value, this.passengerPrice).subscribe({
       next: resp => {
         const severity = resp.success ? 'success' : 'error';

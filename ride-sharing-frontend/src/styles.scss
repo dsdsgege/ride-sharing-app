@@ -102,6 +102,9 @@ body {
   --p-card-color: var(--text-color);
   --p-card-background: var(--input-bg);
 
+  // progressbar
+  --p-progressbar-border-radius: 0;
+
   transition: background-color #{variables.$transition-speed};
 }
 

@@ -2,7 +2,6 @@ package hu.ridesharing.service;
 
 import hu.ridesharing.entity.Route;
 import hu.ridesharing.entity.RouteId;
-import hu.ridesharing.repository.CarRepository;
 import hu.ridesharing.repository.RouteRepository;
 import hu.ridesharing.service.external.RouteService;
 import lombok.extern.slf4j.Slf4j;

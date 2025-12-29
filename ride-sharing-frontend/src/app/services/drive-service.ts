@@ -35,6 +35,9 @@ export class DriveService {
       return of(response);
     }
 
+    driveData.dateFrom = driveData.dateFrom.toISOString();
+    driveData.dateTo = driveData.dateTo.toISOString();
+
     driveData.passengerPrice = passengerPrice.price;
     return this.httpClient.post<AddResponseModel>(`${this.apiUrl}/add_drive`, driveData);
   }

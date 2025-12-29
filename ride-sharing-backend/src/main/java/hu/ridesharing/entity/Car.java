@@ -12,6 +12,7 @@ import lombok.Data;
 @IdClass(CarId.class)
 @Entity
 public class Car {
+
     @Id
     private String make;
 

@@ -1,4 +1,4 @@
-package hu.ridesharing.dto.response;
+package hu.ridesharing.dto.response.incoming;
 
 import lombok.Getter;
 import lombok.Setter;
