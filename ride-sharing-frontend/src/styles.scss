@@ -108,6 +108,14 @@ body {
   transition: background-color #{variables.$transition-speed};
 }
 
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
 .card {
   padding: 2.5rem;
   background-color: var(--custom-card-bg-color);

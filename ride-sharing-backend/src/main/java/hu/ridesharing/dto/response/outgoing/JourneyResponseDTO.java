@@ -1,6 +1,6 @@
 package hu.ridesharing.dto.response.outgoing;
 
-import hu.ridesharing.entity.Driver;
+import hu.ridesharing.dto.DriverDTO;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,7 +10,7 @@ public class JourneyResponseDTO {
     private String fromCity;
     private String toCity;
     private double price;
-    private Driver driver;
+    private DriverDTO driver;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
     private String carMake;

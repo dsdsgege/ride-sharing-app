@@ -1,5 +1,6 @@
 package hu.ridesharing.service;
 
+import hu.ridesharing.dto.DriverDTO;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.entity.Journey;
 import hu.ridesharing.repository.JourneyRepository;
@@ -46,7 +47,10 @@ public class JourneyService {
         JourneyResponseDTO response = new JourneyResponseDTO();
         response.setSeats(journey.getSeats());
         response.setPrice(journey.getPassengerPrice());
-        response.setDriver(journey.getDriver());
+        DriverDTO driver = new DriverDTO();
+        driver.setFullName(journey.getDriver().getFullName());
+        driver.setRating(journey.getDriver().getRating());
+        response.setDriver(driver);
         response.setFromCity(journey.getFromCity());
         response.setToCity(journey.getToCity());
         response.setArrivalTime(journey.getArrive());

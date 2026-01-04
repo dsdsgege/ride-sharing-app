@@ -28,7 +28,7 @@ cd ride-sharing-app
 
 On Windows:
 ```powershell
-New-Item -ItemType File -Path "ride-sharing-frontend/src/environments/environments.development.ts"
+Copy-Item -ItemType File -Path "ride-sharing-frontend/src/environments/environments.development.ts"
 ```
 
 On Linux/macOS:
@@ -40,9 +40,24 @@ Now you need to configure the environment.development.ts file.
 This includes giving an api key for openweathermap's API, 
 further information in the environment file's documentation.
 
+4. Create a .env file for the backend
+
+On Windows:
+```powershell
+Copy-Item -Path ".env.example" -Destination ".env"
+```
+
+On Linux/macOS:
+```sh
+cp .env.example .env
+```
+
+You have to set the API keys here...
+
 ## Starting the application:
 Run the following command:
 ```sh
+mvn clean install
 docker-compose up
 ```
 If any changes are made, run

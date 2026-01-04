@@ -14,9 +14,6 @@ import java.util.Set;
 public class Driver {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String fullName;
 
     @OneToMany(mappedBy = "driver")
@@ -24,4 +21,11 @@ public class Driver {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
     private Set<Journey> drives;
+
+    public double getRating() {
+        return ratings.stream()
+                .mapToDouble(Rating::getValue)
+                .average()
+                .orElse(0);
+    }
 }

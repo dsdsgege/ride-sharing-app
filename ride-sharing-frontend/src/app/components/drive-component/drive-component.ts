@@ -10,12 +10,13 @@ import {InputNumber} from 'primeng/inputnumber';
 import {FormService} from '../../services/form-service';
 import {Button} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
-import {RideService} from '../../services/ride-service';
 import {CurrencyPipe} from '@angular/common';
 import { MessageService } from 'primeng/api';
 import {Toast} from 'primeng/toast';
 import {PassengerPrice, DriveService} from '../../services/drive-service';
 import Keycloak from 'keycloak-js';
+import {DriverModel} from '../../model/driver-model';
+import {ProgressBar} from 'primeng/progressbar';
 
 @Component({
   selector: 'app-drive-component',
@@ -29,7 +30,8 @@ import Keycloak from 'keycloak-js';
     Button,
     Dialog,
     CurrencyPipe,
-    Toast
+    Toast,
+    ProgressBar
   ],
   templateUrl: './drive-component.html',
   standalone: true,
@@ -65,12 +67,14 @@ export class DriveComponent implements OnInit {
     depart: this.departControl,
     modelYear: this.modelYearControl,
     seats: this.seatsControl,
-    from: this.fromCityControl,
-    to: this.toCityControl,
+    fromCity: this.fromCityControl,
+    toCity: this.toCityControl,
     carMake: this.carControl,
     carPrice: this.carPriceControl,
     consumption: this.consumptionControl
   });
+
+  protected isLoading: WritableSignal<boolean> = signal(false);
 
   protected readonly today: Date = new Date();
 
@@ -132,7 +136,13 @@ export class DriveComponent implements OnInit {
     );
 
     if (!this.everyInputFilled) {
-      this.messageService.add({ severity: 'contrast', summary: 'Warning', detail: 'Please fill all the fields' });
+      if (this.arriveControl.value && this.departControl.value && this.arriveControl.value < new Date()
+        && this.departControl.value < new Date()) {
+
+        this.messageService.add({ severity: 'contrast', summary: 'Warning', detail: 'Please select valid date' });
+      } else {
+        this.messageService.add({ severity: 'contrast', summary: 'Warning', detail: 'Please fill all the fields' });
+      }
       return;
     }
 
@@ -143,33 +153,45 @@ export class DriveComponent implements OnInit {
       this.keycloak.login({
         redirectUri: window.location.origin + window.location.pathname
       }).then(() => {
+        this.isLoading.set(true);
+
         this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
           this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe(
           price => {
             this.passengerPrice = price;
             this.dialogVisible = true;
+            this.isLoading.set(false);
           }
         );
       });
+      return;
     }
 
+    this.isLoading.set(true);
     this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
       this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe(
       price => {
         this.passengerPrice = price;
         this.dialogVisible = true;
+        this.isLoading.set(false);
       }
     );
   }
 
   protected addDrive() {
-    this.driveService.addDrive(this.driveForm.value, this.passengerPrice).subscribe({
-      next: resp => {
-        const severity = resp.success ? 'success' : 'error';
-        const detail = resp.success ? 'Your ride is shared' : 'Could not share ride';
-        this.messageService.add({ severity, summary: resp.success ? 'Success' : 'Error', detail });
-      },
-      error: err => alert(err.message)
+    this.keycloak.loadUserProfile().then(profile => {
+      let driver = new DriverModel(profile.firstName + " " + profile.lastName, 0);
+      console.log(profile);
+      console.log(driver);
+
+      this.driveService.addDrive(this.driveForm.value, this.passengerPrice, driver).subscribe({
+        next: resp => {
+          const severity = resp.success ? 'success' : 'error';
+          const detail = resp.success ? 'Your ride is shared' : 'Could not share ride';
+          this.messageService.add({ severity, summary: resp.success ? 'Success' : 'Error', detail });
+        },
+        error: err => alert(err.message)
+      });
     });
   }
 

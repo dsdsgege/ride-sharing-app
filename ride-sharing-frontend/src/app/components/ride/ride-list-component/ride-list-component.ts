@@ -77,7 +77,10 @@ export class RideListComponent implements OnInit, OnChanges {
 
     this.rideModelResponse$ = this.rideService.findAll(this.page, this.pageSize, this.sortBy, this.direction,
       this.pickupFrom, this.dropOffTo, this.dateFrom, this.dateTo);
-    this.rideModelResponse$.subscribe(response => this.rides = response.content);
+    this.rideModelResponse$.subscribe(response => {
+      this.rides = response.content;
+      console.log(response.content);
+    });
   }
 
   ngOnChanges(): void {

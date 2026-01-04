@@ -2,12 +2,14 @@ package hu.ridesharing.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Data
+@ToString(exclude = {"driver", "passengers", "ratings"})
 public class Journey {
 
     @Id

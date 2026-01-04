@@ -13,8 +13,8 @@ services:
       - OPEN_ROUTE_API_KEY=${OPEN_ROUTE_API_KEY}
       - GEOCODING_API_KEY=${GEOCODING_API_KEY}
     build:
-      context: .
-      dockerfile: ./ride-sharing-backend/Dockerfile
+      context: ./ride-sharing-backend
+      dockerfile: ./Dockerfile
     networks:
       - default
       - keycloak_dev_network
@@ -25,8 +25,8 @@ services:
     ports:
       - "4200:4200"
     build:
-      context: .
-      dockerfile: ./ride-sharing-frontend/Dockerfile
+      context: ./ride-sharing-frontend
+      dockerfile: ./Dockerfile
     networks:
       - default
       - keycloak_dev_network

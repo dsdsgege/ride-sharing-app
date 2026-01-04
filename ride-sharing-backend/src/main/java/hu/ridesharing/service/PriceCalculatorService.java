@@ -59,6 +59,10 @@ public class PriceCalculatorService {
             Route newRoute = new Route();
             newRoute.setCityA(newRouteId.getCityA());
             newRoute.setCityB(newRouteId.getCityB());
+            newRoute.setLatitudeFrom(latitudeFrom);
+            newRoute.setLongitudeFrom(longitudeFrom);
+            newRoute.setLatitudeTo(latitudeTo);
+            newRoute.setLongitudeTo(longitudeTo);
             newRoute.setDistance(distanceInKm);
             newRoute.setDuration(duration);
             routeRepository.save(newRoute);

@@ -79,7 +79,7 @@ export class FormService {
         return formValue > new Date();
       }
 
-      if(typeof formValue === 'number') {
+      if (typeof formValue === 'number') {
         return formValue > 0;
       }
 
