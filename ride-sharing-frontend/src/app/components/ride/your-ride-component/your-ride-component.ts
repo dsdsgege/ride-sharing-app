@@ -2,6 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {RideModel} from '../../../model/ride-model';
 import {ActivatedRoute} from '@angular/router';
+import {RideService} from '../../../services/ride-service';
 
 @Component({
   selector: 'app-your-ride-component',
@@ -21,11 +22,13 @@ export class YourRideComponent implements OnInit {
 
   protected ride!: RideModel;
 
+  protected readonly rideService: RideService = inject(RideService);
+
   private route: ActivatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.ride = params["ride"] as RideModel;
-    })
+    this.route.queryParams.subscribe(params =>
+      this.rideService.findById(params["id"]).subscribe(ride => this.ride = ride)
+    );
   }
 }

@@ -1,0 +1,34 @@
+@if(isLoading()) {
+  <div class="spinner-container">
+    <p-progressbar mode="indeterminate" [style]="{ height: '6px' }"></p-progressbar>
+  </div>
+}
+
+<div class="container mx-auto p-2 md:p-4">
+
+  <h1 class="text-3xl font-bold text-center mb-6">Your profile</h1>
+
+  <div id="profile-name">
+    <h1 class="text-2xl font-bold uppercase tracking-widest">
+      {{ profile.fullName }}
+    </h1>
+  </div>
+
+  <div class="grid grid-cols-3 text-center">
+
+    <div>
+      <p class="text-xs uppercase mb-1">Drives</p>
+      <p class="text-3xl font-bold">{{ profile.drives }}</p>
+    </div>
+
+    <div id="rides">
+      <p class="text-xs uppercase mb-1">Rides</p>
+      <p class="text-3xl font-bold">{{ profile.rides }}</p>
+    </div>
+
+    <div>
+      <p class="text-xs uppercase mb-1">Rating</p>
+      <p class="text-3xl font-bold">{{ profile.rating }}</p>
+    </div>
+  </div>
+</div>

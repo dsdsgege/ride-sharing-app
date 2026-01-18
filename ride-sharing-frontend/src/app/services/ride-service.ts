@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {RideModelResponse} from '../model/ride-model-response';
+import {RideModel} from '../model/ride-model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +18,14 @@ export class RideService {
     return this.httpClient.get<RideModelResponse>(`${this.apiUrl}/rides?page=${page}&page_size=${pageSize}&` +
       `sort_by=${sortBy}&direction=${direction}&from=${pickupFrom}&to=${dropOffTo}&date_from=` +
       `${dateFrom.toISOString()}&date_to=${dateTo.toISOString()}`);
+  }
+
+  public findById(id: number): Observable<RideModel> {
+    return this.httpClient.get<RideModel>(`${this.apiUrl}?id=${id}`);
+  }
+
+  public findRideCountByFullName(fullName: String) {
+    console.log("findRideCountByPassenger called");
+    return this.httpClient.get<number>(`${this.apiUrl}/ride-count?full_name=${fullName}`);
   }
 }

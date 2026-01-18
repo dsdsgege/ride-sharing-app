@@ -61,7 +61,7 @@ export class RideListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.pickupFrom = params["pickupFrom"] ?? localStorage.getItem("dropoff-city") ?? '';
+      this.pickupFrom = params["pickupFrom"] ?? localStorage.getItem("pickup-city") ?? '';
 
       this.dropOffTo = params["dropOffTo"] ?? localStorage.getItem("dropoff-city") ?? '';
 
@@ -70,7 +70,6 @@ export class RideListComponent implements OnInit, OnChanges {
 
       this.dateTo = new Date(params["date"]?.[1] ??
         JSON.parse(localStorage.getItem("date-range") ?? '[null, null]')[1]);
-
     });
 
     console.log(this.dateTo, this.dateFrom)

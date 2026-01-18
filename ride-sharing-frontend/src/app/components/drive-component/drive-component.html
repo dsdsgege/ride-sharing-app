@@ -11,8 +11,7 @@
   <div class="card w-full max-w-6xl mx-auto p-6 mb-4">
     <div class="drive-info">
       <form [formGroup]="driveForm"
-            (submit)="addDrive()"
-            (reset)="resetForm()">
+            (submit)="addDrive()">
         <div class="form-section grid grid-cols-1 gap-4 md:grid-cols-2 ">
           <h2 class="text-2xl font-semibold md:col-span-2 border-b pb-2 mb-2 mt-3">Car Details</h2>
 
@@ -150,10 +149,6 @@
               You will get  {{ this.passengerPrice?.["price"] | currency:'HUF':'Ft':'1.0-0'}} per passenger.
             </p>
             <div class="flex gap-3 justify-end">
-              <p-button severity="secondary"
-                        type="reset">
-                Cancel
-              </p-button>
               <p-button type="submit">
                 Share&nbsp;ride
               </p-button>

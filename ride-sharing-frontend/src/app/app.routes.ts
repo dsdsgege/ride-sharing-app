@@ -5,6 +5,7 @@ import {RideComponent} from './components/ride/ride-component/ride-component';
 import {DriveComponent} from './components/drive-component/drive-component';
 import {RideListComponent} from './components/ride/ride-list-component/ride-list-component';
 import {YourRideComponent} from './components/ride/your-ride-component/your-ride-component';
+import {ProfileComponent} from './components/profile-component/profile-component';
 
 export const routes: Routes = [
   {
@@ -29,7 +30,7 @@ export const routes: Routes = [
   },
   {
     path: "profile",
-    component: HomeComponent,
+    component: ProfileComponent,
     canActivate: [canActivateAuthRole],
     data: {
       role: 'USER'

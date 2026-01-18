@@ -195,11 +195,6 @@ export class DriveComponent implements OnInit {
     });
   }
 
-  //TODO:
-  protected resetForm() {
-
-  }
-
   private searchCar(search: string) {
     this.carMakesFiltered.set(this.carMakes.filter(
       make => make.toLowerCase().includes(search.toLowerCase())

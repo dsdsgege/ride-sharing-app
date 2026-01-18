@@ -2,7 +2,9 @@ package hu.ridesharing.service;
 
 import hu.ridesharing.dto.DriverDTO;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
+import hu.ridesharing.entity.Driver;
 import hu.ridesharing.entity.Journey;
+import hu.ridesharing.entity.Passenger;
 import hu.ridesharing.repository.JourneyRepository;
 import hu.ridesharing.repository.specification.JourneySpecificationFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +45,32 @@ public class JourneyService {
         return journeys.map(this::mapToResponse);
     }
 
+    public JourneyResponseDTO getRide(Long id) {
+        Journey journey = journeyRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("No ride found with id " + id)
+        );
+        return mapToResponse(journey);
+    }
+
+    public int getRideCountByFullName(String fullName) {
+        Passenger passenger = new Passenger();
+        passenger.setFullName(fullName);
+        var count = journeyRepository.findByPassengers(passenger).size();
+        log.debug("Found {} rides for {}", count, fullName);
+        return count;
+    }
+
+    public int getDriveCountByFullName(String fullName) {
+        Driver driver = new Driver();
+        driver.setFullName(fullName);
+        var count = journeyRepository.findByDriver(driver).size();
+        log.debug("Found {} drives for {}", count, fullName);
+        return count;
+    }
+
     private JourneyResponseDTO mapToResponse(Journey journey) {
         JourneyResponseDTO response = new JourneyResponseDTO();
+        response.setId(journey.getId());
         response.setSeats(journey.getSeats());
         response.setPrice(journey.getPassengerPrice());
         DriverDTO driver = new DriverDTO();

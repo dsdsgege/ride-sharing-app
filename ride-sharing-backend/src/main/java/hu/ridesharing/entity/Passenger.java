@@ -10,9 +10,6 @@ import java.util.Set;
 public class Passenger {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String fullName;
 
     @ManyToMany(mappedBy = "passengers")

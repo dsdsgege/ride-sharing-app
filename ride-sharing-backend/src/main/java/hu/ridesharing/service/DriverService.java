@@ -1,6 +1,7 @@
 package hu.ridesharing.service;
 
 import hu.ridesharing.entity.Driver;
+import hu.ridesharing.exception.DriverNotFoundException;
 import hu.ridesharing.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,11 @@ public class DriverService {
         if (!driverRepository.existsById(driver.getFullName())) {
             driverRepository.save(driver);
         }
+    }
+
+    public double getDriverRatingByFullName(String fullName) {
+        return driverRepository.findById(fullName).orElseThrow(
+                () -> new DriverNotFoundException("No driver was found with the name " + fullName)
+        ).getRating();
     }
 }

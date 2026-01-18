@@ -28,7 +28,7 @@ public class Journey {
     @JoinTable(
             name = "passenger_journey",
             joinColumns = @JoinColumn(name = "journey_id"),
-            inverseJoinColumns = @JoinColumn(name = "passenger_id")
+            inverseJoinColumns = @JoinColumn(name = "full_name")
     )
     private Set<Passenger> passengers;
 

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @RestController
@@ -34,11 +33,19 @@ public class RideController {
                                              @RequestParam(name = "to") String toCity,
                                              @RequestParam(name = "date_from") OffsetDateTime dateFrom,
                                              @RequestParam(name = "date_to") OffsetDateTime dateTo) {
-        var sort = Sort.by(sortBy);
 
+        var sort = Sort.by(sortBy);
         return journeyService.getRides(fromCity, toCity, dateFrom.toLocalDateTime(), dateTo.toLocalDateTime(),
                 PageRequest.of(page, pageSize, "desc".equalsIgnoreCase(direction) ? sort.descending() : sort));
     }
 
+    @GetMapping
+    public JourneyResponseDTO getRide(@RequestParam Long id) {
+        return journeyService.getRide(id);
+    }
 
+    @GetMapping("/ride-count")
+    public int getRideCountByFullName(@RequestParam(name = "full_name") String fullName) {
+        return journeyService.getRideCountByFullName(fullName);
+    }
 }

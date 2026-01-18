@@ -46,4 +46,14 @@ export class DriveService {
     driveData.passengerPrice = passengerPrice.price;
     return this.httpClient.post<AddResponseModel>(`${this.apiUrl}/add_drive`, {drive: driveData, driver: driver});
   }
+
+  public findDriveCountByFullName(fullName: String): Observable<number> {
+    console.log("findRideCountByPassenger called");
+    return this.httpClient.get<number>(`${this.apiUrl}/drive-count?full_name=${fullName}`);
+  }
+
+  public findDriverRatingByFullName(fullName: String): Observable<number> {
+    console.log("findRideCountByPassenger called");
+    return this.httpClient.get<number>(`${this.apiUrl}/driver-rating?full_name=${fullName}`);
+  }
 }

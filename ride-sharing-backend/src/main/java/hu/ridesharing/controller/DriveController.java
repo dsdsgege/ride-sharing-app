@@ -63,4 +63,14 @@ public class DriveController {
         }
         return Map.of("success", true);
     }
+
+    @GetMapping("/drive-count")
+    public int getDriveCountByFullName(@RequestParam(name="full_name") String fullName) {
+        return journeyService.getDriveCountByFullName(fullName);
+    }
+
+    @GetMapping("/driver-rating")
+    public double getDriverRatingByFullName(@RequestParam(name="full_name") String fullName) {
+        return driverService.getDriverRatingByFullName(fullName);
+    }
 }

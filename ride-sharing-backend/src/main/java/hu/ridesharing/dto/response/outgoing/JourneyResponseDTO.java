@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class JourneyResponseDTO {
+    private Long id;
     private String fromCity;
     private String toCity;
     private double price;
