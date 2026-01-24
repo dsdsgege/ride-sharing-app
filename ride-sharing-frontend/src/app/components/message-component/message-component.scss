@@ -1,0 +1,19 @@
+.chat-window-expandable {
+  background-color: var(--card-bg-color);
+  color: whitesmoke;
+  height: 2rem;
+  width: 20rem;
+  padding: 5px;
+  border-radius: 8px;
+  margin: 0.2rem
+}
+
+.chat-window-expandable:hover {
+  cursor: pointer;
+}
+
+.chat-window-expanded {
+  width: 20rem;
+  background-color: var(--card-bg-color);
+  padding: 1rem;
+}

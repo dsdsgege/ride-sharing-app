@@ -1,14 +1,24 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, output, signal} from '@angular/core';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {RideModel} from '../../../model/ride-model';
 import {ActivatedRoute} from '@angular/router';
 import {RideService} from '../../../services/ride-service';
+import {MessageService} from 'primeng/api';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import {faMessage} from '@fortawesome/free-solid-svg-icons/faMessage';
+import {CurrencyPipe, DatePipe} from '@angular/common';
+import {MessageComponaent} from '../../message-component/message-component';
 
 @Component({
   selector: 'app-your-ride-component',
   imports: [
     Breadcrumb,
+    FaIconComponent,
+    DatePipe,
+    CurrencyPipe,
+    MessageComponaent,
   ],
+  providers: [MessageService],
   templateUrl: './your-ride-component.html',
   standalone: true,
   styleUrl: './your-ride-component.scss'
@@ -22,13 +32,31 @@ export class YourRideComponent implements OnInit {
 
   protected ride!: RideModel;
 
+  protected isMessageClosed = signal<boolean>(false);
+
+  protected isChatExpanded = signal<boolean>(false);
+
   protected readonly rideService: RideService = inject(RideService);
 
-  private route: ActivatedRoute = inject(ActivatedRoute);
+  protected readonly faMessage = faMessage;
+
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
+
+  private readonly messageService: MessageService = inject(MessageService);
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params =>
-      this.rideService.findById(params["id"]).subscribe(ride => this.ride = ride)
-    );
+    this.route.queryParams.subscribe({
+      next: params => {
+        this.rideService.findById(params["id"]).subscribe(ride => this.ride = ride);
+      },
+      error: err => {
+        console.error(err)
+        this.messageService.add({severity: 'error', summary: 'Error', detail: "Your ride could not be found."});
+      }
+    });
+  }
+
+  protected onMessageClick() {
+
   }
 }

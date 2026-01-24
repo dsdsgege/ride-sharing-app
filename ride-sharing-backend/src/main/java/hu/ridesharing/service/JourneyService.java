@@ -28,6 +28,7 @@ public class JourneyService {
     }
 
     public Journey addDrive(Journey drive) {
+        log.debug("Adding drive: {}", drive);
         return this.journeyRepository.save(drive);
     }
 

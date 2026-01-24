@@ -7,10 +7,87 @@
 
   <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
 
-    <div class="form-section grid grid-cols-1 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
+      <div class="text-xl font-bold flex items-start">
+        Your Driver
+      </div>
+
+      <div class="col-span-2 grid grid-cols-2 gap-y-4 gap-x-2">
+
+        <div class="font-medium">Full name:</div>
+        <div class="font-semibold">
+          {{ this.ride.driver.fullName }}
+        </div>
+
+        <div class="font-medium">Rating:</div>
+        <div class="font-semibold">
+          @if (this.ride.driver.rating > 0) {
+            <span>★</span>
+          }
+          {{ this.ride.driver.rating === 0 ? "No ratings yet" :  this.ride.driver.rating }}
+        </div>
+
+        <div class="font-medium">Car:</div>
+        <div class="font-semibold">
+          {{ this.ride.carMake }}
+        </div>
+
+        <div class="font-medium">Contact:</div>
+        <div>
+          <fa-icon class="cursor-pointer text-xl"
+                   [icon]="faMessage"
+                   (click)="onMessageClick()"
+                   title="Message Driver">
+          </fa-icon>
+        </div>
+      </div>
+
+      <hr class="col-span-2 md:col-span-3 my-2">
+
+      <div class="text-xl font-bold">
+        Trip Details
+      </div>
+
+      <div class="col-span-2 grid grid-cols-1 gap-y-4">
+
+        <div class="grid grid-cols-3">
+          <div class="font-medium">Pickup:</div>
+          <div class="col-span-2">
+            <span class="font-bold">{{ this.ride.fromCity }}</span>
+            <span class="text-sm mx-1">•</span>
+            {{ this.ride.departureTime | date: 'medium' }}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3">
+          <div class="font-medium">Drop-off:</div>
+          <div class="col-span-2">
+            <span class="font-bold">{{ this.ride.toCity }}</span>
+            <span class="text-sm mx-1">•</span>
+            {{ this.ride.arrivalTime | date: 'medium' }}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 items-center mt-2">
+          <div class="font-medium">Total Price:</div>
+          <div class="col-span-2 text-2xl font-bold">
+            {{ this.ride.price | currency: 'HUF ': true: '1.0-0' }}
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </div>
-
 </div>
+
+@if (!this.isMessageClosed()) {
+  <div class="message-container">
+    <app-message-component [name]="this.ride.driver.fullName"
+                           [(isExpanded)]="isChatExpanded"
+                           (click)="isChatExpanded.set(true)"
+                           (isMessageClosed)="this.isMessageClosed.set(true)">
+    </app-message-component>
+  </div>
+}

@@ -119,10 +119,11 @@ body {
 
 .card {
   padding: 2.5rem;
-  background-color: var(--custom-card-bg-color);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
   transition: all ease-in-out 0.2s;
-  border: solid 0.05rem var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }

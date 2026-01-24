@@ -1,0 +1,29 @@
+@if (!isExpanded()) {
+  <div class="chat-window-expandable flex justify-between">
+    <span>
+      <fa-icon [icon]="faArrowCircleUp"></fa-icon>&nbsp;Send a message to&nbsp;{{ this.name() }}
+    </span>
+
+    <fa-icon class="justify-end hover:border-b"
+             [icon]="faXmark"
+             (click)="this.isMessageClosed.emit(true)">
+    </fa-icon>
+  </div>
+} @else {
+  <div class="chat-window-expanded">
+    <div class="chat-header flex justify-between">
+      <span>
+        <fa-icon [icon]="faUser"></fa-icon>&nbsp;{{ this.name() }}
+      </span>
+
+      <fa-icon class="justify-end hover:border-b"
+               [icon]="faXmark"
+               (click)="this.isMessageClosed.emit(true)">
+      </fa-icon>
+    </div>
+
+    <div class="chat-body h-50">
+
+    </div>
+  </div>
+}

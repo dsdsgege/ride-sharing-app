@@ -156,15 +156,18 @@ export class DriveComponent implements OnInit {
         this.isLoading.set(true);
 
         this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
-          this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe(
-          price => {
+          this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe({
+          next : price => {
             this.passengerPrice = price;
             this.dialogVisible = true;
             this.isLoading.set(false);
+          },
+          error: err => {
+            this.messageService.add({severity: 'error', summary: 'Error', detail: err.message});
+            this.isLoading.set(false);
           }
-        );
+        });
       });
-      return;
     }
 
     this.isLoading.set(true);
