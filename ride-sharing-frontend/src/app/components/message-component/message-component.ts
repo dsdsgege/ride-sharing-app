@@ -18,7 +18,7 @@ export class MessageComponaent {
 
   public isExpanded = model<boolean>(false);
 
-  public isMessageClosed = output<boolean>();
+  public close = output<void>();
 
   protected readonly faArrowCircleUp = faArrowCircleUp;
   protected readonly faXmark = faXmark;

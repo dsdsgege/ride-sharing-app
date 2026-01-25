@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {RideModelResponse} from '../model/ride-model-response';
-import {RideModel} from '../model/ride-model';
+import {RideModelResponse} from '../model/ride/ride-model-response';
+import {RideModel} from '../model/ride/ride-model';
 
 @Injectable({
   providedIn: 'root'

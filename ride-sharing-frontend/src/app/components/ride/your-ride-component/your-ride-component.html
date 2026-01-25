@@ -37,7 +37,7 @@
         <div>
           <fa-icon class="cursor-pointer text-xl"
                    [icon]="faMessage"
-                   (click)="onMessageClick()"
+                   (click)="closeChat()"
                    title="Message Driver">
           </fa-icon>
         </div>
@@ -82,12 +82,11 @@
   </div>
 </div>
 
-@if (!this.isMessageClosed()) {
+@if (this.isChatVisible()) {
   <div class="message-container">
     <app-message-component [name]="this.ride.driver.fullName"
                            [(isExpanded)]="isChatExpanded"
-                           (click)="isChatExpanded.set(true)"
-                           (isMessageClosed)="this.isMessageClosed.set(true)">
+                           (close)="closeChat()">
     </app-message-component>
   </div>
 }

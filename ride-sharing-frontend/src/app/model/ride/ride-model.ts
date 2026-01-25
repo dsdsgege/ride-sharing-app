@@ -1,4 +1,4 @@
-import {DriverModel} from './driver-model';
+import {DriverModel} from '../driver-model';
 
 export interface RideModel {
   id: number;

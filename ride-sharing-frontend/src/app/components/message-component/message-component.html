@@ -6,7 +6,7 @@
 
     <fa-icon class="justify-end hover:border-b"
              [icon]="faXmark"
-             (click)="this.isMessageClosed.emit(true)">
+             (click)="close.emit()">
     </fa-icon>
   </div>
 } @else {
@@ -16,13 +16,13 @@
         <fa-icon [icon]="faUser"></fa-icon>&nbsp;{{ this.name() }}
       </span>
 
-      <fa-icon class="justify-end hover:border-b"
+      <fa-icon class="justify-end hover:cursor-pointer"
                [icon]="faXmark"
-               (click)="this.isMessageClosed.emit(true)">
+               (click)="close.emit()">
       </fa-icon>
     </div>
 
-    <div class="chat-body h-50">
+    <div class="chat-body">
 
     </div>
   </div>

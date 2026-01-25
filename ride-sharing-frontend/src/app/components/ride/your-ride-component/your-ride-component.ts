@@ -1,6 +1,6 @@
 import {Component, inject, OnInit, output, signal} from '@angular/core';
 import {Breadcrumb} from 'primeng/breadcrumb';
-import {RideModel} from '../../../model/ride-model';
+import {RideModel} from '../../../model/ride/ride-model';
 import {ActivatedRoute} from '@angular/router';
 import {RideService} from '../../../services/ride-service';
 import {MessageService} from 'primeng/api';
@@ -32,7 +32,7 @@ export class YourRideComponent implements OnInit {
 
   protected ride!: RideModel;
 
-  protected isMessageClosed = signal<boolean>(false);
+  protected isChatVisible = signal<boolean>(false);
 
   protected isChatExpanded = signal<boolean>(false);
 
@@ -56,7 +56,7 @@ export class YourRideComponent implements OnInit {
     });
   }
 
-  protected onMessageClick() {
-
+  protected closeChat() {
+      this.isChatVisible.set(false);
   }
 }

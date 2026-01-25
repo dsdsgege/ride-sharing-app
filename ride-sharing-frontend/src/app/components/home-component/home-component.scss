@@ -14,16 +14,16 @@ button {
 
 .join-button {
   color: #e3e2e2;
-  background-color: var(--card-bg-color);
+  background-color: var(--secondary);
   border: 1px #e3e2e2 solid;
   border-radius: 24px;
 }
 
 .join-button:hover {
   cursor: pointer;
-  color: var(--card-bg-color);
+  color: var(--secondary);
   background-color: #e3e2e2;
-  border: 1px var(--card-bg-color) solid;
+  border: 1px var(--secondary) solid;
 }
 
 .share-button {

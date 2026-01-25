@@ -1,5 +1,5 @@
 .chat-window-expandable {
-  background-color: var(--card-bg-color);
+  background-color: var(--secondary);
   color: whitesmoke;
   height: 2rem;
   width: 20rem;
@@ -14,6 +14,15 @@
 
 .chat-window-expanded {
   width: 20rem;
-  background-color: var(--card-bg-color);
+  background-color: var(--secondary);
   padding: 1rem;
+  border-radius: 8px;
+}
+
+.chat-header {
+  border-bottom: 1px solid var(--text-color);
+}
+
+.chat-body {
+  height: 15rem;
 }

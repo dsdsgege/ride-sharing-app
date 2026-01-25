@@ -5,7 +5,10 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
 
-public class JourneySpecificationFactory {
+public final class JourneySpecificationFactory {
+
+    private JourneySpecificationFactory() {
+    }
 
     public static Specification<Journey> findByFromCity(String fromCity) {
         return (root, query, cb) -> cb.equal(root.get("fromCity"), fromCity);
