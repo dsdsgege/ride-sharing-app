@@ -21,7 +21,7 @@ export class RideService {
   }
 
   public findById(id: number): Observable<RideModel> {
-    return this.httpClient.get<RideModel>(`${this.apiUrl}?id=${id}`);
+    return this.httpClient.get<RideModel>(`${this.apiUrl}/${id}`);
   }
 
   public findRideCountByFullName(fullName: String) {
