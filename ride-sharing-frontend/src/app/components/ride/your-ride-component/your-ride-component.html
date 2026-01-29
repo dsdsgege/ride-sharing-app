@@ -81,11 +81,12 @@
 
   </div>
 </div>
-
-@if (this.isChatVisible()) {
+<!--TODO: seats kiíratása-->
+@if (!this.isChatVisible()) {
   <div class="message-container">
     <app-message-component [name]="this.ride.driver.fullName"
                            [(isExpanded)]="isChatExpanded"
+                           (click)="isChatExpanded.set(true)"
                            (close)="closeChat()">
     </app-message-component>
   </div>

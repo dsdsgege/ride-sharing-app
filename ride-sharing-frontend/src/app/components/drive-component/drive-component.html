@@ -143,7 +143,10 @@
           </div>
         </div>
 
-        <p-dialog header="Warning!" [modal]="true" [(visible)]="dialogVisible" [style]="{ width: '60%' }" >
+        <p-dialog header="Warning!" [modal]="true"
+                  [draggable]="false"
+                  [(visible)]="dialogVisible"
+                  [style]="{ width: '60%' }" >
           <div class="flex flex-col">
             <p>
               You will get  {{ this.passengerPrice?.["price"] | currency:'HUF':'Ft':'1.0-0'}} per passenger.

@@ -84,6 +84,7 @@ public class PriceCalculatorService {
      * @param age age of the car
      * @return
      */
+    //TODO: amortizáció régebbi autóknál is
     private double getDeprecation(int age) {
         return switch (age) {
             case 0 -> 0.1;

@@ -3,19 +3,23 @@ package hu.ridesharing.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @IdClass(ChatId.class)
-public class Chat {
+@Getter
+@Setter
+public class ChatMessage {
 
     @Id
-    private String from;
+    private String sender;
 
     @Id
-    private String to;
+    private String receiver;
 
     @Id
-    private long timestamp;
+    private Long timestamp;
 
     private String message;
 }

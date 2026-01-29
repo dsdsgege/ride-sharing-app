@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class ChatId implements Serializable {
-    private String from;
-    private String to;
+    private String sender;
+    private String receiver;
     private long timestamp;
 }

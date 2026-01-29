@@ -1,6 +1,6 @@
 package hu.ridesharing.service;
 
-import hu.ridesharing.entity.Chat;
+import hu.ridesharing.entity.ChatMessage;
 import hu.ridesharing.repository.ChatRepository;
 import hu.ridesharing.repository.specification.ChatSpecificationFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +22,8 @@ public class ChatService {
         this.chatRepository = chatRepository;
     }
 
-    public Page<Chat> getChats(String from, String to, int page, int size) {
-        Specification<Chat> spec = ChatSpecificationFactory.findByFromAndTo(from, to);
+    public Page<ChatMessage> getChats(String from, String to, int page, int size) {
+        Specification<ChatMessage> spec = ChatSpecificationFactory.findByFromAndTo(from, to);
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("timestamp").descending());
         return chatRepository.findAll(spec, pageRequest);
     }

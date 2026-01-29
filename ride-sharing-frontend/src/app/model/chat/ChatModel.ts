@@ -1,6 +1,6 @@
 export interface ChatModel {
-  from: string;
-  to: string;
-  timestamp: Date;
+  sender: string;
+  receiver: string;
+  timestamp: Date | null;
   message: string;
 }

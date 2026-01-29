@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, output, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {RideModel} from '../../../model/ride/ride-model';
 import {ActivatedRoute} from '@angular/router';
@@ -7,7 +7,7 @@ import {MessageService} from 'primeng/api';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {faMessage} from '@fortawesome/free-solid-svg-icons/faMessage';
 import {CurrencyPipe, DatePipe} from '@angular/common';
-import {MessageComponaent} from '../../message-component/message-component';
+import {ChatComponent} from '../../chat-component/chat-component';
 
 @Component({
   selector: 'app-your-ride-component',
@@ -16,7 +16,7 @@ import {MessageComponaent} from '../../message-component/message-component';
     FaIconComponent,
     DatePipe,
     CurrencyPipe,
-    MessageComponaent,
+    ChatComponent,
   ],
   providers: [MessageService],
   templateUrl: './your-ride-component.html',
