@@ -47,13 +47,13 @@ export class DriveService {
     return this.httpClient.post<AddResponseModel>(`${this.apiUrl}/add_drive`, {drive: driveData, driver: driver});
   }
 
-  public findDriveCountByFullName(fullName: String): Observable<number> {
+  public findDriveCountByUsername(username: String): Observable<number> {
     console.log("findRideCountByPassenger called");
-    return this.httpClient.get<number>(`${this.apiUrl}/drive-count?full_name=${fullName}`);
+    return this.httpClient.get<number>(`${this.apiUrl}/drive-count?username=${username}`);
   }
 
-  public findDriverRatingByFullName(fullName: String): Observable<number> {
+  public findDriverRatingByUsername(username: String): Observable<number> {
     console.log("findRideCountByPassenger called");
-    return this.httpClient.get<number>(`${this.apiUrl}/driver-rating?full_name=${fullName}`);
+    return this.httpClient.get<number>(`${this.apiUrl}/driver-rating?username=${username}`);
   }
 }

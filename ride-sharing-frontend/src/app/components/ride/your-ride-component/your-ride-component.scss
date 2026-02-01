@@ -1,14 +1,4 @@
-::ng-deep {
-  .p-button {
-    background-color: transparent;
-    border: none;
-  }
 
-  .p-button:not(:disabled):hover {
-    background-color: transparent;
-    border: none;
-  }
-}
 
 .message-button:hover {
   cursor: pointer;
@@ -19,11 +9,15 @@
 }
 
 .message-container {
-  position: absolute;
+  position: fixed;
   bottom: 5px;
   right: 5px;
   animation: slide-in ease-in-out 0.4s both;
   animation-delay: 2000ms;
+}
+
+.no-animation-delay {
+  animation-delay: 0ms !important;
 }
 
 @keyframes slide-in {

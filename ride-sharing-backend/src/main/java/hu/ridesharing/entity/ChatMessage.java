@@ -12,12 +12,21 @@ import lombok.Setter;
 @Setter
 public class ChatMessage {
 
+    /**
+     * The sender's username.
+     */
     @Id
     private String sender;
 
+    /**
+     * The receiver's username.
+     */
     @Id
     private String receiver;
 
+    /**
+     * The timestamp of the message. (ONLY ONE TIMEZONE!)
+     */
     @Id
     private Long timestamp;
 

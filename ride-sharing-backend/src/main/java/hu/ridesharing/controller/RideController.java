@@ -42,7 +42,14 @@ public class RideController {
     }
 
     @GetMapping("/ride-count")
-    public int getRideCountByFullName(@RequestParam(name = "full_name") String fullName) {
-        return journeyService.getRideCountByFullName(fullName);
+    public int getRideCountByUsername(@RequestParam String username) {
+        return journeyService.getRideCountByUsername(username);
     }
+
+    @PostMapping("/join/{id}")
+    public void joinRide(@PathVariable Long id, @RequestBody JoinRideRequest request) {
+        this.journeyService.joinRide(id, request.username(), request.email(), request.fullName());
+    }
+
+    record JoinRideRequest(String username, String email, String fullName) {}
 }

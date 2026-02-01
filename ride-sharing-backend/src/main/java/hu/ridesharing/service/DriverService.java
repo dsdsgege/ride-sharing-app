@@ -21,15 +21,15 @@ public class DriverService {
 
     @Transactional
     public void addDriver(Driver driver) {
-        log.debug("Adding driver: {}", driver.getFullName());
-        if (!driverRepository.existsById(driver.getFullName())) {
+        log.debug("Adding driver: {}", driver.getUsername());
+        if (!driverRepository.existsById(driver.getUsername())) {
             driverRepository.save(driver);
         }
     }
 
-    public double getDriverRatingByFullName(String fullName) {
-        return driverRepository.findById(fullName).orElseThrow(
-                () -> new DriverNotFoundException("No driver was found with the name " + fullName)
+    public double getDriverRatingByUsername(String username) {
+        return driverRepository.findById(username).orElseThrow(
+                () -> new DriverNotFoundException("No driver was found with the username " + username)
         ).getRating();
     }
 }

@@ -1,11 +1,14 @@
-<script src="../../../model/ride-model.ts"></script>@if (!rides || rides.length === 0) {
+@if (!rides || rides.length === 0 && !noContent()) {
   <p-progressbar mode="indeterminate" [style]="{ height: '6px' }" />
 } @else {
   <div class="container mx-auto p-4">
 
   <h1 class="text-3xl font-bold text-center mb-6">Choose your ride</h1>
-  <div class="breadcrumb flex max-w-6xl mx-auto">
-  <p-breadcrumb [model]="items"/>
+  <div class="breadcrumb flex justify-between max-w-6xl mx-auto">
+    <p-breadcrumb [model]="items"/>
+    <div class="filter">
+      Filter&nbsp;<fa-icon [icon]="faFilter"></fa-icon>
+    </div>
   </div>
 
   <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
@@ -44,3 +47,4 @@
     </div>
   </div>
 }
+<p-toast />

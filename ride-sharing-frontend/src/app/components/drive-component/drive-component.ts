@@ -183,8 +183,7 @@ export class DriveComponent implements OnInit {
 
   protected addDrive() {
     this.keycloak.loadUserProfile().then(profile => {
-      let driver = new DriverModel(profile.firstName + " " + profile.lastName, 0);
-      console.log(profile);
+      let driver = new DriverModel(profile.username ?? "", profile.firstName + " " + profile.lastName, 0);
       console.log(driver);
 
       this.driveService.addDrive(this.driveForm.value, this.passengerPrice, driver).subscribe({

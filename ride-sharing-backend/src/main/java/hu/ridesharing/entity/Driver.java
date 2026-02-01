@@ -14,6 +14,8 @@ import java.util.Set;
 public class Driver {
 
     @Id
+    private String username;
+
     private String fullName;
 
     @OneToMany(mappedBy = "driver")

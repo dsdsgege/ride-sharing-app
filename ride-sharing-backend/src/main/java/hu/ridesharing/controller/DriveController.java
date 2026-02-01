@@ -66,12 +66,12 @@ public class DriveController {
     }
 
     @GetMapping("/drive-count")
-    public int getDriveCountByFullName(@RequestParam(name="full_name") String fullName) {
-        return journeyService.getDriveCountByFullName(fullName);
+    public int getDriveCountByUsername(@RequestParam String username) {
+        return journeyService.getDriveCountByUsername(username);
     }
 
     @GetMapping("/driver-rating")
-    public double getDriverRatingByFullName(@RequestParam(name="full_name") String fullName) {
-        return driverService.getDriverRatingByFullName(fullName);
+    public double getDriverRatingByUsername(@RequestParam String username) {
+        return driverService.getDriverRatingByUsername(username);
     }
 }

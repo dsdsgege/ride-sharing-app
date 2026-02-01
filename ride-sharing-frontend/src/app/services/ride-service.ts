@@ -24,8 +24,13 @@ export class RideService {
     return this.httpClient.get<RideModel>(`${this.apiUrl}/${id}`);
   }
 
-  public findRideCountByFullName(fullName: String) {
+  public findRideCountByUsername(username: String) {
     console.log("findRideCountByPassenger called");
-    return this.httpClient.get<number>(`${this.apiUrl}/ride-count?full_name=${fullName}`);
+    return this.httpClient.get<number>(`${this.apiUrl}/ride-count?username=${username}`);
+  }
+
+  public joinRide(id: number, username: string, email: string, fullName: string): Observable<RideModel> {
+    return this.httpClient.post<RideModel>(`${this.apiUrl}/join/${id}`,
+      {"username": username, "email": email, "fullName": fullName});
   }
 }

@@ -10,6 +10,8 @@ import java.util.Set;
 public class Passenger {
 
     @Id
+    private String username;
+
     private String fullName;
 
     @ManyToMany(mappedBy = "passengers")

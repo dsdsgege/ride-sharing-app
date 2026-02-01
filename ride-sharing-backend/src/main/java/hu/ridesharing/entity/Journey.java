@@ -21,7 +21,7 @@ public class Journey {
     private String toCity;
 
     @ManyToOne
-    @JoinColumn(name = "driver_name")
+    @JoinColumn(name = "driver_id")
     private Driver driver;
 
     @ManyToMany

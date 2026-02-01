@@ -37,7 +37,7 @@
         <div>
           <fa-icon class="cursor-pointer text-xl"
                    [icon]="faMessage"
-                   (click)="closeChat()"
+                   (click)="this.contactClicked()"
                    title="Message Driver">
           </fa-icon>
         </div>
@@ -69,6 +69,12 @@
           </div>
         </div>
 
+        <div class="grid grid-cols-3">
+          <div class="font-medium">Free seats:</div>
+          <div class="col-span-2 font-semibold">
+            {{ this.ride.seats }}
+          </div>
+        </div>
         <div class="grid grid-cols-3 items-center mt-2">
           <div class="font-medium">Total Price:</div>
           <div class="col-span-2 text-2xl font-bold">
@@ -78,13 +84,21 @@
 
       </div>
     </div>
-
+    <div class="flex justify-end">
+      <p-button (click)="joinRide()"
+                [disabled]="this.ride.seats === 0">
+        Join ride
+      </p-button>
+    </div>
   </div>
 </div>
 <!--TODO: seats kiíratása-->
-@if (!this.isChatVisible()) {
-  <div class="message-container">
+@if (this.isChatVisible()) {
+  <div class="message-container"
+       (transitionend)="this.isContactClicked.set(false)"
+       [class.no-animation-delay]="this.isContactClicked()">
     <app-message-component [name]="this.ride.driver.fullName"
+                           [username]="this.ride.driver.username"
                            [(isExpanded)]="isChatExpanded"
                            (click)="isChatExpanded.set(true)"
                            (close)="closeChat()">

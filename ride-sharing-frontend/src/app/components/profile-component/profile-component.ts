@@ -24,13 +24,14 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.keycloak.loadUserProfile().then(profile => {
+      this.profile.username = profile.username ?? "";
       this.profile.fullName = profile.firstName + ' ' + profile.lastName;
 
-      this.rideService.findRideCountByFullName(this.profile.fullName).subscribe(res => this.profile.rides = res);
+      this.rideService.findRideCountByUsername(this.profile.username).subscribe(res => this.profile.rides = res);
 
-      this.driveService.findDriveCountByFullName(this.profile.fullName).subscribe(res => this.profile.drives = res);
+      this.driveService.findDriveCountByUsername(this.profile.username).subscribe(res => this.profile.drives = res);
 
-      this.driveService.findDriverRatingByFullName(this.profile.fullName).subscribe(res => this.profile.rating = res);
+      this.driveService.findDriverRatingByUsername(this.profile.username).subscribe(res => this.profile.rating = res);
 
       this.isLoading.set(false);
     });

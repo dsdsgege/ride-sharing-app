@@ -6,7 +6,9 @@ import hu.ridesharing.entity.Driver;
 import hu.ridesharing.entity.Journey;
 import hu.ridesharing.entity.Passenger;
 import hu.ridesharing.repository.JourneyRepository;
+import hu.ridesharing.repository.PassengerRepository;
 import hu.ridesharing.repository.specification.JourneySpecificationFactory;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,17 +18,18 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static hu.ridesharing.repository.specification.JourneySpecificationFactory.findByFromCity;
-
 @Service
 @Slf4j
 public class JourneyService {
 
     private final JourneyRepository journeyRepository;
 
+    private final PassengerRepository passengerRepository;
+
     @Autowired
-    public JourneyService(JourneyRepository journeyRepository) {
+    public JourneyService(JourneyRepository journeyRepository, PassengerRepository passengerRepository) {
         this.journeyRepository = journeyRepository;
+        this.passengerRepository = passengerRepository;
     }
 
     public Journey addDrive(Journey drive) {
@@ -55,20 +58,39 @@ public class JourneyService {
         return mapToResponse(journey);
     }
 
-    public int getRideCountByFullName(String fullName) {
+    public int getRideCountByUsername(String username) {
         Passenger passenger = new Passenger();
-        passenger.setFullName(fullName);
+        passenger.setUsername(username);
         var count = journeyRepository.findByPassengers(passenger).size();
-        log.debug("Found {} rides for {}", count, fullName);
+        log.debug("Found {} rides for {}", count, username);
         return count;
     }
 
-    public int getDriveCountByFullName(String fullName) {
+    public int getDriveCountByUsername(String username) {
         Driver driver = new Driver();
-        driver.setFullName(fullName);
+        driver.setUsername(username);
         var count = journeyRepository.findByDriver(driver).size();
-        log.debug("Found {} drives for {}", count, fullName);
+        log.debug("Found {} drives for {}", count, username);
         return count;
+    }
+
+    @Transactional
+    public void joinRide(Long id, String passengerUsername, String passengerEmail, String passengerFullName) {
+        Journey journey = journeyRepository.findById(id).orElseThrow();
+        journey.setSeats(journey.getSeats() - 1);
+
+        var passenger = passengerRepository.findById(passengerUsername);
+        if (passenger.isPresent()) {
+            journey.getPassengers().add(passenger.get());
+
+        } else {
+            Passenger newPassenger = new Passenger();
+            newPassenger.setUsername(passengerUsername);
+            newPassenger.setFullName(passengerFullName);
+            passengerRepository.save(newPassenger);
+
+            journey.getPassengers().add(newPassenger);
+        }
     }
 
     private JourneyResponseDTO mapToResponse(Journey journey) {
@@ -77,6 +99,7 @@ public class JourneyService {
         response.setSeats(journey.getSeats());
         response.setPrice(journey.getPassengerPrice());
         DriverDTO driver = new DriverDTO();
+        driver.setUsername(journey.getDriver().getUsername());
         driver.setFullName(journey.getDriver().getFullName());
         driver.setRating(journey.getDriver().getRating());
         response.setDriver(driver);

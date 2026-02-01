@@ -23,7 +23,7 @@ export class ChatService implements OnDestroy {
   constructor() {
   }
 
-  openConnection(fullName: string){
+  openConnection(username: string){
     this.stompClient = new Client({
       brokerURL: this.url,
 
@@ -35,7 +35,7 @@ export class ChatService implements OnDestroy {
       console.log('Connected: ' + this.stompClient?.connected);
 
       // The client only subscribes to their own topic as backend sends the message to both topic
-      this.stompClient?.subscribe(`/topic/private-message/${fullName}`, (message: Message) => {
+      this.stompClient?.subscribe(`/topic/private-message/${username}`, (message: Message) => {
         if (message.body) {
           const parsedMessage: ChatModel = JSON.parse(message.body);
           this.messageSubject.next(parsedMessage);

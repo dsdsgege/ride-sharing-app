@@ -19,6 +19,7 @@ import {ChatModel} from '../../model/chat/ChatModel';
 export class ChatComponent implements OnInit{
 
   public name = input.required<string>();
+  public username = input.required<string>();
 
   public isExpanded = model<boolean>(false);
 
@@ -36,12 +37,12 @@ export class ChatComponent implements OnInit{
 
   ngOnInit(): void {
     this.keycloak.loadUserProfile().then(profile => {
-      this.chatService.openConnection(profile.firstName + " " + profile.lastName);
+      this.chatService.openConnection(profile.username ?? "");
 
       this.chatService.connectedSubj.subscribe(isConnected => {
         if (isConnected) {
           const message = {
-            sender: profile.firstName + " " + profile.lastName,
+            sender: profile.username ?? "",
             receiver: "System",
             timestamp: null,
             message: "You have successfully connected to the chat."
@@ -50,7 +51,6 @@ export class ChatComponent implements OnInit{
         }
       })
     });
-
 
     this.chatService.getMessages().subscribe(msg => {
       if (msg) {
