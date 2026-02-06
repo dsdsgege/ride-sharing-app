@@ -1,18 +1,23 @@
 package hu.ridesharing.service;
 
 import hu.ridesharing.dto.DriverDTO;
+import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.entity.Driver;
 import hu.ridesharing.entity.Journey;
 import hu.ridesharing.entity.Passenger;
+import hu.ridesharing.entity.Rating;
 import hu.ridesharing.repository.JourneyRepository;
 import hu.ridesharing.repository.PassengerRepository;
+import hu.ridesharing.repository.RatingRepository;
 import hu.ridesharing.repository.specification.JourneySpecificationFactory;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +31,12 @@ public class JourneyService {
 
     private final PassengerRepository passengerRepository;
 
+    private final RatingRepository ratingRepository;
+
     @Autowired
-    public JourneyService(JourneyRepository journeyRepository, PassengerRepository passengerRepository) {
+    public JourneyService(JourneyRepository journeyRepository, PassengerRepository passengerRepository,
+                          RatingRepository ratingRepository, EmailService emailService) {
+
         this.journeyRepository = journeyRepository;
         this.passengerRepository = passengerRepository;
     }
@@ -48,6 +57,26 @@ public class JourneyService {
 
         Page<Journey> journeys = journeyRepository.findAll(spec, pageRequest);
 
+        return journeys.map(this::mapToResponse);
+    }
+
+    public Page<JourneyResponseDTO> getRides(RideFilterRequest filterRequest) {
+        var sort = Sort.by(filterRequest.getSortBy());
+        var pageable = PageRequest.of(filterRequest.getPage(), filterRequest.getPageSize(),
+                filterRequest.getDirection().equalsIgnoreCase("desc") ? sort.descending() : sort);
+
+        log.debug("Advanced filtering rides with filter request: {}", filterRequest);
+
+        Specification<Journey> spec = JourneySpecificationFactory.findByFromCity(filterRequest.getPickupFrom())
+                .and(JourneySpecificationFactory.findByToCity(filterRequest.getDropOffTo()))
+                .and(JourneySpecificationFactory.findByDate(filterRequest.getDateFrom(), filterRequest.getDateTo()))
+                .and(JourneySpecificationFactory.findBySeats(filterRequest.getSeats()))
+                .and(JourneySpecificationFactory.findByMaxPrice(filterRequest.getMaxPrice()))
+                .and(JourneySpecificationFactory.findByRating(
+                        filterRequest.getRating(), filterRequest.isShowWithoutRating())
+                );
+
+        Page<Journey> journeys = journeyRepository.findAll(spec, pageable);
         return journeys.map(this::mapToResponse);
     }
 
@@ -101,7 +130,11 @@ public class JourneyService {
         DriverDTO driver = new DriverDTO();
         driver.setUsername(journey.getDriver().getUsername());
         driver.setFullName(journey.getDriver().getFullName());
-        driver.setRating(journey.getDriver().getRating());
+        driver.setRating(ratingRepository.findByDriver(journey.getDriver()).stream()
+                .mapToDouble(Rating::getValue)
+                .average()
+                .orElse(0)
+        );
         response.setDriver(driver);
         response.setFromCity(journey.getFromCity());
         response.setToCity(journey.getToCity());

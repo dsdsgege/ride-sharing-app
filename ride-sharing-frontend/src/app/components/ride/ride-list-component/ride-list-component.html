@@ -1,23 +1,26 @@
-@if (!rides || rides.length === 0 && !noContent()) {
+@if (this.loading()) {
   <p-progressbar mode="indeterminate" [style]="{ height: '6px' }" />
 } @else {
   <div class="container mx-auto p-4">
 
-  <h1 class="text-3xl font-bold text-center mb-6">Choose your ride</h1>
-  <div class="breadcrumb flex justify-between max-w-6xl mx-auto">
-    <p-breadcrumb [model]="items"/>
-    <div class="filter">
-      Filter&nbsp;<fa-icon [icon]="faFilter"></fa-icon>
+    <h1 class="text-3xl font-bold text-center mb-6">Choose your ride</h1>
+    <div class="breadcrumb flex justify-between max-w-6xl mx-auto">
+      <p-breadcrumb [model]="items"/>
+      <div class="filter-container">
+        <span class="filter"
+              (click)="filterDialogVisible = true">
+          Filter&nbsp;<fa-icon [icon]="faFilter"></fa-icon>
+        </span>
+      </div>
     </div>
-  </div>
 
-  <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
+    <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
 
-  <div class="form-section grid grid-cols-1 gap-4">
-  @for (ride of rides; track ride) {
-    <p-card header="{{ ride.fromCity }} &rarr; {{ ride.toCity }}"
-            routerLink="your-ride"
-            [queryParams]="{ id: ride.id }">
+      <div class="form-section grid grid-cols-1 gap-4">
+        @for (ride of rides; track ride) {
+          <p-card header="{{ ride.fromCity }} &rarr; {{ ride.toCity }}"
+                  routerLink="your-ride"
+                  [queryParams]="{ id: ride.id }">
             <div class="flex flex-row justify-between items-center w-full">
               <div class="flex flex-col gap-1">
                 <div class="font-bold text-sm md:text-xl">
@@ -31,7 +34,7 @@
                 </div>
               </div>
 
-              <div class="ml-4">
+              <div class="user-icon ml-4">
                 <p-button pTooltip="{{ ride.driver.rating }} ★"
                           tooltipPosition="left">
                   <fa-icon [icon]="faUser"
@@ -44,7 +47,92 @@
           </p-card>
         }
       </div>
-    </div>
   </div>
+</div>
 }
 <p-toast />
+<p-dialog
+  [(visible)]="filterDialogVisible"
+  header="Filter Options"
+  [modal]="true"
+  [draggable]="false"
+  [style]="{width: '60vw'}"
+  [breakpoints]="{'768px': '100vw'}">
+  <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+    <p-floatlabel>
+      <input id="pickupFrom" pInputText class="w-full" [formControl]="pickupControl"/>
+      <label for="pickupFrom">Pickup city</label>
+    </p-floatlabel>
+
+    <p-floatlabel>
+      <input id="dropOffTo" pInputText class="w-full" [formControl]="dropoffControl"/>
+      <label for="dropOffTo">Drop-off city</label>
+    </p-floatlabel>
+
+    <p-floatlabel class="w-full">
+      <p-inputnumber [inputStyle]="{ width: '100%' }"
+                     [formControl]="seatsControl"
+                     [showButtons]="true"
+                     [min]="1"
+                     [max]="8"
+                     id="seats"
+                     class="w-full"
+                     styleClass="w-full"
+                     suffix=" seat(s)">
+      </p-inputnumber>
+      <label for="seats">Minimum number of free seats</label>
+    </p-floatlabel>
+
+    <p-floatlabel class="w-full">
+      <p-inputnumber [formControl]="ratingControl"
+                     [showButtons]="true"
+                     [min]="1"
+                     [max]="5"
+                     [inputStyle]="{ width: '100%' }"
+                     inputId="driver-rating"
+                     class="w-full">
+      </p-inputnumber>
+      <label for="driver-rating">Minimum driver rating</label>
+    </p-floatlabel>
+
+    <p-floatlabel class="w-full">
+      <p-inputnumber [inputStyle]="{ width: '100%' }"
+                     [formControl]="passengerPriceControl"
+                     [min]="0"
+                     id="passenger-price"
+                     class="w-full"
+                     mode="currency"
+                     currency="HUF"
+                     locale="hu-HU"
+                     styleClass="w-full">
+      </p-inputnumber>
+      <label for="passenger-price">Maximum Price/person</label>
+    </p-floatlabel>
+
+    <p-datepicker [formControl]="this.dateControl"
+                  [iconDisplay]="'input'"
+                  [dateFormat]="'yy/mm/dd'"
+                  [showIcon]="true"
+                  [placeholder]="'Select date range'"
+                  class="w-full"
+                  selectionMode="range"
+                  dataType="string"
+                  appendTo="body"
+                  iconDisplay="input">
+    </p-datepicker>
+
+    <div class="flex gap-2 w-full">
+      <label for="withoutRating">Show without rating</label>
+      <p-checkbox [(ngModel)]="ratingCheck"
+                  [binary]="true"
+                  inputId="withoutRating"
+                  class="mt-1">
+      </p-checkbox>
+    </div>
+  </div>
+  <div class="flex justify-end mt-3">
+    <p-button (click)="filterRides()">
+      Apply
+    </p-button>
+  </div>
+</p-dialog>

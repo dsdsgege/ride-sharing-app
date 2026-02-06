@@ -12,18 +12,17 @@ public class Rating {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "driver_id")
-    private Driver driver;
-
-    @ManyToOne
-    @JoinColumn(name = "passenger_id")
-    private Passenger passenger;
-
-    @ManyToOne
     @JoinColumn(name = "journey_id")
     private Journey journey;
 
     private double value;
 
+    private RatingType type;
+
     private String comment;
+}
+
+enum RatingType {
+    PASSENGER_TO_DRIVER,
+    DRIVER_TO_PASSENGER
 }

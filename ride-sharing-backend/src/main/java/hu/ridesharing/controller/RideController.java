@@ -1,5 +1,6 @@
 package hu.ridesharing.controller;
 
+import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.service.JourneyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,11 @@ public class RideController {
         var sort = Sort.by(sortBy);
         return journeyService.getRides(fromCity, toCity, dateFrom.toLocalDateTime(), dateTo.toLocalDateTime(),
                 PageRequest.of(page, pageSize, "desc".equalsIgnoreCase(direction) ? sort.descending() : sort));
+    }
+
+    @PostMapping("/rides/filter")
+    public Page<JourneyResponseDTO> filterRides(@RequestBody RideFilterRequest filterRequest) {
+        return journeyService.getRides(filterRequest);
     }
 
     @GetMapping("/{id}")

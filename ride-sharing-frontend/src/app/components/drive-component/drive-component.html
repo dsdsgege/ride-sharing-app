@@ -42,6 +42,7 @@
             <p-floatlabel class="custom-form-element w-full">
               <p-inputnumber id="car-price"
                              class="w-full"
+                             [inputStyle]="{ width: '100%' }"
                              [formControl]="carPriceControl"
                              mode="currency"
                              currency="HUF"
@@ -56,6 +57,7 @@
             <p-floatlabel class="custom-form-element w-full">
               <p-inputnumber inputId="model-year"
                              class="w-full"
+                             [inputStyle]="{ width: '100%' }"
                              [formControl]="modelYearControl"
                              [useGrouping]="false"
                              [min]="1980"
@@ -67,13 +69,15 @@
 
           <div class="element">
             <p-floatlabel class="custom-form-element w-full">
-              <p-inputnumber class="w-full"
-                             [formControl]="consumptionControl"
-                             mode="decimal"
+              <p-inputnumber [formControl]="consumptionControl"
+                             [inputStyle]="{ width: '100%' }"
                              [showButtons]="true"
+                             [min]="0"
+                             [max]="100"
+                             class="w-full"
+                             mode="decimal"
                              suffix=" liter"
-                             inputId="mileage"
-                             [min]="0" [max]="100">
+                             inputId="mileage">
               </p-inputnumber>
               <label for="mileage">Mileage (liter/100km)</label>
             </p-floatlabel>
@@ -81,12 +85,13 @@
 
           <div class="element">
             <p-floatlabel class="custom-form-element w-full">
-              <p-inputnumber id="seats"
-                             class="w-full"
-                             [formControl]="seatsControl"
+              <p-inputnumber [formControl]="seatsControl"
                              [showButtons]="true"
                              [min]="1"
                              [max]="8"
+                             [inputStyle]="{ width: '100%' }"
+                             id="seats"
+                             class="w-full"
                              suffix=" seat(s)">
               </p-inputnumber>
               <label for="seats">Number of free seats</label>
@@ -142,32 +147,32 @@
             </p-datepicker>
           </div>
         </div>
-
-        <p-dialog header="Warning!" [modal]="true"
-                  [draggable]="false"
-                  [(visible)]="dialogVisible"
-                  [style]="{ width: '60%' }" >
-          <div class="flex flex-col">
-            <p>
-              You will get  {{ this.passengerPrice?.["price"] | currency:'HUF':'Ft':'1.0-0'}} per passenger.
-            </p>
-            <div class="flex gap-3 justify-end">
-              <p-button severity="secondary"
-                        type="button">
-                Cancel
-              </p-button>
-              <p-button type="submit">
-                Share&nbsp;ride
-              </p-button>
-            </div>
-          </div>
-        </p-dialog>
       </form>
     </div>
     <div class="flex mt-4 justify-end">
       <p-button (click)="showDialog()">Share&nbsp;ride</p-button>
     </div>
   </div>
-
 </div>
+
 <p-toast />
+
+<p-dialog header="Warning!" [modal]="true"
+          [draggable]="false"
+          [(visible)]="dialogVisible"
+          [style]="{ width: '60%' }" >
+  <div class="flex flex-col">
+    <p>
+      You will get  {{ this.passengerPrice?.["price"] | currency:'HUF':'Ft':'1.0-0'}} per passenger.
+    </p>
+    <div class="flex gap-3 justify-end">
+      <p-button (click)="dialogVisible=false" severity="secondary"
+                type="button">
+        Cancel
+      </p-button>
+      <p-button type="submit">
+        Share&nbsp;ride
+      </p-button>
+    </div>
+  </div>
+</p-dialog>

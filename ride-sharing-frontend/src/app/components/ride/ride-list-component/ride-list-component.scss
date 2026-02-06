@@ -1,12 +1,16 @@
 ::ng-deep {
-  .p-button {
-    background-color: transparent;
-    border: none;
+  .user-icon {
+    .p-button {
+      background-color: transparent;
+      border: none;
+    }
   }
 
-  .p-button:not(:disabled):hover {
-    background-color: transparent;
-    border: none;
+  .user-icon {
+    .p-button:not(:disabled):hover {
+      background-color: transparent;
+      border: none;
+    }
   }
 }
 
@@ -18,6 +22,18 @@
   transform: translate(0, -0.3rem)
 }
 
-.filter:hover {
+.filter-container {
+  display: flex;
+  align-items: end;
+  padding: 0.2em;
+}
+
+.filter-container .filter:hover {
   cursor: pointer;
+}
+
+::ng-deep .p-datepicker {
+  input {
+    width: 100%;
+  }
 }

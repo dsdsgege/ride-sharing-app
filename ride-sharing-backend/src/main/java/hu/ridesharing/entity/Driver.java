@@ -18,16 +18,7 @@ public class Driver {
 
     private String fullName;
 
-    @OneToMany(mappedBy = "driver")
-    private Set<Rating> ratings;
-
+    @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
     private Set<Journey> drives;
-
-    public double getRating() {
-        return ratings.stream()
-                .mapToDouble(Rating::getValue)
-                .average()
-                .orElse(0);
-    }
 }

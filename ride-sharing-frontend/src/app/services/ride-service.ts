@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {RideModelResponse} from '../model/ride/ride-model-response';
 import {RideModel} from '../model/ride/ride-model';
+import {RideFilterModel} from '../model/ride/RideFilterModel';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,13 @@ export class RideService {
   public findAll(page: number, pageSize: number, sortBy: string, direction: string, pickupFrom: string,
                  dropOffTo: string, dateFrom: Date, dateTo: Date): Observable<RideModelResponse> {
 
-    console.log("findAll");
     return this.httpClient.get<RideModelResponse>(`${this.apiUrl}/rides?page=${page}&page_size=${pageSize}&` +
       `sort_by=${sortBy}&direction=${direction}&from=${pickupFrom}&to=${dropOffTo}&date_from=` +
       `${dateFrom.toISOString()}&date_to=${dateTo.toISOString()}`);
+  }
+
+  public findByFilter(filter: RideFilterModel): Observable<RideModelResponse> {
+    return this.httpClient.post<RideModelResponse>(`${this.apiUrl}/rides/filter`, filter);
   }
 
   public findById(id: number): Observable<RideModel> {
@@ -25,7 +29,6 @@ export class RideService {
   }
 
   public findRideCountByUsername(username: String) {
-    console.log("findRideCountByPassenger called");
     return this.httpClient.get<number>(`${this.apiUrl}/ride-count?username=${username}`);
   }
 
