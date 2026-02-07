@@ -10,6 +10,7 @@ import java.util.Set;
 @Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(exclude = "rides")
 public class Passenger {
 
     @Id
@@ -18,7 +19,8 @@ public class Passenger {
 
     private String fullName;
 
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "passengers")
-    private Set<Journey> rides;
+    private String emailAddress;
+
+    @OneToMany(mappedBy = "passenger")
+    private Set<JourneyPassenger> rides;
 }

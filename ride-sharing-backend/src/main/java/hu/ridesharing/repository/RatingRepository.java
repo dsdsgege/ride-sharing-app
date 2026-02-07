@@ -21,6 +21,6 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
         INNER JOIN passenger p ON jp.passenger_id = p.id
         WHERE p.username = ?
      */
-    @Query("SELECT r FROM Rating r INNER JOIN r.journey.passengers p WHERE :passenger = p")
+    @Query("SELECT r FROM Rating r INNER JOIN r.journey.passengers jp WHERE jp.passenger = :passenger")
     List<Rating> findByPassenger(Passenger passenger);
 }

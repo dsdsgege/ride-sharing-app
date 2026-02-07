@@ -56,4 +56,12 @@ export class DriveService {
     console.log("findRideCountByPassenger called");
     return this.httpClient.get<number>(`${this.apiUrl}/driver-rating?username=${username}`);
   }
+
+  public acceptPassenger(token: String | undefined) {
+    return this.httpClient.post<AcceptanceStatus>(`${this.apiUrl}/accept-passenger`, {token: token});
+  }
+}
+
+interface AcceptanceStatus {
+  success: boolean;
 }

@@ -147,6 +147,25 @@
             </p-datepicker>
           </div>
         </div>
+        <p-dialog header="Warning!" [modal]="true"
+                  [draggable]="false"
+                  [(visible)]="dialogVisible"
+                  [style]="{ width: '60%' }" >
+          <div class="flex flex-col">
+            <p>
+              You will get  {{ this.passengerPrice?.["price"] | currency:'HUF':'Ft':'1.0-0'}} per passenger.
+            </p>
+            <div class="flex gap-3 justify-end">
+              <p-button (click)="dialogVisible=false" severity="secondary"
+                        type="button">
+                Cancel
+              </p-button>
+              <p-button type="submit">
+                Share&nbsp;ride
+              </p-button>
+            </div>
+          </div>
+        </p-dialog>
       </form>
     </div>
     <div class="flex mt-4 justify-end">
@@ -156,23 +175,3 @@
 </div>
 
 <p-toast />
-
-<p-dialog header="Warning!" [modal]="true"
-          [draggable]="false"
-          [(visible)]="dialogVisible"
-          [style]="{ width: '60%' }" >
-  <div class="flex flex-col">
-    <p>
-      You will get  {{ this.passengerPrice?.["price"] | currency:'HUF':'Ft':'1.0-0'}} per passenger.
-    </p>
-    <div class="flex gap-3 justify-end">
-      <p-button (click)="dialogVisible=false" severity="secondary"
-                type="button">
-        Cancel
-      </p-button>
-      <p-button type="submit">
-        Share&nbsp;ride
-      </p-button>
-    </div>
-  </div>
-</p-dialog>

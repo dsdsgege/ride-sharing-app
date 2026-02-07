@@ -21,8 +21,3 @@ public class Rating {
 
     private String comment;
 }
-
-enum RatingType {
-    PASSENGER_TO_DRIVER,
-    DRIVER_TO_PASSENGER
-}

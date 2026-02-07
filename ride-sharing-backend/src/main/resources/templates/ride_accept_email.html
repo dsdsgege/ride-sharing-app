@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple email</title>
+</head>
+<body>
+ <div class="wrapper">
+     <h1>Dear <span th:text="${driver}"></span>,</h1>
+     <br>
+     <div>
+         Passenger <strong><span th:text="${passenger}"></span></strong>
+         <span th:if="${passengerRating} > 0">with a rating of
+            <span th:text="passengerRating"></span>&#10029;
+         </span>
+         <span th:unless="${passengerRating} > 0">
+             that has no rating yet
+         </span>
+         wants to join your ride:
+     </div>
+     <br>
+     <table style="border: 1px solid #ccc; border-collapse: collapse; padding: 10px; width: 100%; max-width: 600px;">
+         <tr style="background-color: #f9f9f9; border-bottom: 1px solid #ccc;">
+             <td style="border-right: 1px solid #ccc; padding: 8px"><strong>Ride #</strong></td>
+             <td style="border-right: 1px solid #ccc; padding: 8px"><strong>Route</strong></td>
+             <td style="padding: 8px"><strong>Time</strong></td>
+         </tr>
+         <tr>
+             <td style="border-right: 1px solid #ccc; padding: 8px"><span th:text="${rideNumber}"></span></td>
+             <td style="border-right: 1px solid #ccc; padding: 8px"><span th:text="${fromCity}"></span> - <span th:text="${toCity}"></span></td>
+             <td style="padding: 8px"><span th:text="${depart}"></span> - <span th:text="${arrive}"></span></td>
+         </tr>
+     </table>
+     <br><br>
+     <div>
+         Please review the details and confirm the booking:
+         <br><br>
+         <a th:href="${acceptLink}"
+            style="background-color: #007bff; color: white; padding: 10px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+             Accept Passenger
+         </a>
+     </div>
+     <br><br>
+     <div style="font-size: 12px; color: #999;">
+         Best wishes,<br>
+         <strong>RideSharingApp Team</strong>
+     </div>
+ </div>
+</body>
+</html>

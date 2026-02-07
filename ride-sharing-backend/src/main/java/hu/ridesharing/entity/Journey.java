@@ -27,13 +27,8 @@ public class Journey {
     @JoinColumn(name = "driver_id")
     private Driver driver;
 
-    @ManyToMany
-    @JoinTable(
-            name = "passenger_journey",
-            joinColumns = @JoinColumn(name = "journey_id"),
-            inverseJoinColumns = @JoinColumn(name = "passenger_username")
-    )
-    private Set<Passenger> passengers;
+    @OneToMany(mappedBy = "journey")
+    private Set<JourneyPassenger> passengers;
 
     @OneToMany(mappedBy = "journey")
     private Set<Rating> ratings;

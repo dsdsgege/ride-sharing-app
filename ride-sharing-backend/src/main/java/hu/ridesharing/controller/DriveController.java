@@ -74,4 +74,15 @@ public class DriveController {
     public double getDriverRatingByUsername(@RequestParam String username) {
         return driverService.getDriverRatingByUsername(username);
     }
+
+    @PostMapping("/accept-passenger")
+    public AcceptanceStatus acceptPassenger(@RequestBody Token token) {
+        return new AcceptanceStatus(driverService.acceptPassenger(token.token()));
+    }
+
+    record AcceptanceStatus(boolean success) {
+    }
+
+    record Token(String token) {
+    }
 }

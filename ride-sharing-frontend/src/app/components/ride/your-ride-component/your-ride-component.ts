@@ -77,6 +77,9 @@ export class YourRideComponent implements OnInit {
     this.keycloak.loadUserProfile().then(profile => {
       const fullName = profile.firstName + " " + profile.lastName;
       this.rideService.joinRide(this.ride.id, profile.username ?? "", profile.email ?? "", fullName).subscribe();
+    }).catch(err => {
+      this.keycloak.login();
+      console.error(err);
     });
   }
 }

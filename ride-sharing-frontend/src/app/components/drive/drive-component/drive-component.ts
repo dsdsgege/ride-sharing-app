@@ -1,5 +1,5 @@
 import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
-import {CarsService} from '../../services/cars-service';
+import {CarsService} from '../../../services/cars-service';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
 import {DatePicker} from 'primeng/datepicker';
@@ -7,15 +7,15 @@ import {FloatLabel} from 'primeng/floatlabel';
 import {InputText} from 'primeng/inputtext';
 import {Listbox, ListboxChangeEvent} from 'primeng/listbox';
 import {InputNumber} from 'primeng/inputnumber';
-import {FormService} from '../../services/form-service';
+import {FormService} from '../../../services/form-service';
 import {Button} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
 import {CurrencyPipe} from '@angular/common';
 import { MessageService } from 'primeng/api';
 import {Toast} from 'primeng/toast';
-import {PassengerPrice, DriveService} from '../../services/drive-service';
+import {PassengerPrice, DriveService} from '../../../services/drive-service';
 import Keycloak from 'keycloak-js';
-import {DriverModel} from '../../model/driver-model';
+import {DriverModel} from '../../../model/driver-model';
 import {ProgressBar} from 'primeng/progressbar';
 
 @Component({
@@ -183,7 +183,8 @@ export class DriveComponent implements OnInit {
 
   protected addDrive() {
     this.keycloak.loadUserProfile().then(profile => {
-      let driver = new DriverModel(profile.username ?? "", profile.firstName + " " + profile.lastName, 0);
+      let driver = new DriverModel(profile.username ?? "", profile.firstName + " " + profile.lastName,
+        profile.email ?? "", 0);
       console.log(driver);
 
       this.driveService.addDrive(this.driveForm.value, this.passengerPrice, driver).subscribe({

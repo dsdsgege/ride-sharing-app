@@ -18,6 +18,8 @@ public class Driver {
 
     private String fullName;
 
+    private String emailAddress;
+
     @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "driver")
     private Set<Journey> drives;

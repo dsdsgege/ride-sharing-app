@@ -3,14 +3,13 @@ package hu.ridesharing.service;
 import hu.ridesharing.dto.DriverDTO;
 import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
-import hu.ridesharing.entity.Driver;
-import hu.ridesharing.entity.Journey;
-import hu.ridesharing.entity.Passenger;
-import hu.ridesharing.entity.Rating;
+import hu.ridesharing.entity.*;
+import hu.ridesharing.repository.JourneyPassengerRepository;
 import hu.ridesharing.repository.JourneyRepository;
 import hu.ridesharing.repository.PassengerRepository;
 import hu.ridesharing.repository.RatingRepository;
 import hu.ridesharing.repository.specification.JourneySpecificationFactory;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -33,12 +33,20 @@ public class JourneyService {
 
     private final RatingRepository ratingRepository;
 
+    private final JourneyPassengerRepository journeyPassengerRepository;
+
+    private final EmailService emailService;
+
     @Autowired
     public JourneyService(JourneyRepository journeyRepository, PassengerRepository passengerRepository,
-                          RatingRepository ratingRepository, EmailService emailService) {
+                          RatingRepository ratingRepository, EmailService emailService,
+                          JourneyPassengerRepository journeyPassengerRepository) {
 
         this.journeyRepository = journeyRepository;
         this.passengerRepository = passengerRepository;
+        this.ratingRepository = ratingRepository;
+        this.emailService = emailService;
+        this.journeyPassengerRepository = journeyPassengerRepository;
     }
 
     public Journey addDrive(Journey drive) {
@@ -106,19 +114,34 @@ public class JourneyService {
     @Transactional
     public void joinRide(Long id, String passengerUsername, String passengerEmail, String passengerFullName) {
         Journey journey = journeyRepository.findById(id).orElseThrow();
-        journey.setSeats(journey.getSeats() - 1);
 
         var passenger = passengerRepository.findById(passengerUsername);
-        if (passenger.isPresent()) {
-            journey.getPassengers().add(passenger.get());
-
-        } else {
+        Passenger savedPassenger;
+        if (passenger.isEmpty()) {
             Passenger newPassenger = new Passenger();
             newPassenger.setUsername(passengerUsername);
             newPassenger.setFullName(passengerFullName);
-            passengerRepository.save(newPassenger);
+            newPassenger.setEmailAddress(passengerEmail);
 
-            journey.getPassengers().add(newPassenger);
+            savedPassenger = passengerRepository.save(newPassenger);
+        } else {
+            savedPassenger = passenger.get();
+        }
+
+        // save the relationship (accepted is false by default)
+        // the driver has to accept the Passenger through email
+        String secureToken = UUID.randomUUID().toString();
+        JourneyPassenger jp = new JourneyPassenger();
+        jp.setJourney(journey);
+        jp.setPassenger(savedPassenger);
+        jp.setAcceptToken(secureToken);
+        journeyPassengerRepository.save(jp);
+
+        try {
+            emailService.sendRideAcceptEmail(journey, savedPassenger, secureToken);
+        } catch (MessagingException e) {
+            //TODO
+            e.printStackTrace();
         }
     }
 
