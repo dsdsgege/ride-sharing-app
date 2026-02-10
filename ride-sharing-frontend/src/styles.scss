@@ -130,6 +130,12 @@ body {
   transition: background-color #{variables.$transition-speed};
 }
 
+@media (max-width: 768px) {
+  body {
+    margin-top: 2.4rem;
+  }
+}
+
 .spinner-container {
   position: fixed;
   top: 0;
@@ -163,7 +169,7 @@ button {
   background-color: transparent;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .breadcrumb {
     font-size: 0.7rem;
   }

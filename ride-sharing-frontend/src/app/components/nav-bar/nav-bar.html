@@ -41,14 +41,13 @@
       <a routerLink="drive" routerLinkActive="active-mobile">DRIVE</a>
     </div>
     <div class="flex-1">
-      @if (keycloak.authenticated) {
-        <script>console.log("authenticated");</script>
-        <a (click)="logout()">LOGOUT</a>
-      } @else {
-        <a routerLink="profile" routerLinkActive="active-mobile">PROFILE</a>
-        <script>console.log("not authenticated");</script>
-      }
+      <a routerLink="profile" routerLinkActive="active-mobile">PROFILE</a>
     </div>
+    @if (keycloak.authenticated) {
+      <div class="flex-1">
+        <a (click)="logout()">LOGOUT</a>
+      </div>
+    }
   </div>
 
   <div class="hidden md:flex flex-2 justify-start">
@@ -59,10 +58,15 @@
 
   <div class="flex-1"></div>
 
-  <div class="hidden md:flex flex-1">
+  <div class="hidden md:flex flex-1 gap-6">
     <div class="flex-1 nav-item">
       <a routerLink="profile" routerLinkActive="active">PROFILE</a>
     </div>
+    @if (keycloak.authenticated) {
+      <div class="flex-1 nav-item ">
+        <a (click)="logout();">LOGOUT</a>
+      </div>
+    }
     <div class="flex-1 nav-item">
       @if (themeService.isDarkMode()) {
         <button (click)="onThemeButtonClick()">

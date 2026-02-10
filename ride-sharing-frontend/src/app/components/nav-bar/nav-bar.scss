@@ -1,6 +1,15 @@
 .nav-bar {
   background-color: var(--navbar-bg);
   color: #e3e2e2;
+  position: fixed;
+  width: 100%;
+  z-index: 1500;
+  top: 0;
+  left: 0;
+}
+
+.nav-item {
+  user-select: none;
 }
 
 .nav-item > button:hover {
