@@ -147,10 +147,12 @@
             </p-datepicker>
           </div>
         </div>
-        <p-dialog header="Warning!" [modal]="true"
+        <p-dialog header="Warning!"
+                  [modal]="true"
                   [draggable]="false"
                   [(visible)]="dialogVisible"
-                  [style]="{ width: '60%' }" >
+                  [style]="{width: '60vw', 'background-color': 'var(--dialog-bg)', 'backdrop-filter': 'blur(20px)',
+                   border: 'none'}">
           <div class="flex flex-col">
             <p>
               You will get  {{ this.passengerPrice?.["price"] | currency:'HUF':'Ft':'1.0-0'}} per passenger.
@@ -173,5 +175,4 @@
     </div>
   </div>
 </div>
-
 <p-toast />

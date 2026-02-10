@@ -191,7 +191,7 @@ export class DriveComponent implements OnInit {
         next: resp => {
           const severity = resp.success ? 'success' : 'error';
           const detail = resp.success ? 'Your ride is shared' : 'Could not share ride';
-          this.messageService.add({ severity, summary: resp.success ? 'Success' : 'Error', detail });
+          this.messageService.add({ severity, summary: resp.success ? 'Success' : 'Error', detail});
         },
         error: err => alert(err.message)
       });
@@ -203,4 +203,6 @@ export class DriveComponent implements OnInit {
       make => make.toLowerCase().includes(search.toLowerCase())
     ));
   }
+
+
 }

@@ -47,7 +47,16 @@
           </p-card>
         }
       </div>
-  </div>
+      <div class="flex justify-center">
+        <p-paginator class="m-3"
+                     (onPageChange)="onPageChange($event)"
+                     [first]="first"
+                     [rows]="pageSize"
+                     [totalRecords]="totalRecords"
+                     [rowsPerPageOptions]="[5, 10, 20]">
+        </p-paginator>
+      </div>
+    </div>
 </div>
 }
 <p-toast />
@@ -56,7 +65,7 @@
   header="Filter Options"
   [modal]="true"
   [draggable]="false"
-  [style]="{width: '60vw'}"
+  [style]="{width: '60vw', 'background-color': 'var(--dialog-bg)', 'backdrop-filter': 'blur(20px)', border: 'none'}"
   [breakpoints]="{'768px': '100vw'}">
   <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
     <p-floatlabel>

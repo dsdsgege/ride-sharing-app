@@ -3,9 +3,7 @@ import {Breadcrumb} from 'primeng/breadcrumb';
 import {MenuItem, MessageService} from 'primeng/api';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {RideService} from '../../../services/ride-service';
-import {Observable} from 'rxjs';
 import {RideModel} from '../../../model/ride/ride-model';
-import {RideModelResponse} from '../../../model/ride/ride-model-response';
 import {Card} from 'primeng/card';
 import { ProgressBarModule } from 'primeng/progressbar';
 import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
@@ -24,6 +22,7 @@ import {InputNumber} from 'primeng/inputnumber';
 import {RideFilterModel} from '../../../model/ride/RideFilterModel';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
+import {Paginator} from 'primeng/paginator';
 
 @Component({
   selector: 'app-ride-list',
@@ -45,7 +44,8 @@ import { CheckboxModule } from 'primeng/checkbox';
     DatePicker,
     InputNumber,
     CheckboxModule,
-    FormsModule
+    FormsModule,
+    Paginator
   ],
   providers: [MessageService],
   templateUrl: './ride-list-component.html',
@@ -54,10 +54,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 })
 export class RideListComponent implements OnInit {
 
-  protected page: number = 0;
-  protected pageSize: number = 10;
-  protected sortBy: string = "depart"
-  protected direction: string = "asc";
   protected pickupFrom!: string;
   protected dropOffTo!: string;
   protected dateFrom!: Date;
@@ -79,11 +75,19 @@ export class RideListComponent implements OnInit {
 
   protected filterDialogVisible: boolean = false;
 
-  protected dialogWidth = '50%';
-
   protected readonly faUser = faUser;
   protected readonly dateFormat: string = "short" // M/d/yy, h:mm a
   protected readonly faFilter = faFilter;
+
+  // paginator properties
+  protected first = 0;
+  protected page: number = 0;
+  protected pageSize: number = 10;
+  protected sortBy: string = "depart"
+  protected direction: string = "asc";
+  protected totalRecords = 0;
+
+  private advancedFilterApplied = false;
 
   private readonly rideService: RideService = inject(RideService)
 
@@ -115,21 +119,7 @@ export class RideListComponent implements OnInit {
       this.dateControl.setValue([this.dateFrom, this.dateTo]);
     });
 
-    console.log(this.dateTo, this.dateFrom)
-
-    this.loading.set(true);
-    this.rideService.findAll(this.page, this.pageSize, this.sortBy, this.direction,
-      this.pickupFrom, this.dropOffTo, this.dateFrom, this.dateTo).subscribe(response => {
-        this.rides = response.content;
-
-        if (response.content.length === 0) {
-          this.messageService.add({severity: 'warn', summary: 'No rides found',
-            detail: 'No rides found for the given parameters.'});
-          console.log("No rides found for the given parameters.")
-        }
-        console.log(response.content);
-        this.loading.set(false);
-      });
+    this.findRides();
 
     // load saved advanced filter to inputs
     let filter = JSON.parse(localStorage.getItem("ride-filter") ?? "null");
@@ -141,6 +131,24 @@ export class RideListComponent implements OnInit {
       this.passengerPriceControl.setValue(filter.price);
       this.ratingControl.setValue(filter.rating);
     }
+  }
+
+  findRides() {
+    this.loading.set(true);
+    this.rideService.findAll(this.page, this.pageSize, this.sortBy, this.direction,
+      this.pickupFrom, this.dropOffTo, this.dateFrom, this.dateTo).subscribe(response => {
+      this.rides = response.content;
+
+      this.totalRecords = response.totalElements;
+
+      if (response.content.length === 0) {
+        this.messageService.add({severity: 'warn', summary: 'No rides found',
+          detail: 'No rides found for the given parameters.'});
+        console.log("No rides found for the given parameters.")
+      }
+      console.log(response.content);
+      this.loading.set(false);
+    });
   }
 
   filterRides() {
@@ -183,11 +191,27 @@ export class RideListComponent implements OnInit {
 
     this.rideService.findByFilter(filter).subscribe(response => {
       this.rides = response.content;
+      this.totalRecords = response.totalElements;
+
       if (response.content.length === 0) {
         this.messageService.add({severity: 'warn', summary: 'No rides found',
           detail: 'No rides found for the given parameters.'});
       }
       this.loading.set(false);
     });
+
+    this.advancedFilterApplied = true;
+  }
+
+  protected onPageChange($event: any) {
+    this.page = $event.page;
+    this.pageSize = $event.rows;
+    this.first = $event.first;
+
+    if (this.advancedFilterApplied) {
+      this.filterRides();
+    } else {
+      this.findRides();
+    }
   }
 }

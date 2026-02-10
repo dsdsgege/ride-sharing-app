@@ -98,7 +98,8 @@ public class JourneyService {
     public int getRideCountByUsername(String username) {
         Passenger passenger = new Passenger();
         passenger.setUsername(username);
-        var count = journeyRepository.findByPassengers(passenger).size();
+
+        var count = journeyPassengerRepository.findJourneyPassengersByPassenger(passenger).size();
         log.debug("Found {} rides for {}", count, username);
         return count;
     }

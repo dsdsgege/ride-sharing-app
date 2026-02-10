@@ -26,6 +26,7 @@
   display: flex;
   align-items: end;
   padding: 0.2em;
+  user-select: none;
 }
 
 .filter-container .filter:hover {

@@ -21,13 +21,16 @@
   --text-hover-color: #{variables.$color-light-text-hover};
   --card-hover-color: #{variables.$color-light-card-hover};
 
-  --dialog-bg: #{variables.$dialog-bg};
+  --dialog-bg: #{variables.$dialog-bg-light};
+
+  --background: linear-gradient(#9fd1d3, #b5ade3);
 
   color-scheme: light;
 }
 
 body.dark-theme {
-  background: linear-gradient(#0a5e62, #17082a);
+  --background: linear-gradient(#0a5e62, #17082a);
+
   --navbar-bg: #{variables.$navbar-dark-bg};
 
   --bg-color: #{variables.$color-dark-bg};
@@ -42,14 +45,17 @@ body.dark-theme {
   --text-hover-color: #{variables.$color-dark-text-hover};
   --card-hover-color: #{variables.$color-dark-card-hover};
 
+  --dialog-bg: #{variables.$dialog-bg-dark};
+
   color-scheme: dark;
 }
 
 body {
-  background: linear-gradient(#9fd1d3, #b5ade3);
+  margin-top: 5rem;
+
+  background: var(--background);
   color: var(--text-color);
   min-height: 100vh;
-  margin: 0;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
 
   // input text
@@ -107,6 +113,20 @@ body {
   // progressbar
   --p-progressbar-border-radius: 0;
 
+  // p-select
+  --p-select-background: none;
+  --p-select-border-color: gray;
+  --p-select-focus-border-color: var(--text-color);
+  --p-select-focus-ring-color: var(--text-color);
+  --p-select-color: var(--text-color);
+
+  // paginator
+  --p-paginator-background: none;
+  --p-paginator-color: var(--text-color);
+  --p-paginator-nav-button-color: var(--text-color);
+  --p-paginator-nav-button-selected-color: var(--text-color);
+  --p-paginator-nav-button-selected-background: var(--card-hover-color);
+
   transition: background-color #{variables.$transition-speed};
 }
 
@@ -120,7 +140,7 @@ body {
 
 .card {
   padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.03);
+  background-color: rgba(128, 232, 255, 0.1);
   border-radius: 8px;
   transition: all ease-in-out 0.2s;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -141,6 +161,12 @@ button {
 
 .breadcrumb {
   background-color: transparent;
+}
+
+@media (max-width: 600px) {
+  .breadcrumb {
+    font-size: 0.7rem;
+  }
 }
 
 footer a:hover {
@@ -176,4 +202,14 @@ main {
 .p-card:hover {
   cursor: pointer;
   background-color: var(--card-hover-color);
+}
+
+.p-toast {
+  top: 100px !important;
+}
+
+@media (max-width: 768px) {
+  .p-toast {
+    top: 50px !important;
+  }
 }
