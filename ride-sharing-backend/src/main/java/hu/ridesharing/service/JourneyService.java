@@ -4,6 +4,7 @@ import hu.ridesharing.dto.DriverDTO;
 import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.entity.*;
+import hu.ridesharing.exception.JoinRideException;
 import hu.ridesharing.repository.JourneyPassengerRepository;
 import hu.ridesharing.repository.JourneyRepository;
 import hu.ridesharing.repository.PassengerRepository;
@@ -136,7 +137,11 @@ public class JourneyService {
         jp.setJourney(journey);
         jp.setPassenger(savedPassenger);
         jp.setAcceptToken(secureToken);
-        journeyPassengerRepository.save(jp);
+        try {
+            journeyPassengerRepository.save(jp);
+        } catch (Exception e) {
+            throw new JoinRideException(e.getMessage(), e);
+        }
 
         try {
             emailService.sendRideAcceptEmail(journey, savedPassenger, secureToken);

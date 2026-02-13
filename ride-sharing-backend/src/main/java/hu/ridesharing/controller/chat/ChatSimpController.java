@@ -1,4 +1,4 @@
-package hu.ridesharing.controller;
+package hu.ridesharing.controller.chat;
 
 import hu.ridesharing.entity.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +8,22 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+/**
+ * This class handles the websocket communication.
+ */
 @Controller
 @MessageMapping("/chat")
-public class ChatController {
+public class ChatSimpController {
 
     private final SimpMessagingTemplate messagingTemplate;
 
     @Autowired
-    public ChatController(SimpMessagingTemplate messagingTemplate) {
+    public ChatSimpController(SimpMessagingTemplate messagingTemplate) {
         this.messagingTemplate = messagingTemplate;
     }
 
-    @MessageMapping("/private-message")
-    public ChatMessage sendMessage(@Payload ChatMessage chat) {
+    @MessageMapping("/private-messages")
+    public void sendMessage(@Payload ChatMessage chat) {
         chat.setTimestamp(System.currentTimeMillis());
 
         // this way we do not need to make complex url's on the frontend
@@ -28,8 +31,6 @@ public class ChatController {
 
         // sending it to the sender as well, so they both see the sent message
         messagingTemplate.convertAndSend("/topic/private-messages/" + chat.getSender(), chat);
-
-        return chat;
     }
 
     @MessageMapping("/add-user")

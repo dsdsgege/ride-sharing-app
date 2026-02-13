@@ -6,10 +6,10 @@ const isAccessAllowed = async (
   __: RouterStateSnapshot,
   authData: AuthGuardData
 ): Promise<boolean> => {
-  const { authenticated, grantedRoles, keycloak } = authData;
+  const { authenticated, keycloak } = authData;
 
   try {
-    if(!authenticated) {
+    if (!authenticated) {
       await keycloak.login()
       return keycloak.authenticated === true;
     } else {

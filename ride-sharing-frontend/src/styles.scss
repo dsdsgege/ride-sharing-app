@@ -127,6 +127,9 @@ body {
   --p-paginator-nav-button-selected-color: var(--text-color);
   --p-paginator-nav-button-selected-background: var(--card-hover-color);
 
+  // inputgroup addon
+  --p-inputgroup-addon-border-color: var(--text-color);
+
   transition: background-color #{variables.$transition-speed};
 }
 

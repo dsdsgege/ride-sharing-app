@@ -23,35 +23,39 @@ export class ChatService implements OnDestroy {
   constructor() {
   }
 
-  openConnection(username: string){
+  openConnection(username: string): Promise<void>{
     this.stompClient = new Client({
       brokerURL: this.url,
-
-      debug: (str) => console.log(str),
       reconnectDelay: 5000, // Auto-reconnect
     });
 
-    this.stompClient.onConnect = (frame) => {
-      console.log('Connected: ' + this.stompClient?.connected);
+    const client = this.stompClient;
+    return new Promise(resolve => {
 
-      // The client only subscribes to their own topic as backend sends the message to both topic
-      this.stompClient?.subscribe(`/topic/private-message/${username}`, (message: Message) => {
-        if (message.body) {
-          const parsedMessage: ChatModel = JSON.parse(message.body);
-          this.messageSubject.next(parsedMessage);
-        }
-      });
+      // defining the callback on connection
+      client.onConnect = (frame) => {
+        console.log('Connected: ' + this.stompClient?.connected);
 
-      this.connectedSubj.next(true);
-    };
+        // The client only subscribes to their own topic as backend sends the message to both topic
+        this.stompClient?.subscribe(`/topic/private-messages/${username}`, (message: Message) => {
+          if (message.body) {
+            const parsedMessage: ChatModel = JSON.parse(message.body);
+            this.messageSubject.next(parsedMessage);
+          }
+        });
 
-    this.stompClient.activate();
+        this.connectedSubj.next(true);
+        resolve();
+      };
+
+      client.activate();
+    });
   }
 
   sendMessage(message: ChatModel) {
     if (this.stompClient && this.stompClient.connected) {
       this.stompClient.publish({
-        destination: `/app/chat/private-message`,
+        destination: `/app/chat/private-messages`,
         body: JSON.stringify(message)
       });
     } else {

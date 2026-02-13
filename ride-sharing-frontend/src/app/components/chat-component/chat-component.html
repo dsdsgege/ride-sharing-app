@@ -1,7 +1,7 @@
 @if (!isExpanded()) {
   <div class="chat-window-expandable flex justify-between">
     <span>
-      <fa-icon [icon]="faArrowCircleUp"></fa-icon>&nbsp;Send a message to&nbsp;{{ this.name() }}
+      <fa-icon [icon]="faArrowCircleUp"></fa-icon>&nbsp;Send a message to&nbsp;{{ this.otherName() }}
     </span>
 
     <fa-icon class="justify-end hover:border-b"
@@ -13,7 +13,7 @@
   <div class="chat-window-expanded">
     <div class="chat-header flex justify-between">
       <span>
-        <fa-icon [icon]="faUser"></fa-icon>&nbsp;{{ this.name() }}
+        <fa-icon [icon]="faUser"></fa-icon>&nbsp;{{ this.otherName() }}
       </span>
 
       <fa-icon class="justify-end hover:cursor-pointer"
@@ -24,8 +24,23 @@
 
     <div class="chat-body">
       @for (message of messages; track $index) {
-        <div>{{ message.message }}</div>
+        @if (message.sender === this.otherUsername()) {
+          <div class="message-received">{{ message.message }}</div>
+        } @else {
+          <div class="message-sent">{{ message.message }}</div>
+        }
       }
+    </div>
+    <div class="input">
+      <p-inputgroup>
+        <input pInputText
+               placeholder="Send your message"
+               [(ngModel)]="currentMessage"/>
+        <p-inputgroup-addon class="cursor-pointer"
+                            (click)="sendMessage()">
+          <fa-icon [icon]="faPaperPlane"></fa-icon>
+        </p-inputgroup-addon>
+      </p-inputgroup>
     </div>
   </div>
 }

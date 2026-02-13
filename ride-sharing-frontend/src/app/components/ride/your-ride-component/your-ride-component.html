@@ -78,7 +78,7 @@
         <div class="grid grid-cols-3 items-center mt-2">
           <div class="font-medium">Total Price:</div>
           <div class="col-span-2 text-2xl font-bold">
-            {{ this.ride.price | currency: 'HUF ': true: '1.0-0' }}
+            {{ this.ride.price | currency: 'HUF ': 'Ft': '1.0-0' }}
           </div>
         </div>
 
@@ -97,8 +97,8 @@
   <div class="message-container"
        (transitionend)="this.isContactClicked.set(false)"
        [class.no-animation-delay]="this.isContactClicked()">
-    <app-message-component [name]="this.ride.driver.fullName"
-                           [username]="this.ride.driver.username"
+    <app-message-component [otherName]="this.ride.driver.fullName"
+                           [otherUsername]="this.ride.driver.username"
                            [(isExpanded)]="isChatExpanded"
                            (click)="isChatExpanded.set(true)"
                            (close)="closeChat()">
