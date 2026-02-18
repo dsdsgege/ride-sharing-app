@@ -1,7 +1,8 @@
-import {Injectable, OnDestroy} from '@angular/core';
+import {inject, Injectable, OnDestroy} from '@angular/core';
 import {ChatModel} from '../model/chat/ChatModel';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Client, Message} from '@stomp/stompjs';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +15,26 @@ export class ChatService implements OnDestroy {
 
   private messageSubject = new BehaviorSubject<ChatModel | null>(null);
 
-  private readonly protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+  private readonly webSocketProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
 
   private readonly host = window.location.host;
 
-  private readonly url = `${this.protocol}${this.host}/ws`;
+  private readonly webSocketUrl = `${this.webSocketProtocol}${this.host}/ws`;
+
+  private readonly httpClient = inject(HttpClient);
 
   constructor() {
   }
 
+  ngOnDestroy() {
+    if (this.stompClient) {
+      this.stompClient.deactivate();
+    }
+  }
+
   openConnection(username: string): Promise<void>{
     this.stompClient = new Client({
-      brokerURL: this.url,
+      brokerURL: this.webSocketUrl,
       reconnectDelay: 5000, // Auto-reconnect
     });
 
@@ -67,9 +76,12 @@ export class ChatService implements OnDestroy {
     return this.messageSubject.asObservable();
   }
 
-  ngOnDestroy() {
-    if (this.stompClient) {
-      this.stompClient.deactivate();
-    }
+  findChatPartnersByUsername(username: string, page: number) {
+    return this.httpClient.get<ChatPartnerResponse>(`/api/chat/partners?username=${username}&page=${page}`);
   }
+}
+
+interface ChatPartnerResponse {
+  content: string[];
+  totalElements: number;
 }

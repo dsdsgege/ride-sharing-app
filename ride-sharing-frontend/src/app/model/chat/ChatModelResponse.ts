@@ -1,6 +1,6 @@
 import {ChatModel} from './ChatModel';
 
-export interface RideModelResponse {
+export interface ChatModelResponse {
   content: ChatModel[];
   size: number;
   page: number;

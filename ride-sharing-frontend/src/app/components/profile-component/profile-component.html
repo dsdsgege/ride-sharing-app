@@ -4,7 +4,7 @@
   </div>
 }
 
-<div class="container mx-auto p-2 md:p-4">
+<div class="container mx-auto p-2 md:p-4 text-xs md:text-xl">
 
   <h1 class="text-3xl font-bold text-center mb-6">Your profile</h1>
 
@@ -31,4 +31,36 @@
       <p class="text-3xl font-bold">{{ profile.rating }}</p>
     </div>
   </div>
+
+  <div class="card w-full mt-5">
+    <div class="grid grid-cols-3">
+
+      <div class="flex flex-col gap-3">
+        @for (partner of partners; track $index) {
+          <div class="message-partner text-xs md:text-xl"
+               (click)="chatWithPartner(partner)">
+            <fa-icon [icon]="faUser" style="font-size: 1rem;">
+            </fa-icon>&nbsp;
+            {{ partner.fullName }}
+          </div>
+        }
+        @if (totalItems > (page + 1) * 10) {
+          <p-button (click)="loadMore()">
+            Load more
+          </p-button>
+        }
+      </div>
+
+      @if (this.selectedChatPartner()) {
+        <div class="chat-window col-span-2">
+          <app-chat-component [isExpanded]="true"
+                              [otherUsername]="this.selectedChatPartner()?.username ?? ''"
+                              [otherName]="this.selectedChatPartner()?.fullName ?? ''">
+          </app-chat-component>
+        </div>
+
+      }
+    </div>
+  </div>
+
 </div>

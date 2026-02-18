@@ -13,7 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -64,5 +67,13 @@ public class DriverService {
         journey.setSeats(journey.getSeats() - 1);
 
         return true;
+    }
+
+    public Map<String, String> findAllFullNameByUsernames(List<String> usernames) {
+        return this.driverRepository.findAllFullNameByUsernames(usernames)
+                .stream()
+                .collect(
+                        Collectors.toMap(Driver::getUsername, Driver::getFullName)
+                );
     }
 }

@@ -97,11 +97,11 @@
   <div class="message-container"
        (transitionend)="this.isContactClicked.set(false)"
        [class.no-animation-delay]="this.isContactClicked()">
-    <app-message-component [otherName]="this.ride.driver.fullName"
+    <app-chat-component [otherName]="this.ride.driver.fullName"
                            [otherUsername]="this.ride.driver.username"
                            [(isExpanded)]="isChatExpanded"
                            (click)="isChatExpanded.set(true)"
                            (close)="closeChat()">
-    </app-message-component>
+    </app-chat-component>
   </div>
 }

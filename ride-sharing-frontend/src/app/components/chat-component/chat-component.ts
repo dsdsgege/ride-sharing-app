@@ -12,7 +12,7 @@ import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import {FormsModule} from '@angular/forms';
 
 @Component({
-  selector: 'app-message-component',
+  selector: 'app-chat-component',
   standalone: true,
   imports: [
     FaIconComponent,

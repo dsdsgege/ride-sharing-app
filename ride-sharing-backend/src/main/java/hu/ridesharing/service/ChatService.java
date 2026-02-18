@@ -1,14 +1,12 @@
 package hu.ridesharing.service;
 
 import hu.ridesharing.entity.ChatMessage;
+import hu.ridesharing.exception.ChatException;
 import hu.ridesharing.repository.ChatRepository;
-import hu.ridesharing.repository.specification.ChatSpecificationFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,9 +20,15 @@ public class ChatService {
         this.chatRepository = chatRepository;
     }
 
-    public Page<ChatMessage> getChats(String from, String to, int page, int size) {
-        Specification<ChatMessage> spec = ChatSpecificationFactory.findByFromAndTo(from, to);
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("timestamp").descending());
-        return chatRepository.findAll(spec, pageRequest);
+    public void save(ChatMessage chatMessage) {
+        try {
+            chatRepository.save(chatMessage);
+        } catch (Exception e) {
+            throw new ChatException("Could not save chat message to the database.");
+        }
+    }
+
+    public Page<String> findChatPartnersByUsername(String username, int page) {
+        return chatRepository.findChatPartners(username, PageRequest.of(0, (page + 1) * 5));
     }
 }
