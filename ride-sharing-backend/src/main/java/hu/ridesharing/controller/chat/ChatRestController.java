@@ -1,5 +1,6 @@
 package hu.ridesharing.controller.chat;
 
+import hu.ridesharing.entity.ChatMessage;
 import hu.ridesharing.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,5 +31,13 @@ public class ChatRestController {
                                                    @RequestParam int page) {
 
         return chatService.findChatPartnersByUsername(username, page);
+    }
+
+    @GetMapping("/history")
+    public Page<ChatMessage> findMessagesBetweenPartners(@RequestParam(name = "first_partner") String firstPartner,
+                                                         @RequestParam(name = "second_partner") String secondPartner,
+                                                         @RequestParam int page) {
+
+        return chatService.findMessagesBetweenPartners(firstPartner, secondPartner, page);
     }
 }

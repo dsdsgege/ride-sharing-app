@@ -23,13 +23,25 @@
     </div>
 
     <div class="chat-body">
-      @for (message of messages; track $index) {
-        @if (message.sender === this.otherUsername()) {
-          <div class="message-received">{{ message.message }}</div>
-        } @else {
-          <div class="message-sent">{{ message.message }}</div>
-        }
+      @if (this.totalMessages > (this.page + 1) * 10) {
+        <p-button id="load-more-button"
+                  (click)="loadMore()">
+          Load more
+        </p-button>
       }
+
+
+      <div #messagesContainer
+           class="messages"
+           (scroll)="onScroll()">
+        @for (message of messages; track $index) {
+          @if (message.sender === this.otherUsername()) {
+            <div class="message-received text-xs md:text-lg">{{ message.message }}</div>
+          } @else {
+            <div class="message-sent text-xs md:text-lg">{{ message.message }}</div>
+          }
+        }
+      </div>
     </div>
     <div class="input">
       <p-inputgroup>

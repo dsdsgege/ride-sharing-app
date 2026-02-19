@@ -13,7 +13,6 @@
 }
 
 .chat-window-expanded {
-  width: 20rem;
   background-color: var(--secondary);
   padding: 1rem;
   border-radius: 8px;
@@ -28,8 +27,11 @@
 }
 
 .input {
+  margin-left: auto;
+  margin-right: 0;
   height: 2rem;
   width: 100%;
+  max-width: 20rem;
 }
 
 .p-inputgroup {
@@ -55,14 +57,39 @@
   height: 2rem;
 }
 
+.messages {
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  scrollbar-width: thin;
+}
+
+
 .message-sent {
+  margin-bottom: 0.5rem;
+
   margin-left: auto;
-  margin-right: 0;
+  max-width: 85%;
   width: fit-content;
+
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 6px 8px;
+  border-radius: 12px;
+  text-align: left;
 }
 
 .message-received {
+  margin-bottom: 0.5rem;
+
   margin-right: auto;
-  margin-left: 0;
+  max-width: 85%;
   width: fit-content;
+
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 6px 8px;
+  border-radius: 12px;
+}
+
+#load-more-button {
+  background-color: transparent;
 }

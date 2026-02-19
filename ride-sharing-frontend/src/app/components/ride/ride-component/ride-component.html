@@ -41,6 +41,7 @@
         <p-datepicker class="custom-form-element w-full"
                       selectionMode="range"
                       dataType="string"
+                      [minDate]="today"
                       [formControl]="this.dateControl"
                       [iconDisplay]="'input'"
                       [dateFormat]="'yy/mm/dd'"

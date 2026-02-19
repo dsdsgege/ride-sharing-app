@@ -44,11 +44,13 @@ export class RideComponent implements OnInit {
   protected pickupControl: FormControl<string | null> = new FormControl(null);
   protected dropoffControl: FormControl<string | null> = new FormControl(null);
 
+  protected position: GeolocationPosition | null = null;
+
+  protected readonly today = new Date();
+
   protected readonly faLocationDot = faLocationDot;
 
   protected readonly faSearch = faSearch;
-
-  protected position: GeolocationPosition | null = null;
 
   protected readonly Number = Number;
 

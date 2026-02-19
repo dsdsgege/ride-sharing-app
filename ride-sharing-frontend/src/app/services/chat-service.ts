@@ -3,6 +3,7 @@ import {ChatModel} from '../model/chat/ChatModel';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Client, Message} from '@stomp/stompjs';
 import {HttpClient} from '@angular/common/http';
+import {ChatModelResponse} from '../model/chat/ChatModelResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,7 @@ export class ChatService implements OnDestroy {
     }
   }
 
+  // STOMP/WEBSOCKET
   openConnection(username: string): Promise<void>{
     this.stompClient = new Client({
       brokerURL: this.webSocketUrl,
@@ -76,8 +78,15 @@ export class ChatService implements OnDestroy {
     return this.messageSubject.asObservable();
   }
 
+  // REST
   findChatPartnersByUsername(username: string, page: number) {
     return this.httpClient.get<ChatPartnerResponse>(`/api/chat/partners?username=${username}&page=${page}`);
+  }
+
+  findChatHistoryBetweenUsers(username: string, partnerUsername: string, page: number) {
+    return this.httpClient.get<ChatModelResponse>(
+      `/api/chat/history?first_partner=${username}&second_partner=${partnerUsername}&page=${page}`
+    );
   }
 }
 

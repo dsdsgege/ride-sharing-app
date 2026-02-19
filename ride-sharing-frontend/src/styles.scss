@@ -13,7 +13,7 @@
   --custom-card-bg-color: #{variables.$color-light-card-bg};
 
   --primary-color: #{variables.$color-primary};
-  --primary-hover-color: #096848;
+  --primary-hover-color: #08b69f;
 
   --input-bg: #{variables.$input-light-bg};
   --input-bg-active: rgba(220, 241, 211, 0.62);
@@ -45,6 +45,8 @@ body.dark-theme {
   --text-hover-color: #{variables.$color-dark-text-hover};
   --card-hover-color: #{variables.$color-dark-card-hover};
 
+  --primary-color: #0f7569;
+
   --dialog-bg: #{variables.$dialog-bg-dark};
 
   color-scheme: dark;
@@ -74,6 +76,7 @@ body {
 
   --p-button-primary-background: var(--primary-color);
   --p-button-primary-border-color: var(--primary-color);
+  --p-button-primary-hover-background: var(--primary-hover-color);
   --p-button-primary-color: whitesmoke;
 
   // listbox
