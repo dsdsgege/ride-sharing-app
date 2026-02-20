@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  chatWithPartner(partner: ProfileDataModel) {
+  protected chatWithPartner(partner: ProfileDataModel) {
     this.selectedChatPartner.set(partner);
   }
 

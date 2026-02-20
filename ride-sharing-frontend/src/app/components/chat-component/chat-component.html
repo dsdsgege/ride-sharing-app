@@ -10,8 +10,9 @@
     </fa-icon>
   </div>
 } @else {
-  <div class="chat-window-expanded">
-    <div class="chat-header flex justify-between">
+    <div class="chat-window-expanded"
+       [class.transparent-bg]="backgroundTransparent()">
+    <div class="chat-header flex justify-between text-lg md:text-xl">
       <span>
         <fa-icon [icon]="faUser"></fa-icon>&nbsp;{{ this.otherName() }}
       </span>
@@ -23,26 +24,25 @@
     </div>
 
     <div class="chat-body">
-      @if (this.totalMessages > (this.page + 1) * 10) {
-        <p-button id="load-more-button"
-                  (click)="loadMore()">
-          Load more
-        </p-button>
-      }
-
-
       <div #messagesContainer
            class="messages"
            (scroll)="onScroll()">
+        @if (this.totalMessages > (this.page + 1) * 10) {
+          <p-button class="load-more-button"
+                    (click)="loadMore()">
+            Load more
+          </p-button>
+        }
         @for (message of messages; track $index) {
           @if (message.sender === this.otherUsername()) {
-            <div class="message-received text-xs md:text-lg">{{ message.message }}</div>
+            <div class="message-received text-xs md:text-base">{{ message.message }}</div>
           } @else {
-            <div class="message-sent text-xs md:text-lg">{{ message.message }}</div>
+            <div class="message-sent text-xs md:text-base">{{ message.message }}</div>
           }
         }
       </div>
     </div>
+
     <div class="input">
       <p-inputgroup>
         <input pInputText

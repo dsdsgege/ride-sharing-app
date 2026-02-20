@@ -33,11 +33,12 @@
   </div>
 
   <div class="card w-full mt-5">
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-3 h-full">
 
-      <div class="flex flex-col gap-3">
+      <div class="flex flex-col gap-3 h-full">
         @for (partner of partners; track $index) {
           <div class="message-partner text-xs md:text-xl"
+               [class.active]="partner.username === selectedChatPartner()?.username"
                (click)="chatWithPartner(partner)">
             <fa-icon [icon]="faUser" style="font-size: 1rem;">
             </fa-icon>&nbsp;
@@ -53,12 +54,17 @@
 
       @if (this.selectedChatPartner()) {
         <div class="chat-window col-span-2">
-          <app-chat-component [isExpanded]="true"
+          <app-chat-component class="expanded-mode"
+                              [backgroundTransparent]="true"
+                              [isExpanded]="true"
                               [otherUsername]="this.selectedChatPartner()?.username ?? ''"
                               [otherName]="this.selectedChatPartner()?.fullName ?? ''">
           </app-chat-component>
         </div>
-
+      } @else {
+        <div class="col-span-2">
+          <h1 class="text-center">Select a partner to chat with</h1>
+        </div>
       }
     </div>
   </div>

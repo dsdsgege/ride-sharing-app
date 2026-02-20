@@ -92,16 +92,18 @@
     </div>
   </div>
 </div>
-<!--TODO: seats kiíratása-->
+
 @if (this.isChatVisible()) {
   <div class="message-container"
        (transitionend)="this.isContactClicked.set(false)"
-       [class.no-animation-delay]="this.isContactClicked()">
-    <app-chat-component [otherName]="this.ride.driver.fullName"
-                           [otherUsername]="this.ride.driver.username"
-                           [(isExpanded)]="isChatExpanded"
-                           (click)="isChatExpanded.set(true)"
-                           (close)="closeChat()">
+       [class.no-animation-delay]="this.isContactClicked()"
+       [class.chat-is-open]="isChatExpanded()">
+    <app-chat-component [class.expanded-mode]="isChatExpanded()"
+                        [otherName]="this.ride.driver.fullName"
+                        [otherUsername]="this.ride.driver.username"
+                        [(isExpanded)]="isChatExpanded"
+                        (click)="isChatExpanded.set(true)"
+                        (close)="closeChat()">
     </app-chat-component>
   </div>
 }

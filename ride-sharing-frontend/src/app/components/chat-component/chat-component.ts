@@ -41,6 +41,8 @@ export class ChatComponent implements AfterViewInit {
 
   public otherUsername = input.required<string>();
 
+  public backgroundTransparent = input<boolean>(false);
+
   public isExpanded = model<boolean>(false);
 
   public close = output<void>();
@@ -69,8 +71,6 @@ export class ChatComponent implements AfterViewInit {
 
   private username: string = "";
 
-  private isNearBottom = true;
-
   constructor() {
     // IMPORTANT: It only starts the websocket connection when the chat is expanded!
     // listening to the changes of isExpaned so we can connect or disconnect from the websocket
@@ -80,6 +80,9 @@ export class ChatComponent implements AfterViewInit {
       }
       if (!this.isExpanded()) {
         this.chatService.ngOnDestroy();
+      }
+      if (this.otherUsername()) {
+        this.loadHistory();
       }
     });
   }
@@ -93,8 +96,6 @@ export class ChatComponent implements AfterViewInit {
     const scrollBar = this.scrollBar.nativeElement;
     const threshold = 10;
     const position = scrollBar.scrollTop + scrollBar.clientHeight;
-
-    this.isNearBottom = scrollBar.scrollHeight - position <= threshold;
   }
 
   protected sendMessage() {

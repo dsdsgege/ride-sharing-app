@@ -1,3 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+:host(.expanded-mode) {
+  flex: 1;
+  min-height: 20rem;
+  margin-top: auto;
+  height: 100%;
+}
+
 .chat-window-expandable {
   background-color: var(--secondary);
   color: var(--text-color);
@@ -5,7 +17,7 @@
   width: 20rem;
   padding: 5px;
   border-radius: 8px;
-  margin: 0.2rem
+  margin: 0.2rem;
 }
 
 .chat-window-expandable:hover {
@@ -16,6 +28,14 @@
   background-color: var(--secondary);
   padding: 1rem;
   border-radius: 8px;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.transparent-bg {
+  background-color: transparent;
 }
 
 .chat-header {
@@ -23,7 +43,21 @@
 }
 
 .chat-body {
-  height: 15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  flex: 1;
+  min-height: 0;
+}
+
+.messages {
+  overflow-y: auto;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  scrollbar-width: thin;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .input {
@@ -57,14 +91,6 @@
   height: 2rem;
 }
 
-.messages {
-  height: 100%;
-  overflow-y: scroll;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-  scrollbar-width: thin;
-}
-
-
 .message-sent {
   margin-bottom: 0.5rem;
 
@@ -90,6 +116,7 @@
   border-radius: 12px;
 }
 
-#load-more-button {
+.load-more-button {
+  text-align: center;
   background-color: transparent;
 }
