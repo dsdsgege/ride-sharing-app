@@ -91,6 +91,12 @@ export class ChatComponent implements AfterViewInit {
     this.scrollToBottom();
   }
 
+  protected sendMessageOnkeyUp($event: KeyboardEvent) {
+    if ($event.key === "Enter") {
+      this.sendMessage();
+    }
+  }
+
   protected sendMessage() {
     this.keycloak.loadUserProfile().then(profile => {
       const currentMessageTemp = this.currentMessage;
@@ -159,4 +165,6 @@ export class ChatComponent implements AfterViewInit {
   private scrollToBottom(): void {
     this.scrollBar.nativeElement.scrollTop = this.scrollBar.nativeElement.scrollHeight;
   }
+
+  protected readonly KeyboardEvent = KeyboardEvent;
 }

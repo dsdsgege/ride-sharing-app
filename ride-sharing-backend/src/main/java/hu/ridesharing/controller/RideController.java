@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
@@ -36,6 +38,11 @@ public class RideController {
         var sort = Sort.by(sortBy);
         return journeyService.getRides(fromCity, toCity, dateFrom.toLocalDateTime(), dateTo.toLocalDateTime(),
                 PageRequest.of(page, pageSize, "desc".equalsIgnoreCase(direction) ? sort.descending() : sort));
+    }
+
+    @GetMapping ("/my-rides")
+    public Page<JourneyResponseDTO> getMyRides(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
+        return journeyService.getMyRides(jwt.getClaimAsString("preferred_username"), page);
     }
 
     @PostMapping("/rides/filter")

@@ -220,6 +220,23 @@ main {
   top: 100px !important;
 }
 
+.profile-select-list {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
+}
+
+.profile-select-list:hover {
+  cursor: pointer;
+  background: linear-gradient(to right, rgba(248, 248, 248, 0.45), transparent);
+}
+
+.profile-active-select {
+  background: linear-gradient(to right, rgba(248, 248, 248, 0.45), transparent);
+}
+
 @media (max-width: 768px) {
   .p-toast {
     top: 50px !important;

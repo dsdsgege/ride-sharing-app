@@ -5,36 +5,34 @@
   text-align: center;
 }
 
-#rides {
-  border-left: 1px solid var(--text-color);
+#drives, #ratings {
   border-right: 1px solid var(--text-color);
 }
 
-.message-partner {
-  display: flex;
-  align-items: center;
+#drives, #rides, #ratings, #chats {
   padding: 1rem;
-  border-radius: 8px;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
 }
 
-.message-partner:hover {
+#drives:hover, #rides:hover, #ratings:hover, #chats:hover {
   cursor: pointer;
-  background: linear-gradient(to right, rgba(248, 248, 248, 0.45), transparent);
 }
 
-.active {
-  background: linear-gradient(to right, rgba(248, 248, 248, 0.45), transparent);
+@media screen and (min-width: 768px) {
+  #rides {
+    border-right: 1px solid var(--text-color);
+  }
 }
 
-.chat-window {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  width: 100%;
-  height: 100%;
+@media screen and (max-width: 767px) {
+  #drives, #rides {
+    border-bottom: 1px solid var(--text-color);
+  }
 }
 
 .card {
   height: 35rem
+}
+
+.active-tab {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), transparent);
 }

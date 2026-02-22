@@ -1,0 +1,70 @@
+<div class="grid grid-cols-3 h-full">
+
+  <div class="rides flex flex-col gap-3 h-full">
+    @for (ride of rides; track $index) {
+      <div class="profile-select-list text-xs md:text-xl"
+           [class.profile-active-select]="ride.id === selectedRide()?.id"
+           (click)="selectRide(ride)">
+
+        {{ ride.fromCity }} to {{ ride.toCity }}
+        <br>
+        <span class="text-xs">
+          {{ ride.departureTime | date:'medium' }}&rightarrow;{{ ride.arrivalTime | date:'medium' }}
+        </span>
+      </div>
+    }
+    @if (totalItems > (page + 1) * 10) {
+      <p-button (click)="loadMore()">
+        Load more
+      </p-button>
+    }
+  </div>
+
+  @if (this.selectedRide()) {
+    <div class="col-span-2 flex flex-col p-4 rounded-lg" style="background: rgba(0, 0, 0, 0.2);">
+
+      <h2 class="text-2xl font-bold border-b border-gray-500 pb-3 mb-4">
+        Edit Ride: {{ selectedRide()!.fromCity }} to {{ selectedRide()!.toCity }}
+      </h2>
+
+      <div class="flex gap-6 mb-6 opacity-80 text-sm">
+        <span><strong>Price:</strong> ${{ selectedRide()!.price }}</span>
+        <span><strong>Driver ID:</strong> {{ selectedRide()!.driver }}</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div class="flex flex-col gap-1">
+          <label class="text-sm font-semibold">Car Make</label>
+          <input type="text" [(ngModel)]="selectedRide()!.carMake"/>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-sm font-semibold">Available Seats</label>
+          <p-inputNumber [(ngModel)]="selectedRide()!.seats" [min]="1" [max]="10" [showButtons]="true"></p-inputNumber>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-sm font-semibold">Departure Time</label>
+          <p-calendar [(ngModel)]="selectedRide()!.departureTime"></p-calendar>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="text-sm font-semibold">Arrival Time</label>
+          <p-calendar [(ngModel)]="selectedRide()!.arrivalTime"></p-calendar>
+        </div>
+
+      </div>
+
+      <div class="flex justify-between mt-auto pt-6">
+        <p-button label="Delete Ride" icon="pi pi-trash" severity="danger"></p-button>
+        <p-button label="Save Changes" icon="pi pi-check" severity="success"></p-button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="col-span-2">
+      <h1 class="text-center">Select a ride to manage it</h1>
+    </div>
+  }
+</div>

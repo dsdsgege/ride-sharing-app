@@ -25,8 +25,7 @@
 
     <div class="chat-body">
       <div #messagesContainer
-           class="messages"
-           (scroll)="onScroll()">
+           class="messages">
         @if (this.totalMessages > (this.page + 1) * 10) {
           <p-button class="load-more-button"
                     (click)="loadMore()">
@@ -45,9 +44,9 @@
 
     <div class="input">
       <p-inputgroup>
-        <input pInputText
-               placeholder="Send your message"
-               [(ngModel)]="currentMessage"/>
+        <input placeholder="Send your message"
+               [(ngModel)]="currentMessage"
+               (keyup)="sendMessageOnkeyUp($event)"/>
         <p-inputgroup-addon class="cursor-pointer"
                             (click)="sendMessage()">
           <fa-icon [icon]="faPaperPlane"></fa-icon>
