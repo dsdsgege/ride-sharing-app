@@ -91,13 +91,6 @@ export class ChatComponent implements AfterViewInit {
     this.scrollToBottom();
   }
 
-  // Track user's scroll position
-  protected onScroll(): void {
-    const scrollBar = this.scrollBar.nativeElement;
-    const threshold = 10;
-    const position = scrollBar.scrollTop + scrollBar.clientHeight;
-  }
-
   protected sendMessage() {
     this.keycloak.loadUserProfile().then(profile => {
       const currentMessageTemp = this.currentMessage;
@@ -148,7 +141,7 @@ export class ChatComponent implements AfterViewInit {
 
   private loadHistory() {
     return new Promise<void> ((resolve) => {
-      this.chatService.findChatHistoryBetweenUsers(this.username, this.otherUsername(), this.page).subscribe({
+      this.chatService.findChatHistoryBetweenUsers(this.otherUsername(), this.page).subscribe({
         next: response => {
           this.messages = response.content ?? [];
           this.totalMessages = response.totalElements;

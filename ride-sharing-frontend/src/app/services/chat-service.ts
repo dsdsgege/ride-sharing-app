@@ -83,9 +83,9 @@ export class ChatService implements OnDestroy {
     return this.httpClient.get<ChatPartnerResponse>(`/api/chat/partners?username=${username}&page=${page}`);
   }
 
-  findChatHistoryBetweenUsers(username: string, partnerUsername: string, page: number) {
+  findChatHistoryBetweenUsers(partnerUsername: string, page: number) {
     return this.httpClient.get<ChatModelResponse>(
-      `/api/chat/history?first_partner=${username}&second_partner=${partnerUsername}&page=${page}`
+      `/api/chat/history?partner=${partnerUsername}&page=${page}`
     );
   }
 }

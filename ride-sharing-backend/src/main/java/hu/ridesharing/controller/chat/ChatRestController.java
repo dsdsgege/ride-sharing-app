@@ -4,6 +4,8 @@ import hu.ridesharing.entity.ChatMessage;
 import hu.ridesharing.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,10 +36,10 @@ public class ChatRestController {
     }
 
     @GetMapping("/history")
-    public Page<ChatMessage> findMessagesBetweenPartners(@RequestParam(name = "first_partner") String firstPartner,
-                                                         @RequestParam(name = "second_partner") String secondPartner,
-                                                         @RequestParam int page) {
+    public Page<ChatMessage> findMessagesBetweenPartners(@RequestParam(name = "partner") String partner,
+                                                         @RequestParam int page,
+                                                         @AuthenticationPrincipal Jwt jwt) {
 
-        return chatService.findMessagesBetweenPartners(firstPartner, secondPartner, page);
+        return chatService.findMessagesBetweenPartners(jwt.getClaimAsString("preferred_username"), partner, page);
     }
 }
