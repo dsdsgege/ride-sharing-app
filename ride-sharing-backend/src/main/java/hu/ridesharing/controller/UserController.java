@@ -19,8 +19,8 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/find/profiles")
-    public UsersResponse findUsersByUsernames(@RequestBody   UsersRequest request) {
+    @PostMapping("/find/full-names")
+    public UsersResponse findUsersByUsernames(@RequestBody UsersRequest request) {
         return new UsersResponse(
                 userService.findAllFullNameByUsernames(request.usernames())
                         .entrySet().stream()
@@ -29,12 +29,12 @@ public class UserController {
         );
     }
 
-    record UsersResponse(List<UserDTO> users) {
+    public record UsersResponse(List<UserDTO> users) {
     }
 
-    record UsersRequest(List<String> usernames) {
+    public record UsersRequest(List<String> usernames) {
     }
 
-    record UserDTO(String username, String fullName) {
+    private record UserDTO(String username, String fullName) {
     }
 }

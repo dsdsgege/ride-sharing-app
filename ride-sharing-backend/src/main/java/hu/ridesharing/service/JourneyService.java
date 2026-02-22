@@ -4,6 +4,7 @@ import hu.ridesharing.dto.DriverDTO;
 import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.entity.*;
+import hu.ridesharing.exception.EmailSendingError;
 import hu.ridesharing.exception.JoinRideException;
 import hu.ridesharing.repository.JourneyPassengerRepository;
 import hu.ridesharing.repository.JourneyRepository;
@@ -70,19 +71,19 @@ public class JourneyService {
     }
 
     public Page<JourneyResponseDTO> getRides(RideFilterRequest filterRequest) {
-        var sort = Sort.by(filterRequest.getSortBy());
-        var pageable = PageRequest.of(filterRequest.getPage(), filterRequest.getPageSize(),
-                filterRequest.getDirection().equalsIgnoreCase("desc") ? sort.descending() : sort);
+        var sort = Sort.by(filterRequest.sortBy());
+        var pageable = PageRequest.of(filterRequest.page(), filterRequest.pageSize(),
+                filterRequest.direction().equalsIgnoreCase("desc") ? sort.descending() : sort);
 
         log.debug("Advanced filtering rides with filter request: {}", filterRequest);
 
-        Specification<Journey> spec = JourneySpecificationFactory.findByFromCity(filterRequest.getPickupFrom())
-                .and(JourneySpecificationFactory.findByToCity(filterRequest.getDropOffTo()))
-                .and(JourneySpecificationFactory.findByDate(filterRequest.getDateFrom(), filterRequest.getDateTo()))
-                .and(JourneySpecificationFactory.findBySeats(filterRequest.getSeats()))
-                .and(JourneySpecificationFactory.findByMaxPrice(filterRequest.getMaxPrice()))
+        Specification<Journey> spec = JourneySpecificationFactory.findByFromCity(filterRequest.pickupFrom())
+                .and(JourneySpecificationFactory.findByToCity(filterRequest.dropOffTo()))
+                .and(JourneySpecificationFactory.findByDate(filterRequest.dateFrom(), filterRequest.dateTo()))
+                .and(JourneySpecificationFactory.findBySeats(filterRequest.seats()))
+                .and(JourneySpecificationFactory.findByMaxPrice(filterRequest.maxPrice()))
                 .and(JourneySpecificationFactory.findByRating(
-                        filterRequest.getRating(), filterRequest.isShowWithoutRating())
+                        filterRequest.rating(), filterRequest.showWithoutRating())
                 );
 
         Page<Journey> journeys = journeyRepository.findAll(spec, pageable);
@@ -140,14 +141,13 @@ public class JourneyService {
         try {
             journeyPassengerRepository.save(jp);
         } catch (Exception e) {
-            throw new JoinRideException(e.getMessage(), e);
+            throw new JoinRideException("Could not join ride.");
         }
 
         try {
             emailService.sendRideAcceptEmail(journey, savedPassenger, secureToken);
         } catch (MessagingException e) {
-            //TODO
-            e.printStackTrace();
+            throw new EmailSendingError("Could not send approve email for driver.");
         }
     }
 

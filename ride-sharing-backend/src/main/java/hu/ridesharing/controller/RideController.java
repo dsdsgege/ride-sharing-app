@@ -1,5 +1,6 @@
 package hu.ridesharing.controller;
 
+import hu.ridesharing.dto.request.JoinRideRequest;
 import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.service.JourneyService;
@@ -56,6 +57,4 @@ public class RideController {
     public void joinRide(@PathVariable Long id, @RequestBody JoinRideRequest request) {
         this.journeyService.joinRide(id, request.username(), request.email(), request.fullName());
     }
-
-    record JoinRideRequest(String username, String email, String fullName) {}
 }

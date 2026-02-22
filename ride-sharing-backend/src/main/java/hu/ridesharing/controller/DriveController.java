@@ -52,8 +52,8 @@ public class DriveController {
     @Transactional(rollbackOn = SQLException.class)
     @PostMapping("add_drive")
     public Map<String, Boolean> addDrive(@RequestBody AddDriveRequest addDriveRequest) throws SQLException {
-        Driver driver = addDriveRequest.getDriver();
-        Journey drive = addDriveRequest.getDrive();
+        Driver driver = addDriveRequest.driver();
+        Journey drive = addDriveRequest.drive();
         drive.setDriver(driver);
 
         driverService.addDriver(driver);
@@ -80,9 +80,9 @@ public class DriveController {
         return new AcceptanceStatus(driverService.acceptPassenger(token.token()));
     }
 
-    record AcceptanceStatus(boolean success) {
+    public record AcceptanceStatus(boolean success) {
     }
 
-    record Token(String token) {
+    public record Token(String token) {
     }
 }

@@ -28,14 +28,20 @@ public class EmailService {
 
     private final RatingRepository ratingRepository;
 
+    private final String from;
+
+    private static final String SUBJECT = "Passenger wants to join to your ride";
+
     @Autowired
     public EmailService(JavaMailSender mailSender, SpringTemplateEngine templateEngine,
-                        RatingRepository ratingRepository, @Value("${app.frontend.url}") String frontendUrl) {
+                        RatingRepository ratingRepository, @Value("${app.frontend.url}") String frontendUrl,
+                        @Value("${spring.mail.username}") String from) {
 
         this.mailSender = mailSender;
         this.templateEngine = templateEngine;
         this.ratingRepository = ratingRepository;
         this.frontendUrl = frontendUrl;
+        this.from = from;
     }
 
     public void sendRideAcceptEmail(Journey journey, Passenger passenger, String secureToken)
@@ -58,17 +64,20 @@ public class EmailService {
         context.setVariable("arrive", journey.getArrive().toString().replace("T", " "));
         context.setVariable("acceptLink", frontendUrl + "/drive/accept-passenger?token=" + secureToken);
 
-        String htmlContent = templateEngine.process("ride_accept_email", context);
-
         MimeMessage message = mailSender.createMimeMessage();
 
+        String htmlContent = templateEngine.process("ride_accept_email", context);
+        String to = driver.getEmailAddress();
+        //TODO DELETE:
+        to = "gellerr.vrabely@gmail.com";
+
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setTo("gellerr.vrabely@gmail.com");
+        helper.setTo(to);
         helper.setFrom("gellerr.vrabely@gmail.com");
-        helper.setSubject("Passenger wants to join to your ride");
+        helper.setSubject(SUBJECT);
         helper.setText(htmlContent, true);
 
-        log.debug("Sending email...");
+        log.debug("Sending email to {}", to);
         mailSender.send(message);
     }
 }

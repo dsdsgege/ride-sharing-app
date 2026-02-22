@@ -12,13 +12,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DriverNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleDriverNotFoundException(DriverNotFoundException ex) {
-        String errorMessage = ex.getMessage();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", errorMessage));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
     }
 
     @ExceptionHandler(ChatException.class)
     public ResponseEntity<Map<String, String>> handleChatException(ChatException ex) {
-        String errorMessage = ex.getMessage();
-        return ResponseEntity.internalServerError().body(Map.of("error", errorMessage));
+        return ResponseEntity.internalServerError().body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(JoinRideException.class)
+    public ResponseEntity<Map<String, String>> handleJoinRideException(JoinRideException ex) {
+        return ResponseEntity.internalServerError().body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(EmailSendingError.class)
+    public ResponseEntity<Map<String, String>> handleEmailSendingError(EmailSendingError ex) {
+        return ResponseEntity.internalServerError().body(Map.of("error", ex.getMessage()));
     }
 }
