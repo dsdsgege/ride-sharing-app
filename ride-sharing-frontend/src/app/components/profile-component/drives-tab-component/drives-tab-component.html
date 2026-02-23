@@ -1,0 +1,103 @@
+<div class="grid grid-cols-2 md:grid-cols-3 h-full">
+
+  <ul class="rides flex flex-col gap-3 h-full">
+    @for (ride of rides; track $index) {
+      <li class="profile-select-list text-xs md:text-sm lg:text-lg"
+           [class.profile-active-select]="ride.id === selectedDrive()?.id"
+           (click)="selectRide(ride)">
+
+        {{ ride.fromCity }} to {{ ride.toCity }}
+        <span class="text-xs">
+          {{ ride.departureTime | date:'short' }}&rightarrow;{{ ride.arrivalTime | date:'short' }}
+        </span>
+      </li>
+    }
+    @if (totalItems > (page + 1) * 10) {
+      <p-button (click)="loadMore()">
+        Load more
+      </p-button>
+    }
+  </ul>
+
+  @if (this.selectedDrive()) {
+    <div class="md:col-span-2 flex flex-col p-4 rounded-lg" style="background: rgba(0, 0, 0, 0.2);">
+
+      <h2 class="text-sm md:text-xl font-bold border-b border-gray-500 pb-1 mb-4">
+        Edit Drive: {{ selectedDrive()!.fromCity }} to {{ selectedDrive()!.toCity }}
+      </h2>
+
+
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            [formGroup]="driveEditform"
+            (submit)="updateDrive()">
+        <div class="md:col-span-2 mb-2">
+          <strong>Price:</strong>{{ selectedDrive()!.price | currency: "HUF" : "Ft" : "1.0-0" }}
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <p-floatlabel>
+            <input id="car-make" pInputText class="w-full"
+                   [formControl]="carMakeControl"/>
+            <label for="pickupFrom">Car Make</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <p-floatlabel class="custom-form-element w-full">
+            <p-inputnumber inputId="seats"
+                           class="w-full"
+                           [inputStyle]="{ width: '100%' }"
+                           [formControl]="seatsControl"
+                           [showButtons]="true"
+                           [min]="1">
+            </p-inputnumber>
+            <label for="seats">Seats</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="arrive_date">Depart at:</label>
+          <p-datepicker [formControl]="departControl"
+                        [placeholder]="'Departure time'"
+                        [iconDisplay]="'input'"
+                        [dateFormat]="'mm/dd/y'"
+                        [showTime]="true"
+                        [hourFormat]="'24'"
+                        inputId="arrive_date">
+          </p-datepicker>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="arrive_date">Arrive at:</label>
+          <p-datepicker [formControl]="arriveControl"
+                        [placeholder]="'Arrival time'"
+                        [iconDisplay]="'input'"
+                        [dateFormat]="'mm/dd/y'"
+                        [showTime]="true"
+                        [hourFormat]="'24'"
+                        inputId="arrive_date">
+          </p-datepicker>
+        </div>
+
+      </form>
+
+      <div class="flex flex-col items-stretch gap-2 md:flex-row justify-between mt-auto p-3">
+        <button type="button"
+                class="delete-button"
+                (click)="deleteDrive()">
+          Delete
+        </button>
+
+        <button type="submit"
+                class="success-button">
+          Edit
+        </button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="md:col-span-2">
+      <h1 class="text-center">Select a drive to manage it</h1>
+    </div>
+  }
+</div>

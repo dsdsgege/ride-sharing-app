@@ -56,11 +56,11 @@ public class JourneyService {
         return this.journeyRepository.save(drive);
     }
 
-    public Page<JourneyResponseDTO> getMyRides(String username, int page) {
+    public Page<JourneyResponseDTO> getMyDrives(String username, int page) {
         Driver driver = new Driver();
         driver.setUsername(username);
 
-        log.debug("Fetching rides for driver {}", username);
+        log.debug("Fetching drives for driver {}", username);
         return journeyRepository.findByDriver(driver, PageRequest.of(0, (page + 1) * 10))
                 .map(this::mapToResponse);
     }

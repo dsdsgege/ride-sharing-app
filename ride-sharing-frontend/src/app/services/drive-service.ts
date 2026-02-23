@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import { AddResponseModel } from '../model/add-response-model';
 import {DriverModel} from '../model/driver-model';
+import {RideModelResponse} from '../model/ride/ride-model-response';
 
 export interface PassengerPrice {
   price: number;
@@ -55,6 +56,10 @@ export class DriveService {
   public findDriverRatingByUsername(username: String): Observable<number> {
     console.log("findRideCountByPassenger called");
     return this.httpClient.get<number>(`${this.apiUrl}/driver-rating?username=${username}`);
+  }
+
+  public findMyDrives(page: number) {
+    return this.httpClient.get<RideModelResponse>(`${this.apiUrl}/my-drives?page=${page}`);
   }
 
   public acceptPassenger(token: String | undefined) {

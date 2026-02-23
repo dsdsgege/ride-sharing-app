@@ -1,0 +1,37 @@
+.rides {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.profile-select-list {
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .profile-select-list {
+    flex-direction: column;
+  }
+
+  input, .p-inputnumber, .p-datepicker {
+    height: 2rem;
+  }
+
+  .delete-button {
+    min-width: 4rem;
+  }
+
+  .success-button {
+    min-width: 4rem;
+  }
+}
+
+::ng-deep .p-datepicker {
+  input {
+    width: 100%;
+  }
+}
+
+label {
+  color: var(--text-color);
+}

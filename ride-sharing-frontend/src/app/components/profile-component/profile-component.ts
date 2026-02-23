@@ -7,11 +7,11 @@ import Keycloak from 'keycloak-js';
 import {catchError, forkJoin, of} from 'rxjs';
 import {ProfileTab} from '../../model/profile-tab';
 import {ChatTabComponent} from './chat-tab-component/chat-tab-component';
-import {RidesTabComponent} from './rides-tab-component/rides-tab-component';
+import {DrivesTabComponent} from './drives-tab-component/drives-tab-component';
 
 @Component({
   selector: 'app-profile-component',
-  imports: [ProgressBar, ChatTabComponent, RidesTabComponent],
+  imports: [ProgressBar, ChatTabComponent, DrivesTabComponent],
   templateUrl: './profile-component.html',
   styleUrl: './profile-component.scss'
 })

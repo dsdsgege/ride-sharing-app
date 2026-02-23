@@ -1,6 +1,7 @@
 package hu.ridesharing.controller;
 
 import hu.ridesharing.dto.request.AddDriveRequest;
+import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.entity.Driver;
 import hu.ridesharing.entity.Journey;
 import hu.ridesharing.entity.GeocodingResponse;
@@ -10,6 +11,9 @@ import hu.ridesharing.service.PriceCalculatorService;
 import hu.ridesharing.service.external.GeocodingApiService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -63,6 +67,11 @@ public class DriveController {
             throw new SQLException("Could not save drive to the database.");
         }
         return Map.of("success", true);
+    }
+
+    @GetMapping ("/my-drives")
+    public Page<JourneyResponseDTO> getMyRides(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
+        return journeyService.getMyDrives(jwt.getClaimAsString("preferred_username"), page);
     }
 
     @GetMapping("/drive-count")

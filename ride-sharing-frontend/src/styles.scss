@@ -72,7 +72,8 @@ body {
 
   // floatlabel
   --p-floatlabel-focus-color: var(--text-color);
-  --p-floatlable-color: var(--text-color);
+  --p-floatlabel-color: var(--text-color);
+  --p-floatlabel-active-color: var(--text-color);
 
   --p-button-primary-background: var(--primary-color);
   --p-button-primary-border-color: var(--primary-color);
@@ -235,6 +236,33 @@ main {
 
 .profile-active-select {
   background: linear-gradient(to right, rgba(248, 248, 248, 0.45), transparent);
+}
+
+.delete-button {
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: #9a262f;
+  min-width: 6rem;
+  color: whitesmoke;
+}
+
+.delete-button:hover {
+  cursor: pointer;
+  background-color: #c03931;
+}
+
+.success-button {
+  background-color: #249b40;
+  padding: 0.5rem;
+  border-radius: 8px;
+  min-width: 6rem;
+  color: whitesmoke;
+
+}
+
+.success-button:hover {
+  cursor: pointer;
+  background-color: #218838;
 }
 
 @media (max-width: 768px) {

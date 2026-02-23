@@ -1,21 +1,21 @@
 <div class="grid grid-cols-3 h-full">
 
-  <div class="flex flex-col gap-3 h-full">
+  <ul class="flex flex-col gap-3 h-full">
     @for (partner of partners; track $index) {
-      <div class="profile-select-list text-xs md:text-xl"
+      <li class="profile-select-list text-xs md:text-xl"
            [class.profile-active-select]="partner.username === selectedChatPartner()?.username"
            (click)="chatWithPartner(partner)">
         <fa-icon [icon]="faUser" style="font-size: 1rem;">
         </fa-icon>&nbsp;
         {{ partner.fullName }}
-      </div>
+      </li>
     }
     @if (totalItems > (page + 1) * 10) {
       <p-button (click)="loadMore()">
         Load more
       </p-button>
     }
-  </div>
+  </ul>
 
   @if (this.selectedChatPartner()) {
     <div class="chat-window col-span-2">
