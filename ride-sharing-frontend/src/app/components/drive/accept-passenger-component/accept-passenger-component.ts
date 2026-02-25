@@ -9,7 +9,6 @@ import {MessageService} from 'primeng/api';
   imports: [
     Button
   ],
-  providers: [MessageService],
   templateUrl: './accept-passenger-component.html',
 })
 export class AcceptPassengerComponent implements OnInit {

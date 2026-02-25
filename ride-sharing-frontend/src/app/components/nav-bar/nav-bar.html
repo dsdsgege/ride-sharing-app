@@ -40,12 +40,16 @@
     <div class="flex-1">
       <a routerLink="drive" routerLinkActive="active-mobile">DRIVE</a>
     </div>
-    <div class="flex-1">
-      <a routerLink="profile" routerLinkActive="active-mobile">PROFILE</a>
-    </div>
     @if (keycloak.authenticated) {
       <div class="flex-1">
+        <a routerLink="profile" routerLinkActive="active-mobile">PROFILE</a>
+      </div>
+      <div class="flex-1">
         <a (click)="logout()">LOGOUT</a>
+      </div>
+    } @else {
+      <div class="flex-1">
+        <a (click)="login()">LOGIN</a>
       </div>
     }
   </div>
@@ -59,12 +63,16 @@
   <div class="flex-1"></div>
 
   <div class="hidden md:flex flex-1 gap-6">
-    <div class="flex-1 nav-item">
-      <a routerLink="profile" routerLinkActive="active">PROFILE</a>
-    </div>
-    @if (keycloak.authenticated) {
+    @if (this.keycloak.authenticated) {
+      <div class="flex-1 nav-item">
+        <a routerLink="profile" routerLinkActive="active">PROFILE</a>
+      </div>
       <div class="flex-1 nav-item ">
         <a (click)="logout();">LOGOUT</a>
+      </div>
+    }  @else {
+      <div class="flex-1 nav-item">
+        <a (click)="login()">LOGIN</a>
       </div>
     }
     <div class="flex-1 nav-item">

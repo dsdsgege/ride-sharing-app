@@ -12,7 +12,6 @@ import {Button} from 'primeng/button';
 import {Dialog} from 'primeng/dialog';
 import {CurrencyPipe} from '@angular/common';
 import { MessageService } from 'primeng/api';
-import {Toast} from 'primeng/toast';
 import {PassengerPrice, DriveService} from '../../../services/drive-service';
 import Keycloak from 'keycloak-js';
 import {DriverModel} from '../../../model/driver-model';
@@ -30,12 +29,11 @@ import {ProgressBar} from 'primeng/progressbar';
     Button,
     Dialog,
     CurrencyPipe,
-    Toast,
     ProgressBar
   ],
   templateUrl: './drive-component.html',
   standalone: true,
-  providers: [MessageService],
+
   styleUrl: './drive-component.scss'
 })
 export class DriveComponent implements OnInit {

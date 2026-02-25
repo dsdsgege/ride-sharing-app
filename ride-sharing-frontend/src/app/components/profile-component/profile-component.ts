@@ -8,14 +8,13 @@ import {catchError, forkJoin, of} from 'rxjs';
 import {ProfileTab} from '../../model/profile-tab';
 import {ChatTabComponent} from './chat-tab-component/chat-tab-component';
 import {DrivesTabComponent} from './drives-tab-component/drives-tab-component';
-import {Toast} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-profile-component',
-  imports: [ProgressBar, ChatTabComponent, DrivesTabComponent, Toast],
+  imports: [ProgressBar, ChatTabComponent, DrivesTabComponent],
   templateUrl: './profile-component.html',
-  providers: [MessageService],
+
   styleUrl: './profile-component.scss'
 })
 export class ProfileComponent implements OnInit {

@@ -37,4 +37,8 @@ export class NavBar {
   async logout(): Promise<void> {
     await this.keycloak.logout();
   }
+
+  async login(): Promise<void> {
+    await this.keycloak.login();
+  }
 }

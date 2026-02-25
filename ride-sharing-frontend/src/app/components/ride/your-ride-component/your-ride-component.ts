@@ -21,7 +21,7 @@ import Keycloak from 'keycloak-js';
     ChatComponent,
     Button,
   ],
-  providers: [MessageService],
+
   templateUrl: './your-ride-component.html',
   standalone: true,
   styleUrl: './your-ride-component.scss'

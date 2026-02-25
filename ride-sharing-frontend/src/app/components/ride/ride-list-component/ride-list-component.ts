@@ -11,7 +11,6 @@ import {CurrencyPipe, DatePipe} from '@angular/common';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {Button} from 'primeng/button';
 import {Tooltip} from 'primeng/tooltip';
-import {Toast} from 'primeng/toast';
 import {faFilter} from '@fortawesome/free-solid-svg-icons';
 import {Dialog} from 'primeng/dialog';
 import {FloatLabel} from 'primeng/floatlabel';
@@ -36,7 +35,6 @@ import {Paginator} from 'primeng/paginator';
     Tooltip,
     RouterLink,
     ProgressBarModule,
-    Toast,
     Dialog,
     FloatLabel,
     InputText,
@@ -47,7 +45,6 @@ import {Paginator} from 'primeng/paginator';
     FormsModule,
     Paginator
   ],
-  providers: [MessageService],
   templateUrl: './ride-list-component.html',
   standalone: true,
   styleUrl: './ride-list-component.scss'

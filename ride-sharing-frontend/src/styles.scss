@@ -217,10 +217,6 @@ main {
   background-color: var(--card-hover-color);
 }
 
-.p-toast {
-  top: 100px !important;
-}
-
 .profile-select-list {
   display: flex;
   align-items: center;
@@ -263,6 +259,10 @@ main {
 .success-button:hover {
   cursor: pointer;
   background-color: #218838;
+}
+
+.p-toast {
+  top: 100px !important;
 }
 
 @media (max-width: 768px) {

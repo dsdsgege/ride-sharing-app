@@ -11,6 +11,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {providePrimeNG} from 'primeng/config';
 import Material from '@primeuix/themes/material';
 import {provideAnimations} from '@angular/platform-browser/animations';
+import {MessageService} from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -43,6 +44,7 @@ export const appConfig: ApplicationConfig = {
           httpMethods: ['GET', 'POST', 'PUT', 'DELETE']
         },
       ],
-    }
+    },
+    MessageService
   ]
 };
