@@ -8,11 +8,14 @@ import {catchError, forkJoin, of} from 'rxjs';
 import {ProfileTab} from '../../model/profile-tab';
 import {ChatTabComponent} from './chat-tab-component/chat-tab-component';
 import {DrivesTabComponent} from './drives-tab-component/drives-tab-component';
+import {Toast} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-profile-component',
-  imports: [ProgressBar, ChatTabComponent, DrivesTabComponent],
+  imports: [ProgressBar, ChatTabComponent, DrivesTabComponent, Toast],
   templateUrl: './profile-component.html',
+  providers: [MessageService],
   styleUrl: './profile-component.scss'
 })
 export class ProfileComponent implements OnInit {
@@ -30,6 +33,8 @@ export class ProfileComponent implements OnInit {
   protected readonly keycloak: Keycloak = inject(Keycloak);
 
   protected readonly ProfileTab = ProfileTab;
+
+  protected readonly messageService = inject(MessageService);
 
   ngOnInit(): void {
     this.keycloak.loadUserProfile().then(profile => {

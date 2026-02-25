@@ -1,0 +1,3 @@
+interface SuccessStatus {
+  success: boolean;
+}

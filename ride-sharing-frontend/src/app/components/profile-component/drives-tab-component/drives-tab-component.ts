@@ -1,4 +1,10 @@
-import {ChangeDetectorRef, Component, inject, OnInit, signal} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+  signal
+} from '@angular/core';
 import {Button} from 'primeng/button';
 import {RideModel} from '../../../model/ride/ride-model';
 import {InputNumber} from 'primeng/inputnumber';
@@ -8,6 +14,8 @@ import {FloatLabel} from 'primeng/floatlabel';
 import {InputText} from 'primeng/inputtext';
 import {DriveService} from '../../../services/drive-service';
 import {DatePicker} from 'primeng/datepicker';
+import {MessageService} from 'primeng/api';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-drives-tab-component',
@@ -22,6 +30,7 @@ import {DatePicker} from 'primeng/datepicker';
     CurrencyPipe,
     DatePicker,
   ],
+  providers: [MessageService],
   templateUrl: './drives-tab-component.html',
   styleUrl: './drives-tab-component.scss'
 })
@@ -50,7 +59,7 @@ export class DrivesTabComponent implements OnInit {
 
   protected selectedDrive = signal<RideModel | undefined>(undefined);
 
-  protected readonly dateFormatForPicker: string = "short" // M/d/yy, h:mm a
+  protected readonly messageService = inject(MessageService);
 
   protected readonly driveService = inject(DriveService);
 
@@ -77,8 +86,35 @@ export class DrivesTabComponent implements OnInit {
 
   }
 
-  protected deleteDrive() {
+  //TODO: message toast doesnt work / only appears on child element
 
+  protected deleteDrive() {
+    if (!confirm('Are you sure you want to delete this drive?')) {
+      this.messageService.add({severity: 'warn', summary: 'Deletion cancelled'})
+      return;
+    }
+
+    const drive = this.selectedDrive();
+    if (drive) {
+      this.driveService.deleteDrive(drive.id).subscribe({
+        next: response => {
+          if (response.success) {
+            this.messageService.add({severity: 'success', summary: 'Drive deleted',
+              detail: 'The selected drive was deleted successfully.'});
+            this.loadDrives();
+            return;
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          this.messageService.add({severity: 'error', summary: 'Error',
+            detail: error.message ?? 'An error occurred while deleting the drive.'});
+          return;
+        }
+      });
+    }
+
+    this.messageService.add({severity: 'warn', summary: 'No drive selected',
+      detail: 'Please select a drive to delete.'});
   }
 
   protected loadMore() {

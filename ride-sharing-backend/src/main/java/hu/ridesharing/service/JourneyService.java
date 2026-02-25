@@ -4,6 +4,7 @@ import hu.ridesharing.dto.DriverDTO;
 import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.entity.*;
+import hu.ridesharing.exception.DriverNotFoundException;
 import hu.ridesharing.exception.EmailSendingError;
 import hu.ridesharing.exception.JoinRideException;
 import hu.ridesharing.repository.JourneyPassengerRepository;
@@ -23,6 +24,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -158,6 +160,15 @@ public class JourneyService {
         } catch (MessagingException e) {
             throw new EmailSendingError("Could not send approve email for driver.");
         }
+    }
+
+    public boolean deleteDrive(Long id, String username) {
+        Optional<Journey> journey = journeyRepository.findById(id);
+        if (journey.isPresent()) {
+            journeyRepository.deleteById(id);
+            return true;
+        }
+        throw new DriverNotFoundException("No such drive found for user " + username);
     }
 
     private JourneyResponseDTO mapToResponse(Journey journey) {

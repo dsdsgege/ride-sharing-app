@@ -145,26 +145,30 @@ export class ChatComponent implements AfterViewInit {
     });
   }
 
-  private loadHistory() {
-    return new Promise<void> ((resolve) => {
-      this.chatService.findChatHistoryBetweenUsers(this.otherUsername(), this.page).subscribe({
-        next: response => {
-          this.messages = response.content ?? [];
-          this.totalMessages = response.totalElements;
-          resolve();
-        },
-        error: err => {
-          alert("Could not load chat history. Please try again later.");
-          console.error(err);
-          this.chatService.ngOnDestroy();
-        }
+  private loadHistory(): Promise<void> {
+    return this.keycloak.loadUserProfile().then(() => {
+      return new Promise<void>((resolve) => {
+        this.chatService.findChatHistoryBetweenUsers(this.otherUsername(), this.page).subscribe({
+          next: response => {
+            this.messages = response.content ?? [];
+            this.totalMessages = response.totalElements;
+            resolve();
+          },
+          error: err => {
+            alert("Could not load chat history. Please try again later.");
+            console.error(err);
+            this.chatService.ngOnDestroy();
+          }
+        });
       });
+    }).catch(() => {
+      this.keycloak.login();
+      return new Promise<void>(((resolve, reject) => reject("You need to be logged in to view the chat history."))
+      );
     });
   }
 
   private scrollToBottom(): void {
     this.scrollBar.nativeElement.scrollTop = this.scrollBar.nativeElement.scrollHeight;
   }
-
-  protected readonly KeyboardEvent = KeyboardEvent;
 }

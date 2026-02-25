@@ -62,11 +62,11 @@ export class DriveService {
     return this.httpClient.get<RideModelResponse>(`${this.apiUrl}/my-drives?page=${page}`);
   }
 
-  public acceptPassenger(token: String | undefined) {
-    return this.httpClient.post<AcceptanceStatus>(`${this.apiUrl}/accept-passenger`, {token: token});
+  public deleteDrive(driveId: number) {
+    return this.httpClient.delete<SuccessStatus>(`${this.apiUrl}/my-drives/${driveId}`);
   }
-}
 
-interface AcceptanceStatus {
-  success: boolean;
+  public acceptPassenger(token: String | undefined) {
+    return this.httpClient.post<SuccessStatus>(`${this.apiUrl}/accept-passenger`, {token: token});
+  }
 }

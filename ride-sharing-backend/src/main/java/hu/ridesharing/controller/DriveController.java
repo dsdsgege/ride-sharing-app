@@ -2,6 +2,7 @@ package hu.ridesharing.controller;
 
 import hu.ridesharing.dto.request.AddDriveRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
+import hu.ridesharing.dto.response.outgoing.SuccessStatus;
 import hu.ridesharing.entity.Driver;
 import hu.ridesharing.entity.Journey;
 import hu.ridesharing.entity.GeocodingResponse;
@@ -85,11 +86,13 @@ public class DriveController {
     }
 
     @PostMapping("/accept-passenger")
-    public AcceptanceStatus acceptPassenger(@RequestBody Token token) {
-        return new AcceptanceStatus(driverService.acceptPassenger(token.token()));
+    public SuccessStatus acceptPassenger(@RequestBody Token token) {
+        return new SuccessStatus(driverService.acceptPassenger(token.token()));
     }
 
-    public record AcceptanceStatus(boolean success) {
+    @DeleteMapping("/my-drives/{driveId}")
+    public SuccessStatus deleteDrive(@PathVariable Long driveId, @AuthenticationPrincipal Jwt jwt) {
+        return new SuccessStatus(journeyService.deleteDrive(driveId, jwt.getClaimAsString("preferred_username")));
     }
 
     public record Token(String token) {

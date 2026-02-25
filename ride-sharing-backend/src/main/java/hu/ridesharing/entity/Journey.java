@@ -27,10 +27,10 @@ public class Journey {
     @JoinColumn(name = "driver_id")
     private Driver driver;
 
-    @OneToMany(mappedBy = "journey")
+    @OneToMany(mappedBy = "journey", cascade = CascadeType.ALL)
     private Set<JourneyPassenger> passengers;
 
-    @OneToMany(mappedBy = "journey")
+    @OneToMany(mappedBy = "journey", cascade = CascadeType.ALL)
     private Set<Rating> ratings;
 
     private LocalDateTime depart;
