@@ -15,7 +15,7 @@ import { MessageService } from 'primeng/api';
 import {PassengerPrice, DriveService} from '../../../services/drive-service';
 import Keycloak from 'keycloak-js';
 import {DriverModel} from '../../../model/driver-model';
-import {ProgressBar} from 'primeng/progressbar';
+import {LoadingService} from '../../../services/loading-service';
 
 @Component({
   selector: 'app-drive-component',
@@ -28,8 +28,7 @@ import {ProgressBar} from 'primeng/progressbar';
     InputNumber,
     Button,
     Dialog,
-    CurrencyPipe,
-    ProgressBar
+    CurrencyPipe
   ],
   templateUrl: './drive-component.html',
   standalone: true,
@@ -72,11 +71,11 @@ export class DriveComponent implements OnInit {
     consumption: this.consumptionControl
   });
 
-  protected isLoading: WritableSignal<boolean> = signal(false);
-
   protected readonly today: Date = new Date();
 
   protected readonly dateFormat = 'dd/mm/yy';
+
+  private readonly loadingService = inject(LoadingService);
 
   private readonly carsService: CarsService = inject(CarsService);
 
@@ -151,30 +150,30 @@ export class DriveComponent implements OnInit {
       this.keycloak.login({
         redirectUri: window.location.origin + window.location.pathname
       }).then(() => {
-        this.isLoading.set(true);
+        this.loadingService.show();
 
         this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
           this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe({
           next : price => {
             this.passengerPrice = price;
             this.dialogVisible = true;
-            this.isLoading.set(false);
+            this.loadingService.hide();
           },
           error: err => {
             this.messageService.add({severity: 'error', summary: 'Error', detail: err.message});
-            this.isLoading.set(false);
+            this.loadingService.hide();
           }
         });
       });
     }
 
-    this.isLoading.set(true);
+    this.loadingService.show();
     this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
       this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe(
       price => {
         this.passengerPrice = price;
         this.dialogVisible = true;
-        this.isLoading.set(false);
+        this.loadingService.hide();
       }
     );
   }

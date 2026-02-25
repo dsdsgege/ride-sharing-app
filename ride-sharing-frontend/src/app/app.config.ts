@@ -12,6 +12,7 @@ import {providePrimeNG} from 'primeng/config';
 import Material from '@primeuix/themes/material';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {MessageService} from 'primeng/api';
+import {loadingInterceptor} from './loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,7 +36,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
+    provideHttpClient(withInterceptors([includeBearerTokenInterceptor, loadingInterceptor])),
     {
       provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
       useValue: [

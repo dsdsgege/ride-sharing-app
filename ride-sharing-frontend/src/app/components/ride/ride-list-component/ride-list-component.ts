@@ -5,7 +5,6 @@ import {ActivatedRoute, RouterLink} from '@angular/router';
 import {RideService} from '../../../services/ride-service';
 import {RideModel} from '../../../model/ride/ride-model';
 import {Card} from 'primeng/card';
-import { ProgressBarModule } from 'primeng/progressbar';
 import {faUser} from '@fortawesome/free-solid-svg-icons/faUser';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
@@ -34,7 +33,6 @@ import {Paginator} from 'primeng/paginator';
     Button,
     Tooltip,
     RouterLink,
-    ProgressBarModule,
     Dialog,
     FloatLabel,
     InputText,

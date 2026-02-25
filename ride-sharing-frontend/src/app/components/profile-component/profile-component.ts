@@ -2,24 +2,21 @@ import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {ProfileDataModel} from '../../model/profile-data-model';
 import {RideService} from '../../services/ride-service';
 import {DriveService} from '../../services/drive-service';
-import {ProgressBar} from 'primeng/progressbar';
 import Keycloak from 'keycloak-js';
 import {catchError, forkJoin, of} from 'rxjs';
 import {ProfileTab} from '../../model/profile-tab';
 import {ChatTabComponent} from './chat-tab-component/chat-tab-component';
 import {DrivesTabComponent} from './drives-tab-component/drives-tab-component';
-import {MessageService} from 'primeng/api';
+import {LoadingService} from '../../services/loading-service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile-component',
-  imports: [ProgressBar, ChatTabComponent, DrivesTabComponent],
+  imports: [ChatTabComponent, DrivesTabComponent],
   templateUrl: './profile-component.html',
-
   styleUrl: './profile-component.scss'
 })
 export class ProfileComponent implements OnInit {
-
-  protected isLoading: WritableSignal<boolean> = signal(true);
 
   protected profile: ProfileDataModel = new ProfileDataModel();
 
@@ -31,11 +28,12 @@ export class ProfileComponent implements OnInit {
 
   protected readonly keycloak: Keycloak = inject(Keycloak);
 
+  protected readonly loadingService = inject(LoadingService);
+
   protected readonly ProfileTab = ProfileTab;
 
-  protected readonly messageService = inject(MessageService);
-
   ngOnInit(): void {
+    this.loadingService.show();
     this.keycloak.loadUserProfile().then(profile => {
       this.profile.username = profile.username ?? "";
       this.profile.fullName = profile.firstName + ' ' + profile.lastName;
@@ -50,7 +48,9 @@ export class ProfileComponent implements OnInit {
         rating: this.driveService.findDriverRatingByUsername(this.profile.username).pipe(
           catchError(err => of(0))
         )
-      }).subscribe({
+      }).pipe(
+        finalize(() => this.loadingService.hide())
+      ).subscribe({
         next: res => {
           this.profile.rides = res.rides;
           this.profile.drives = res.drives;
@@ -58,9 +58,11 @@ export class ProfileComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          this.isLoading.set(false);
         }
       });
+    }).catch(err => {
+      console.error(err);
+      this.loadingService.hide();
     });
   }
 }

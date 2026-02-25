@@ -1,64 +1,61 @@
-@if (this.loading()) {
-  <p-progressbar mode="indeterminate" [style]="{ height: '6px' }"></p-progressbar>
-} @else {
-  <div class="container mx-auto p-4">
+<div class="container mx-auto p-4">
 
-    <h1 class="text-3xl font-bold text-center mb-6">Choose your ride</h1>
-    <div class="breadcrumb flex justify-between max-w-6xl mx-auto">
-      <p-breadcrumb [model]="items"/>
-      <div class="filter-container">
-        <span class="filter"
-              (click)="filterDialogVisible = true">
-          Filter&nbsp;<fa-icon [icon]="faFilter"></fa-icon>
-        </span>
-      </div>
+  <h1 class="text-3xl font-bold text-center mb-6">Choose your ride</h1>
+  <div class="breadcrumb flex justify-between max-w-6xl mx-auto">
+    <p-breadcrumb [model]="items"/>
+    <div class="filter-container">
+      <span class="filter"
+            (click)="filterDialogVisible = true">
+        Filter&nbsp;<fa-icon [icon]="faFilter"></fa-icon>
+      </span>
     </div>
+  </div>
 
-    <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
+  <div class="card w-full max-w-6xl mx-auto p-6 mb-8">
 
-      <div class="form-section grid grid-cols-1 gap-4">
-        @for (ride of rides; track ride) {
-          <p-card header="{{ ride.fromCity }} &rarr; {{ ride.toCity }}"
-                  routerLink="your-ride"
-                  [queryParams]="{ id: ride.id }">
-            <div class="flex flex-row justify-between items-center w-full">
-              <div class="flex flex-col gap-1">
-                <div class="font-bold text-sm md:text-xl">
-                  {{ ride.price | currency:'HUF':'Ft':'1.0-0' }}
-                </div>
-
-                <div class="text-sm md:text-md">
-                  <span>{{ ride.departureTime | date: this.dateFormat}}</span>
-                  <span class="mx-1">&rarr;</span>
-                  <span>{{ ride.arrivalTime | date: this.dateFormat }}</span>
-                </div>
+    <div class="form-section grid grid-cols-1 gap-4">
+      @for (ride of rides; track ride) {
+        <p-card header="{{ ride.fromCity }} &rarr; {{ ride.toCity }}"
+                routerLink="your-ride"
+                [queryParams]="{ id: ride.id }">
+          <div class="flex flex-row justify-between items-center w-full">
+            <div class="flex flex-col gap-1">
+              <div class="font-bold text-sm md:text-xl">
+                {{ ride.price | currency:'HUF':'Ft':'1.0-0' }}
               </div>
 
-              <div class="user-icon ml-4">
-                <p-button pTooltip="{{ ride.driver.rating }} ★"
-                          tooltipPosition="left">
-                  <fa-icon [icon]="faUser"
-                           class="text-2xl text-gray-400 hover:text-gray-600 cursor-pointer">
-                  </fa-icon>
-                </p-button>
+              <div class="text-sm md:text-md">
+                <span>{{ ride.departureTime | date: this.dateFormat}}</span>
+                <span class="mx-1">&rarr;</span>
+                <span>{{ ride.arrivalTime | date: this.dateFormat }}</span>
               </div>
-
             </div>
-          </p-card>
-        }
-      </div>
-      <div class="flex justify-center">
-        <p-paginator class="m-3"
-                     (onPageChange)="onPageChange($event)"
-                     [first]="first"
-                     [rows]="pageSize"
-                     [totalRecords]="totalRecords"
-                     [rowsPerPageOptions]="[5, 10, 20]">
-        </p-paginator>
-      </div>
+
+            <div class="user-icon ml-4">
+              <p-button pTooltip="{{ ride.driver.rating }} ★"
+                        tooltipPosition="left">
+                <fa-icon [icon]="faUser"
+                         class="text-2xl text-gray-400 hover:text-gray-600 cursor-pointer">
+                </fa-icon>
+              </p-button>
+            </div>
+
+          </div>
+        </p-card>
+      }
     </div>
+    <div class="flex justify-center">
+      <p-paginator class="m-3"
+                   (onPageChange)="onPageChange($event)"
+                   [first]="first"
+                   [rows]="pageSize"
+                   [totalRecords]="totalRecords"
+                   [rowsPerPageOptions]="[5, 10, 20]">
+      </p-paginator>
+    </div>
+  </div>
 </div>
-}
+
 <p-dialog
   [(visible)]="filterDialogVisible"
   header="Filter Options"

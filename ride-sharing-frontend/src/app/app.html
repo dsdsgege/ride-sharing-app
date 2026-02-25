@@ -1,4 +1,9 @@
 <app-nav-bar></app-nav-bar>
+@if (this.loadingService.isLoading()) {
+  <div class="spinner-container">
+    <p-progressbar mode="indeterminate" [style]="{ height: '6px' }"></p-progressbar>
+  </div>
+}
 <main>
   <router-outlet></router-outlet>
   <p-toast></p-toast>

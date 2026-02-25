@@ -5,7 +5,6 @@ import { FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
 import { MapComponent } from '../../map-component/map-component';
 import { GeolocationService } from '@ng-web-apis/geolocation';
-import { ProgressSpinner } from 'primeng/progressspinner';
 import { take } from 'rxjs';
 import { GeocodingService } from '../../../services/geocoding-service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -16,6 +15,7 @@ import {FormService} from '../../../services/form-service';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {MenuItem} from 'primeng/api';
 import {RouterLink} from '@angular/router';
+import {ProgressSpinner} from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-ride-component',
@@ -25,13 +25,14 @@ import {RouterLink} from '@angular/router';
     FormsModule,
     DatePicker,
     MapComponent,
-    ProgressSpinner,
     FontAwesomeModule,
     Button,
     ReactiveFormsModule,
     Tooltip,
     Breadcrumb,
-    RouterLink],
+    RouterLink,
+    ProgressSpinner
+  ],
   templateUrl: './ride-component.html',
   standalone: true,
   styleUrl: './ride-component.scss'
