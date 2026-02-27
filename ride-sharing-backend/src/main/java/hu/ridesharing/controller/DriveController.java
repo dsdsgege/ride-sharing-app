@@ -2,7 +2,7 @@ package hu.ridesharing.controller;
 
 import hu.ridesharing.dto.request.AddDriveRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
-import hu.ridesharing.dto.response.outgoing.SuccessStatus;
+import hu.ridesharing.dto.response.outgoing.ResponseStatus;
 import hu.ridesharing.entity.Driver;
 import hu.ridesharing.entity.Journey;
 import hu.ridesharing.entity.GeocodingResponse;
@@ -86,13 +86,18 @@ public class DriveController {
     }
 
     @PostMapping("/accept-passenger")
-    public SuccessStatus acceptPassenger(@RequestBody Token token) {
-        return new SuccessStatus(driverService.acceptPassenger(token.token()));
+    public ResponseStatus acceptPassenger(@RequestBody Token token) {
+        return new ResponseStatus(driverService.acceptPassenger(token.token()));
     }
 
-    @DeleteMapping("/my-drives/{driveId}")
-    public SuccessStatus deleteDrive(@PathVariable Long driveId, @AuthenticationPrincipal Jwt jwt) {
-        return new SuccessStatus(journeyService.deleteDrive(driveId, jwt.getClaimAsString("preferred_username")));
+    @DeleteMapping("/my-drive/{driveId}")
+    public ResponseStatus deleteDrive(@PathVariable Long driveId, @AuthenticationPrincipal Jwt jwt) {
+        return new ResponseStatus(journeyService.deleteDrive(driveId, jwt.getClaimAsString("preferred_username")));
+    }
+
+    @PutMapping("/my-drive")
+    public ResponseStatus updateDrive(@RequestBody Journey drive, @AuthenticationPrincipal Jwt jwt) {
+        return new ResponseStatus(journeyService.updateDrive(drive, jwt.getClaimAsString("preferred_username")));
     }
 
     public record Token(String token) {

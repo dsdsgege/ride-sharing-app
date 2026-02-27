@@ -45,7 +45,7 @@ export class ChatService implements OnDestroy {
 
       // defining the callback on connection
       client.onConnect = (frame) => {
-        console.log('Connected: ' + this.stompClient?.connected);
+
 
         // The client only subscribes to their own topic as backend sends the message to both topic
         this.stompClient?.subscribe(`/topic/private-messages/${username}`, (message: Message) => {

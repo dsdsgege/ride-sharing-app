@@ -1,0 +1,3 @@
+interface ResponseStatus {
+  success: boolean;
+}

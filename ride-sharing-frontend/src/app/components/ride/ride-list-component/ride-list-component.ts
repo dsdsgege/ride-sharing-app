@@ -139,9 +139,9 @@ export class RideListComponent implements OnInit {
       if (response.content.length === 0) {
         this.messageService.add({severity: 'warn', summary: 'No rides found',
           detail: 'No rides found for the given parameters.'});
-        console.log("No rides found for the given parameters.")
+
       }
-      console.log(response.content);
+
       this.loading.set(false);
     });
   }

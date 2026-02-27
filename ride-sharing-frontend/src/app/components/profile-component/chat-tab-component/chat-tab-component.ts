@@ -38,8 +38,8 @@ export class ChatTabComponent implements OnInit {
   protected readonly userService = inject(UserService);
 
   ngOnInit(): void {
-    console.log(this.profile());
-    console.log(this.partners);
+
+
     // this way we only stop loading after everything is fetched
     this.findChatPartners().then(() => {
       this.isLoading.set(false);

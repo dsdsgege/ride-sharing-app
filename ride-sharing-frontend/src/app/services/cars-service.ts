@@ -12,7 +12,7 @@ export class CarsService {
   constructor(protected httpClient: HttpClient) {
   }
   public fetchCarMakes(): Observable<CarMakeModel[]> {
-    console.log("cars fetched");
+
     return this.httpClient.get<CarMakeResponseModel>(this.apiUrl).pipe(
       map(response => {
         if (response?.Results) {

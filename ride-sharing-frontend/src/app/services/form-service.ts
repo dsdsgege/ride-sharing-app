@@ -75,7 +75,7 @@ export class FormService {
       }
 
       if (formValue instanceof Date) {
-        console.log(formValue);
+
         return formValue > new Date();
       }
 

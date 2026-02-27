@@ -124,8 +124,8 @@ export class DriveComponent implements OnInit {
   }
 
   protected showDialog() {
-    console.log('Keycloak state:', this.keycloak);
-    console.log('Is authenticated:', this.keycloak.authenticated);
+
+
 
     this.everyInputFilled = this.formService.areInputsFilled(this.carControl, this.consumptionControl,
       this.modelYearControl, this.seatsControl, this.fromCityControl, this.toCityControl, this.arriveControl,
@@ -145,7 +145,7 @@ export class DriveComponent implements OnInit {
 
     if (!this.keycloak.authenticated) {
       setTimeout(() => {
-        console.log("Not authenticated, redirecting to login")
+
       }, 3000)
       this.keycloak.login({
         redirectUri: window.location.origin + window.location.pathname
@@ -182,7 +182,7 @@ export class DriveComponent implements OnInit {
     this.keycloak.loadUserProfile().then(profile => {
       let driver = new DriverModel(profile.username ?? "", profile.firstName + " " + profile.lastName,
         profile.email ?? "", 0);
-      console.log(driver);
+
 
       this.driveService.addDrive(this.driveForm.value, this.passengerPrice, driver).subscribe({
         next: resp => {

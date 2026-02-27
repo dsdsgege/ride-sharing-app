@@ -3,7 +3,7 @@
   <ul class="rides flex flex-col gap-3 h-full">
     @for (ride of rides; track $index) {
       <li class="profile-select-list text-xs md:text-sm lg:text-lg"
-           [class.profile-active-select]="ride.id === selectedDrive()?.id"
+           [class.profile-active-select]="ride.id === selectedRide()?.id"
            (click)="selectRide(ride)">
 
         {{ ride.fromCity }} to {{ ride.toCity }}
@@ -19,19 +19,17 @@
     }
   </ul>
 
-  @if (this.selectedDrive()) {
+  @if (this.selectedRide()) {
     <div class="md:col-span-2 flex flex-col p-4 rounded-lg" style="background: rgba(0, 0, 0, 0.2);">
 
       <h2 class="text-sm md:text-xl font-bold border-b border-gray-500 pb-1 mb-4">
-        Edit Drive: {{ selectedDrive()!.fromCity }} to {{ selectedDrive()!.toCity }}
+        Edit Drive: {{ selectedRide()!.fromCity }} to {{ selectedRide()!.toCity }}
       </h2>
 
 
-      <form class="grid grid-cols-1 md:grid-cols-2 gap-6"
-            [formGroup]="driveEditform"
-            (submit)="updateDrive()">
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="md:col-span-2 mb-2">
-          <strong>Price:</strong>{{ selectedDrive()!.price | currency: "HUF" : "Ft" : "1.0-0" }}
+          <strong>Price:</strong>{{ selectedRide()!.price | currency: "HUF" : "Ft" : "1.0-0" }}
         </div>
 
         <div class="flex flex-col gap-1">
@@ -49,7 +47,7 @@
                            [inputStyle]="{ width: '100%' }"
                            [formControl]="seatsControl"
                            [showButtons]="true"
-                           [min]="1">
+                           [min]="0">
             </p-inputnumber>
             <label for="seats">Seats</label>
           </p-floatlabel>
@@ -90,8 +88,9 @@
           Delete
         </button>
 
-        <button type="submit"
-                class="success-button">
+        <button type="button"
+                class="success-button"
+                (click)="updateDrive()">
           Edit
         </button>
       </div>

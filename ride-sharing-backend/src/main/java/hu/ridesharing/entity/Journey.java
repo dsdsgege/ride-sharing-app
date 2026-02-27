@@ -1,5 +1,7 @@
 package hu.ridesharing.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,8 +35,12 @@ public class Journey {
     @OneToMany(mappedBy = "journey", cascade = CascadeType.ALL)
     private Set<Rating> ratings;
 
+    @JsonProperty("departureTime")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime depart;
 
+    @JsonProperty("arrivalTime")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime arrive;
 
     private String carMake;

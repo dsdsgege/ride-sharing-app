@@ -4,14 +4,13 @@ import hu.ridesharing.dto.DriverDTO;
 import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.entity.*;
-import hu.ridesharing.exception.DriverNotFoundException;
-import hu.ridesharing.exception.EmailSendingError;
-import hu.ridesharing.exception.JoinRideException;
+import hu.ridesharing.exception.*;
 import hu.ridesharing.repository.JourneyPassengerRepository;
 import hu.ridesharing.repository.JourneyRepository;
 import hu.ridesharing.repository.PassengerRepository;
 import hu.ridesharing.repository.RatingRepository;
 import hu.ridesharing.repository.specification.JourneySpecificationFactory;
+import io.micrometer.common.util.StringUtils;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -164,11 +163,47 @@ public class JourneyService {
 
     public boolean deleteDrive(Long id, String username) {
         Optional<Journey> journey = journeyRepository.findById(id);
-        if (journey.isPresent()) {
-            journeyRepository.deleteById(id);
-            return true;
+        if (journey.isEmpty()) {
+            throw new DriveNotFoundException("No such drive found for user " + username);
         }
-        throw new DriverNotFoundException("No such drive found for user " + username);
+
+        if (!journey.get().getDriver().getUsername().equals(username)) {
+            throw new ForbiddenException("You are not the driver of this drive.");
+        }
+
+        journeyRepository.deleteById(id);
+        return true;
+        // TODO: send emails
+    }
+
+    public boolean updateDrive(Journey drive, String username) {
+        Optional<Journey> journey = journeyRepository.findById(drive.getId());
+        if (journey.isEmpty()) {
+            log.warn("No such drive found for user {}", username);
+            throw new DriveNotFoundException("No such drive found for user " + username);
+        }
+
+        if (StringUtils.isBlank(drive.getCarMake()) || drive.getArrive() == null || drive.getDepart() == null) {
+            log.warn("Some of the fields are empty drive: {}", drive);
+            throw new BadRequestException("You must fill every input");
+        }
+
+        Journey updatedJourney = journey.get();
+        updatedJourney.setCarMake(drive.getCarMake());
+        updatedJourney.setSeats(drive.getSeats());
+        updatedJourney.setArrive(drive.getArrive());
+        updatedJourney.setDepart(drive.getDepart());
+
+
+        if (!updatedJourney.getDriver().getUsername().equals(username)) {
+            throw new ForbiddenException("You are not the driver of this drive.");
+        }
+        var savedJourney = journeyRepository.save(updatedJourney);
+        return savedJourney.getArrive() == updatedJourney.getArrive() &&
+                savedJourney.getDepart() == updatedJourney.getDepart() &&
+                savedJourney.getCarMake().equals(updatedJourney.getCarMake()) &&
+                savedJourney.getSeats() == updatedJourney.getSeats();
+        // TODO: send emails
     }
 
     private JourneyResponseDTO mapToResponse(Journey journey) {

@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import { AddResponseModel } from '../model/add-response-model';
 import {DriverModel} from '../model/driver-model';
 import {RideModelResponse} from '../model/ride/ride-model-response';
+import {RideModel} from '../model/ride/ride-model';
 
 export interface PassengerPrice {
   price: number;
@@ -39,7 +40,7 @@ export class DriveService {
       return of(response);
     }
 
-    console.log(driveData);
+
 
     driveData.arrive = new Date(driveData.arrive).toISOString();
     driveData.depart = new Date(driveData.depart).toISOString();
@@ -49,12 +50,12 @@ export class DriveService {
   }
 
   public findDriveCountByUsername(username: String): Observable<number> {
-    console.log("findRideCountByPassenger called");
+
     return this.httpClient.get<number>(`${this.apiUrl}/drive-count?username=${username}`);
   }
 
   public findDriverRatingByUsername(username: String): Observable<number> {
-    console.log("findRideCountByPassenger called");
+
     return this.httpClient.get<number>(`${this.apiUrl}/driver-rating?username=${username}`);
   }
 
@@ -63,10 +64,17 @@ export class DriveService {
   }
 
   public deleteDrive(driveId: number) {
-    return this.httpClient.delete<SuccessStatus>(`${this.apiUrl}/my-drives/${driveId}`);
+    return this.httpClient.delete<ResponseStatus>(`${this.apiUrl}/my-drive/${driveId}`);
+  }
+
+  public updateDrive(rideModel: RideModel) {
+    rideModel.departureTime = new Date(rideModel.departureTime).toISOString().split('.')[0];
+    rideModel.arrivalTime = new Date(rideModel.arrivalTime).toISOString().split('.')[0];
+
+    return this.httpClient.put<ResponseStatus>(`${this.apiUrl}/my-drive`, rideModel);
   }
 
   public acceptPassenger(token: String | undefined) {
-    return this.httpClient.post<SuccessStatus>(`${this.apiUrl}/accept-passenger`, {token: token});
+    return this.httpClient.post<ResponseStatus>(`${this.apiUrl}/accept-passenger`, {token: token});
   }
 }
