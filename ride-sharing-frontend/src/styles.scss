@@ -134,12 +134,30 @@ body {
   // inputgroup addon
   --p-inputgroup-addon-border-color: var(--text-color);
 
+  // togglebutton
+  --p-togglebutton-checked-background: rgba(0, 0, 0, 0.5);
+  --p-togglebutton-checked-border-color: rgba(117, 117, 117, 0.3);
+  --p-togglebutton-checked-color: var(--text-color);
+  --p-togglebutton-color: var(--text-color);
+  --p-togglebutton-background: transparent;
+  --p-togglebutton-border-color: rgba(117, 117, 117, 0.3);
+  --p-togglebutton-hover-background: rgba(117, 117, 117, 0.3);
+  --p-togglebutton-hover-color: var(--text-hover-color);
+
   transition: background-color #{variables.$transition-speed};
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   body {
     margin-top: 2.4rem;
+  }
+
+  input, .p-inputnumber, .p-datepicker, .p-button, .p-togglebutton {
+    height: 2rem;
+  }
+
+  body {
+    --p-togglebutton-padding: 0.4rem;
   }
 }
 

@@ -6,18 +6,20 @@ import lombok.Data;
 @Entity
 @Data
 public class Rating {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "journey_id")
-    private Journey journey;
+    @JoinColumn(name = "rated_username")
+    private User rated;
 
-    private double value;
+    @ManyToOne
+    @JoinColumn(name = "rater_username")
+    private User rater; // Aki adja
 
+    @Enumerated(EnumType.STRING)
     private RatingType type;
 
-    private String comment;
+    private double value;
 }

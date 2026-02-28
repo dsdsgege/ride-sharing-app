@@ -73,8 +73,8 @@ export class DrivesTabComponent implements OnInit {
     this.selectedRide.set(ride);
     this.carMakeControl.setValue(ride.carMake ?? "");
     this.seatsControl.setValue(ride.seats ?? 1);
-    this.arriveControl.setValue(new Date(ride.arrivalTime));
-    this.departControl.setValue(new Date(ride.departureTime));
+    this.arriveControl.setValue(new Date(ride.arrive));
+    this.departControl.setValue(new Date(ride.depart));
 
     // so the styling of primeng and other components load too
     setTimeout(() => {
@@ -103,8 +103,8 @@ export class DrivesTabComponent implements OnInit {
 
     this.loadingService.show()
 
-    ride.departureTime = this.departControl.getRawValue() ?? "";
-    ride.arrivalTime = this.arriveControl.getRawValue() ?? "";
+    ride.depart = this.departControl.getRawValue() ?? "";
+    ride.arrive = this.arriveControl.getRawValue() ?? "";
     ride.carMake = this.carMakeControl.getRawValue() ?? "";
     ride.seats = this.seatsControl.getRawValue() ?? 0;
 

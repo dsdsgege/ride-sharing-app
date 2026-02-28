@@ -1,0 +1,15 @@
+.ratings-received, ratings-given {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+  border-right: var(--text-color) 1px solid;
+}
+
+@media screen and (max-width: 767px) {
+  ::ng-deep {
+    .p-togglebutton {
+      font-size: 0.7rem;
+    }
+  }
+}

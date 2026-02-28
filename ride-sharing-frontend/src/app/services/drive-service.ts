@@ -40,10 +40,8 @@ export class DriveService {
       return of(response);
     }
 
-
-
-    driveData.arrive = new Date(driveData.arrive).toISOString();
-    driveData.depart = new Date(driveData.depart).toISOString();
+    driveData.arrive = new Date(driveData.arrive).toISOString().split(".")[0];
+    driveData.depart = new Date(driveData.depart).toISOString().split(".")[0];
 
     driveData.passengerPrice = passengerPrice.price;
     return this.httpClient.post<AddResponseModel>(`${this.apiUrl}/add_drive`, {drive: driveData, driver: driver});
@@ -68,8 +66,8 @@ export class DriveService {
   }
 
   public updateDrive(rideModel: RideModel) {
-    rideModel.departureTime = new Date(rideModel.departureTime).toISOString().split('.')[0];
-    rideModel.arrivalTime = new Date(rideModel.arrivalTime).toISOString().split('.')[0];
+    rideModel.depart = new Date(rideModel.depart).toISOString().split('.')[0];
+    rideModel.arrive = new Date(rideModel.arrive).toISOString().split('.')[0];
 
     return this.httpClient.put<ResponseStatus>(`${this.apiUrl}/my-drive`, rideModel);
   }

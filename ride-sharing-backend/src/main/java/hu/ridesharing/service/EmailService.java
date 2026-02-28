@@ -1,8 +1,7 @@
 package hu.ridesharing.service;
 
-import hu.ridesharing.entity.Driver;
+import hu.ridesharing.entity.User;
 import hu.ridesharing.entity.Journey;
-import hu.ridesharing.entity.Passenger;
 import hu.ridesharing.entity.Rating;
 import hu.ridesharing.repository.RatingRepository;
 import jakarta.mail.MessagingException;
@@ -44,10 +43,10 @@ public class EmailService {
         this.from = from;
     }
 
-    public void sendRideAcceptEmail(Journey journey, Passenger passenger, String secureToken)
+    public void sendRideAcceptEmail(Journey journey, User passenger, String secureToken)
             throws MessagingException {
 
-        Driver driver = journey.getDriver();
+        User driver = journey.getDriver();
         double passengerRating = ratingRepository.findByPassenger(passenger).stream()
                 .mapToDouble(Rating::getValue)
                 .average()

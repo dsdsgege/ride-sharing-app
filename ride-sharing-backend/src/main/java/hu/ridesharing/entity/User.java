@@ -3,15 +3,11 @@ package hu.ridesharing.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
-import java.util.Set;
-
-@Entity
-@Data
+@Entity(name = "users") // 'user' is used in postgres
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(exclude = "rides")
-public class Passenger {
+@Data
+public class User {
 
     @Id
     @EqualsAndHashCode.Include
@@ -20,7 +16,4 @@ public class Passenger {
     private String fullName;
 
     private String emailAddress;
-
-    @OneToMany(mappedBy = "passenger")
-    private Set<JourneyPassenger> rides;
 }

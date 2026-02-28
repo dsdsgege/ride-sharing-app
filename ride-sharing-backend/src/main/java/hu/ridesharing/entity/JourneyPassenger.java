@@ -24,7 +24,7 @@ public class JourneyPassenger {
 
     @ManyToOne
     @JoinColumn(name = "passenger_id")
-    private Passenger passenger;
+    private User passenger;
 
     private boolean accepted = false;
 }

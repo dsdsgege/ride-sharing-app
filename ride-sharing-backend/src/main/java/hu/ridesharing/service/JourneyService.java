@@ -7,8 +7,8 @@ import hu.ridesharing.entity.*;
 import hu.ridesharing.exception.*;
 import hu.ridesharing.repository.JourneyPassengerRepository;
 import hu.ridesharing.repository.JourneyRepository;
-import hu.ridesharing.repository.PassengerRepository;
 import hu.ridesharing.repository.RatingRepository;
+import hu.ridesharing.repository.UserRepository;
 import hu.ridesharing.repository.specification.JourneySpecificationFactory;
 import io.micrometer.common.util.StringUtils;
 import jakarta.mail.MessagingException;
@@ -32,7 +32,7 @@ public class JourneyService {
 
     private final JourneyRepository journeyRepository;
 
-    private final PassengerRepository passengerRepository;
+    private final UserRepository userRepository;
 
     private final RatingRepository ratingRepository;
 
@@ -41,24 +41,28 @@ public class JourneyService {
     private final EmailService emailService;
 
     @Autowired
-    public JourneyService(JourneyRepository journeyRepository, PassengerRepository passengerRepository,
-                          RatingRepository ratingRepository, EmailService emailService,
-                          JourneyPassengerRepository journeyPassengerRepository) {
+    public JourneyService(JourneyRepository journeyRepository, RatingRepository ratingRepository,
+                          EmailService emailService, JourneyPassengerRepository journeyPassengerRepository,
+                          UserRepository userRepository) {
 
         this.journeyRepository = journeyRepository;
-        this.passengerRepository = passengerRepository;
+        this.userRepository = userRepository;
         this.ratingRepository = ratingRepository;
         this.emailService = emailService;
         this.journeyPassengerRepository = journeyPassengerRepository;
     }
 
-    public Journey addDrive(Journey drive) {
+    public Journey addDrive(Journey drive, String username) {
+        if (!username.equals(drive.getDriver().getUsername())) {
+            throw new ForbiddenException("You cant share ride if you are not the driver.");
+        }
+
         log.debug("Adding drive: {}", drive);
         return this.journeyRepository.save(drive);
     }
 
     public Page<JourneyResponseDTO> getMyDrives(String username, int page) {
-        Driver driver = new Driver();
+        User driver = new User();
         driver.setUsername(username);
 
         log.debug("Fetching drives for driver {}", username);
@@ -108,7 +112,7 @@ public class JourneyService {
     }
 
     public int getRideCountByUsername(String username) {
-        Passenger passenger = new Passenger();
+        User passenger = new User();
         passenger.setUsername(username);
 
         var count = journeyPassengerRepository.findJourneyPassengersByPassenger(passenger).size();
@@ -117,7 +121,7 @@ public class JourneyService {
     }
 
     public int getDriveCountByUsername(String username) {
-        Driver driver = new Driver();
+        User driver = new User();
         driver.setUsername(username);
         var count = journeyRepository.findByDriver(driver).size();
         log.debug("Found {} drives for {}", count, username);
@@ -128,15 +132,15 @@ public class JourneyService {
     public void joinRide(Long id, String passengerUsername, String passengerEmail, String passengerFullName) {
         Journey journey = journeyRepository.findById(id).orElseThrow();
 
-        var passenger = passengerRepository.findById(passengerUsername);
-        Passenger savedPassenger;
+        var passenger = userRepository.findById(passengerUsername);
+        User savedPassenger;
         if (passenger.isEmpty()) {
-            Passenger newPassenger = new Passenger();
+            User newPassenger = new User();
             newPassenger.setUsername(passengerUsername);
             newPassenger.setFullName(passengerFullName);
             newPassenger.setEmailAddress(passengerEmail);
 
-            savedPassenger = passengerRepository.save(newPassenger);
+            savedPassenger = userRepository.save(newPassenger);
         } else {
             savedPassenger = passenger.get();
         }
@@ -214,7 +218,8 @@ public class JourneyService {
         DriverDTO driver = new DriverDTO();
         driver.setUsername(journey.getDriver().getUsername());
         driver.setFullName(journey.getDriver().getFullName());
-        driver.setRating(ratingRepository.findByDriver(journey.getDriver()).stream()
+        driver.setRating(ratingRepository.findByDriver(journey.getDriver())
+                .stream()
                 .mapToDouble(Rating::getValue)
                 .average()
                 .orElse(0)
@@ -222,8 +227,8 @@ public class JourneyService {
         response.setDriver(driver);
         response.setFromCity(journey.getFromCity());
         response.setToCity(journey.getToCity());
-        response.setArrivalTime(journey.getArrive());
-        response.setDepartureTime(journey.getDepart());
+        response.setArrive(journey.getArrive());
+        response.setDepart(journey.getDepart());
         response.setCarMake(journey.getCarMake());
         return response;
     }

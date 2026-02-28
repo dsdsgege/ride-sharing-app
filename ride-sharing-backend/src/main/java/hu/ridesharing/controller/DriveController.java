@@ -3,13 +3,15 @@ package hu.ridesharing.controller;
 import hu.ridesharing.dto.request.AddDriveRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.dto.response.outgoing.ResponseStatus;
-import hu.ridesharing.entity.Driver;
+import hu.ridesharing.entity.User;
 import hu.ridesharing.entity.Journey;
 import hu.ridesharing.entity.GeocodingResponse;
-import hu.ridesharing.service.DriverService;
+import hu.ridesharing.exception.BadRequestException;
 import hu.ridesharing.service.JourneyService;
 import hu.ridesharing.service.PriceCalculatorService;
+import hu.ridesharing.service.UserService;
 import hu.ridesharing.service.external.GeocodingApiService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,16 +29,16 @@ public class DriveController {
     private final PriceCalculatorService priceCalculatorService;
     private final GeocodingApiService geocodingApiService;
     private final JourneyService journeyService;
-    private final DriverService driverService;
+    private final UserService userService;
 
     @Autowired
     public DriveController(PriceCalculatorService priceCalculatorService, GeocodingApiService geocodingApiService,
-                           JourneyService journeyService, DriverService driverService) {
+                           JourneyService journeyService, UserService userService) {
 
         this.priceCalculatorService = priceCalculatorService;
         this.geocodingApiService = geocodingApiService;
         this.journeyService = journeyService;
-        this.driverService = driverService;
+        this.userService = userService;
     }
 
     @GetMapping("/price")
@@ -56,14 +58,21 @@ public class DriveController {
 
     @Transactional(rollbackOn = SQLException.class)
     @PostMapping("add_drive")
-    public Map<String, Boolean> addDrive(@RequestBody AddDriveRequest addDriveRequest) throws SQLException {
-        Driver driver = addDriveRequest.driver();
+    public Map<String, Boolean> addDrive(@RequestBody AddDriveRequest addDriveRequest,
+                                         @AuthenticationPrincipal Jwt jwt) throws SQLException {
+        User driver = addDriveRequest.driver();
+        userService.saveUser(driver);
+
         Journey drive = addDriveRequest.drive();
         drive.setDriver(driver);
 
-        driverService.addDriver(driver);
+        if (drive.getArrive() == null || drive.getDepart() == null || StringUtils.isBlank(drive.getCarMake())
+                || drive.getSeats() == 0 || StringUtils.isBlank(drive.getFromCity())
+                || StringUtils.isBlank(drive.getToCity())) {
+            throw new BadRequestException("Some of the fields are empty.");
+        }
 
-        var journey = journeyService.addDrive(drive);
+        var journey = journeyService.addDrive(drive, jwt.getClaimAsString("preferred_username"));
         if (journey == null) {
             throw new SQLException("Could not save drive to the database.");
         }
@@ -82,12 +91,12 @@ public class DriveController {
 
     @GetMapping("/driver-rating")
     public double getDriverRatingByUsername(@RequestParam String username) {
-        return driverService.getDriverRatingByUsername(username);
+        return userService.getDriverRatingByUsername(username);
     }
 
     @PostMapping("/accept-passenger")
     public ResponseStatus acceptPassenger(@RequestBody Token token) {
-        return new ResponseStatus(driverService.acceptPassenger(token.token()));
+        return new ResponseStatus(userService.acceptPassenger(token.token()));
     }
 
     @DeleteMapping("/my-drive/{driveId}")

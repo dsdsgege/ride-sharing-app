@@ -12,8 +12,8 @@ public class JourneyResponseDTO {
     private String toCity;
     private double price;
     private DriverDTO driver;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private LocalDateTime depart;
+    private LocalDateTime arrive;
     private String carMake;
     private int seats;
 }

@@ -6,8 +6,8 @@ export interface RideModel {
   toCity: string;
   price: number;
   driver: DriverModel;
-  departureTime: Date | string;
-  arrivalTime: Date | string;
+  depart: Date | string;
+  arrive: Date | string;
   carMake: string;
   seats: number;
 }

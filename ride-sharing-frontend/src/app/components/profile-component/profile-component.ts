@@ -9,10 +9,11 @@ import {ChatTabComponent} from './chat-tab-component/chat-tab-component';
 import {DrivesTabComponent} from './drives-tab-component/drives-tab-component';
 import {LoadingService} from '../../services/loading-service';
 import {finalize} from 'rxjs/operators';
+import {RatingTabComponent} from './rating-tab-component/rating-tab-component';
 
 @Component({
   selector: 'app-profile-component',
-  imports: [ChatTabComponent, DrivesTabComponent],
+  imports: [ChatTabComponent, DrivesTabComponent, RatingTabComponent],
   templateUrl: './profile-component.html',
   styleUrl: './profile-component.scss'
 })

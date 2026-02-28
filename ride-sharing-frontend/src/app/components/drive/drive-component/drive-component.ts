@@ -16,6 +16,7 @@ import {PassengerPrice, DriveService} from '../../../services/drive-service';
 import Keycloak from 'keycloak-js';
 import {DriverModel} from '../../../model/driver-model';
 import {LoadingService} from '../../../services/loading-service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-drive-component',
@@ -157,11 +158,11 @@ export class DriveComponent implements OnInit {
           next : price => {
             this.passengerPrice = price;
             this.dialogVisible = true;
-            this.loadingService.hide();
           },
           error: err => {
             this.messageService.add({severity: 'error', summary: 'Error', detail: err.message});
             this.loadingService.hide();
+            return;
           }
         });
       });
@@ -169,7 +170,9 @@ export class DriveComponent implements OnInit {
 
     this.loadingService.show();
     this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
-      this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).subscribe(
+      this.consumptionControl.value, this.modelYearControl.value, this.carPriceControl.value).pipe(finalize(
+      () => this.loadingService.hide()
+    )).subscribe(
       price => {
         this.passengerPrice = price;
         this.dialogVisible = true;
@@ -189,6 +192,7 @@ export class DriveComponent implements OnInit {
           const severity = resp.success ? 'success' : 'error';
           const detail = resp.success ? 'Your ride is shared' : 'Could not share ride';
           this.messageService.add({ severity, summary: resp.success ? 'Success' : 'Error', detail});
+          this.dialogVisible = false;
         },
         error: err => alert(err.message)
       });
@@ -200,6 +204,4 @@ export class DriveComponent implements OnInit {
       make => make.toLowerCase().includes(search.toLowerCase())
     ));
   }
-
-
 }

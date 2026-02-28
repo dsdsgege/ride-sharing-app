@@ -1,7 +1,6 @@
 package hu.ridesharing.repository.specification;
 
 import hu.ridesharing.entity.*;
-import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.Subquery;
 import org.springframework.data.jpa.domain.Specification;
@@ -60,16 +59,14 @@ public final class JourneySpecificationFactory {
             Subquery<Double> subquery = query.subquery(Double.class);
             Root<Rating> ratingRoot = subquery.from(Rating.class);
 
-            // join Rating to Journey
-            Join<Rating, Journey> ratingJourney = ratingRoot.join(Rating_.JOURNEY);
-
-            // join Journey to Driver
-            Join<Journey, Driver> ratingDriver = ratingJourney.join(Journey_.DRIVER);
-
             // select average rating
             subquery.select(cb.avg(ratingRoot.get(Rating_.VALUE)));
 
-            subquery.where(cb.equal(ratingDriver, root.get(Journey_.DRIVER)));
+            // join Rating table's rated col to Journey table's driver col
+            subquery.where(cb.and(
+                    cb.equal(ratingRoot.get(Rating_.RATED), root.get(Journey_.DRIVER)),
+                    cb.equal(ratingRoot.get(Rating_.TYPE), RatingType.PASSENGER_TO_DRIVER)
+            ));
 
             // if rating was null use 0.0
             if (showWithoutRating) {
