@@ -27,7 +27,22 @@
   </div>
   <div class="ratings-given">
     <h1>Ratings given</h1>
-    asd
+
+    <ul class=" flex flex-col gap-3 h-full">
+
+      @for (rating of myRatings; track $index) {
+        <li class="profile-select-list text-xs md:text-sm lg:text-lg">
+          <span class="text-xs">
+          </span>
+        </li>
+      }
+      @if (totalItems > (page + 1) * 10) {
+        <p-button (click)="loadMore()">
+          Load more
+        </p-button>
+      }
+    </ul>
+
   </div>
 
 </div>

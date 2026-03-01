@@ -128,6 +128,22 @@ public class JourneyService {
         return count;
     }
 
+    /**
+     * This method finds the Journeys that are eligible for rating. (Journeys that happened in the past.)
+     *
+     * <p>Note: It can be used to find Journeys for a simple user, but if the username is not defined, it is used to
+     * find every journey that is eligible for rating.</p>
+     *
+     * @return Page of Journeys
+     */
+    public Page<JourneyResponseDTO> getEligibleForRating(User user, int page) {
+        Specification<Journey> spec = JourneySpecificationFactory.findByUser(user)
+                .and(JourneySpecificationFactory.findByDate(null, LocalDateTime.now()));
+
+        return journeyRepository.findAll(spec, PageRequest.of(0, (page + 1) * 5))
+                .map(this::mapToResponse);
+    }
+
     @Transactional
     public void joinRide(Long id, String passengerUsername, String passengerEmail, String passengerFullName) {
         Journey journey = journeyRepository.findById(id).orElseThrow();

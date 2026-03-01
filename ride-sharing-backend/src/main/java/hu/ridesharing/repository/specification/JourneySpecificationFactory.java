@@ -78,4 +78,22 @@ public final class JourneySpecificationFactory {
             return cb.greaterThanOrEqualTo(cb.coalesce(subquery, 0.0), rating);
         };
     }
+
+    public static Specification<Journey> findByUser(User user) {
+        if (user == null) {
+            return null;
+        }
+
+        return (root, query, cb) -> {
+
+            // check for driver
+            var isDriver = cb.equal(root.get(Journey_.DRIVER), user);
+
+            // check for passenger
+            var passengerJoin = root.join(Journey_.PASSENGERS);
+            var isPassenger = cb.equal(passengerJoin.get(JourneyPassenger_.PASSENGER), user);
+
+            return cb.or(isDriver, isPassenger);
+        };
+    }
 }
