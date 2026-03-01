@@ -1,4 +1,4 @@
-export class DriverModel {
+export class UserModel {
   constructor(public username: string,
               public fullName: string,
               private emailAddress: string,

@@ -2,9 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import { AddResponseModel } from '../model/add-response-model';
-import {DriverModel} from '../model/driver-model';
-import {RideModelResponse} from '../model/ride/ride-model-response';
+import {UserModel} from '../model/user-model';
 import {RideModel} from '../model/ride/ride-model';
+import {RideModelWithPassengersResponse} from '../model/ride/ride-model-with-passengers-response';
 
 export interface PassengerPrice {
   price: number;
@@ -32,7 +32,7 @@ export class DriveService {
     return this.httpClient.get<PassengerPrice>(`${this.apiUrl}/price`, {params});
   }
 
-  public addDrive(driveData: any, passengerPrice: PassengerPrice | null, driver: DriverModel):
+  public addDrive(driveData: any, passengerPrice: PassengerPrice | null, driver: UserModel):
     Observable<AddResponseModel> {
 
     if (!passengerPrice?.price) {
@@ -58,7 +58,7 @@ export class DriveService {
   }
 
   public findMyDrives(page: number) {
-    return this.httpClient.get<RideModelResponse>(`${this.apiUrl}/my-drives?page=${page}`);
+    return this.httpClient.get<RideModelWithPassengersResponse>(`${this.apiUrl}/my-drives?page=${page}`);
   }
 
   public deleteDrive(driveId: number) {

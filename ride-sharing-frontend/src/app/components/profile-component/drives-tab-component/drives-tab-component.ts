@@ -6,7 +6,6 @@ import {
   signal
 } from '@angular/core';
 import {Button} from 'primeng/button';
-import {RideModel} from '../../../model/ride/ride-model';
 import {InputNumber} from 'primeng/inputnumber';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CurrencyPipe, DatePipe} from '@angular/common';
@@ -19,6 +18,20 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {LoadingService} from '../../../services/loading-service';
 import {Observable} from 'rxjs';
 import {FormService} from '../../../services/form-service';
+import {OverlayBadgeModule} from 'primeng/overlaybadge';
+import {Tooltip} from 'primeng/tooltip';
+import {RideModelWithPassengers} from '../../../model/ride/ride-model-with-passengers';
+import {Badge} from 'primeng/badge';
+import {Dialog} from 'primeng/dialog';
+import {Rating} from 'primeng/rating';
+import {AccordionModule} from 'primeng/accordion';
+import {UserModel} from '../../../model/user-model';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import {InputGroup} from 'primeng/inputgroup';
+import {InputGroupAddon} from 'primeng/inputgroupaddon';
+import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import {RatingService} from '../../../services/rating-service';
+
 
 @Component({
   selector: 'app-drives-tab-component',
@@ -32,6 +45,15 @@ import {FormService} from '../../../services/form-service';
     ReactiveFormsModule,
     CurrencyPipe,
     DatePicker,
+    OverlayBadgeModule,
+    Tooltip,
+    Badge,
+    Dialog,
+    Rating,
+    AccordionModule,
+    FaIconComponent,
+    InputGroup,
+    InputGroupAddon
   ],
 
   templateUrl: './drives-tab-component.html',
@@ -39,7 +61,7 @@ import {FormService} from '../../../services/form-service';
 })
 export class DrivesTabComponent implements OnInit {
 
-  protected rides: RideModel[] = [];
+  protected rides: RideModelWithPassengers[] = [];
 
   protected totalItems = 0;
 
@@ -53,7 +75,9 @@ export class DrivesTabComponent implements OnInit {
 
   protected departControl: FormControl<Date | null> = new FormControl(null);
 
-  protected selectedRide = signal<RideModel | undefined>(undefined);
+  protected dialogVisible: boolean = false;
+
+  protected selectedRide = signal<RideModelWithPassengers | undefined>(undefined);
 
   protected loadingService = inject(LoadingService);
 
@@ -65,11 +89,13 @@ export class DrivesTabComponent implements OnInit {
 
   private readonly formService = inject(FormService);
 
+  private readonly ratingService = inject(RatingService);
+
   ngOnInit() {
     this.loadDrives();
   }
 
-  protected selectRide(ride: RideModel) {
+  protected selectRide(ride: RideModelWithPassengers) {
     this.selectedRide.set(ride);
     this.carMakeControl.setValue(ride.carMake ?? "");
     this.seatsControl.setValue(ride.seats ?? 1);
@@ -135,6 +161,34 @@ export class DrivesTabComponent implements OnInit {
     this.loadDrives();
   }
 
+  protected isPast(arrive: Date | string): boolean {
+    return new Date(arrive) < new Date();
+  }
+
+  protected isPassengersUndefinedOrEmpty(passengers: UserModel[] | null | undefined): boolean {
+    if (!passengers) {
+      return true;
+    }
+    return passengers?.length === 0;
+  }
+
+  protected sendRating(passenger: UserModel, ratingComment: string) {
+    if (ratingComment.length === 0) {
+      this.messageService.add({severity: 'warn', summary: 'Rating cancelled',
+        detail: 'Please enter a rating comment.'});
+      return;
+    }
+
+    const ride = this.selectedRide();
+    if (ride === undefined ) {
+      this.messageService.add({severity: 'warn', summary: 'No drive selected',
+        detail: 'Please select a drive to rate.'});
+      return;
+    }
+    this.subscribe(this.ratingService.addRating(ride.id, passenger.username, passenger.rating, ratingComment),
+      "Your rating is sent.", "Success", "An error occurred while sending your rating.");
+  }
+
   private loadDrives() {
     this.driveService.findMyDrives(this.page).subscribe(response => {
       this.rides = response.content;
@@ -161,4 +215,6 @@ export class DrivesTabComponent implements OnInit {
       },
     });
   }
+
+  protected readonly faPaperPlane = faPaperPlane;
 }

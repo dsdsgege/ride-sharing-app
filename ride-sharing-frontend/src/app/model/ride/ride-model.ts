@@ -1,11 +1,11 @@
-import {DriverModel} from '../driver-model';
+import {UserModel} from '../user-model';
 
 export interface RideModel {
   id: number;
   fromCity: string;
   toCity: string;
   price: number;
-  driver: DriverModel;
+  driver: UserModel;
   depart: Date | string;
   arrive: Date | string;
   carMake: string;

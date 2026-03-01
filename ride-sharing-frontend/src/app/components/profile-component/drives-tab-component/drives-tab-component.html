@@ -2,9 +2,20 @@
 
   <ul class="rides flex flex-col gap-3 h-full">
     @for (ride of rides; track $index) {
-      <li class="profile-select-list text-xs md:text-sm lg:text-lg"
-           [class.profile-active-select]="ride.id === selectedRide()?.id"
-           (click)="selectRide(ride)">
+      <li class="profile-select-list relative text-xs md:text-sm lg:text-lg"
+          [class.profile-active-select]="ride.id === selectedRide()?.id"
+          (click)="selectRide(ride)">
+
+        @if (isPast(ride.arrive) && !isPassengersUndefinedOrEmpty(ride.passengersToRate)
+            && ride.passengersToRate.length > 0) {
+
+          <p-badge [value]="ride.passengersToRate.length"
+                   severity="danger"
+                   pTooltip="Ratings to make"
+                   tooltipPosition="top"
+                   class="custom-badge-position">
+          </p-badge>
+        }
 
         {{ ride.fromCity }} to {{ ride.toCity }}
         <span class="text-xs">
@@ -12,6 +23,7 @@
         </span>
       </li>
     }
+
     @if (totalItems > (page + 1) * 10) {
       <p-button (click)="loadMore()">
         Load more
@@ -79,6 +91,14 @@
           </p-datepicker>
         </div>
 
+        <div class="md:col-span-2 text-center">
+          <p-button class="text-xs md:text-sm lg:text-lg"
+                    [disabled]="isPassengersUndefinedOrEmpty(selectedRide()!.passengersToRate)"
+                    (click)="this.dialogVisible = true">
+            Rate passenger(s)
+          </p-button>
+        </div>
+
       </form>
 
       <div class="flex flex-col items-stretch gap-2 md:flex-row justify-between mt-auto p-3">
@@ -102,3 +122,40 @@
     </div>
   }
 </div>
+@if (selectedRide() && selectedRide()!.passengersToRate) {
+  <p-dialog header="Rate passenger(s)!"
+            [modal]="true"
+            [draggable]="false"
+            [(visible)]="dialogVisible"
+            [style]="{width: '60vw', 'background-color': 'var(--dialog-bg)', 'backdrop-filter': 'blur(20px)',
+            border: 'none', 'max-height': '60vh', 'overflow-y': 'auto', 'color': 'var(--text-color)'}">
+    <div class="flex flex-col">
+      @for (passenger of selectedRide()!.passengersToRate; track $index) {
+        <p-accordion>
+          <p-accordion-panel value="0">
+            <p-accordion-header>
+              {{ passenger.fullName }}
+            </p-accordion-header>
+            <p-accordion-content>
+              <div class="accordion-content">
+                <p-rating [(ngModel)]="passenger.rating"
+                          [stars]="5">
+                </p-rating>
+
+                <input #ratingComment
+                       type="text"
+                       placeholder="Write a comment..."
+                       class="w-full custom-input">
+
+                <button class="success-button"
+                        (click)="sendRating(passenger, ratingComment.value)">
+                  <fa-icon [icon]="faPaperPlane"></fa-icon>&nbsp;Send
+                </button>
+              </div>
+            </p-accordion-content>
+          </p-accordion-panel>
+        </p-accordion>
+      }
+    </div>
+  </p-dialog>
+}

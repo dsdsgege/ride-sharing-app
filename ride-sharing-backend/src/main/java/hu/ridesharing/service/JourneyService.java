@@ -3,6 +3,7 @@ package hu.ridesharing.service;
 import hu.ridesharing.dto.DriverDTO;
 import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
+import hu.ridesharing.dto.response.outgoing.JourneyResponseWithPassengersDTO;
 import hu.ridesharing.entity.*;
 import hu.ridesharing.exception.*;
 import hu.ridesharing.repository.JourneyPassengerRepository;
@@ -23,6 +24,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -61,13 +63,26 @@ public class JourneyService {
         return this.journeyRepository.save(drive);
     }
 
-    public Page<JourneyResponseDTO> getMyDrives(String username, int page) {
+    public Page<JourneyResponseWithPassengersDTO> getMyDrives(String username, int page) {
         User driver = new User();
         driver.setUsername(username);
 
+        Page<Journey> drives = journeyRepository.findByDriver(driver, PageRequest.of(0, (page + 1) * 10));
         log.debug("Fetching drives for driver {}", username);
-        return journeyRepository.findByDriver(driver, PageRequest.of(0, (page + 1) * 10))
-                .map(this::mapToResponse);
+
+        return drives.map(journey -> {
+            List<User> passengers = journeyPassengerRepository.findAcceptedPassengersByJourney(journey);
+            var passengersFiltered = passengers.stream()
+                    .filter(
+                            passenger -> ratingRepository.findPassengersByJourney(journey)
+                                    .stream()
+                                    .noneMatch(passengerRated -> passengerRated.equals(passenger))
+                    )
+                    .toList();
+
+            log.debug("Found {} passengers for drive {}", passengersFiltered.size(), journey.getId());
+            return mapToExtendedResponse(journey, passengersFiltered);
+        });
     }
 
     public Page<JourneyResponseDTO> getRides(String fromCity, String toCity, LocalDateTime dateFrom,
@@ -128,22 +143,6 @@ public class JourneyService {
         return count;
     }
 
-    /**
-     * This method finds the Journeys that are eligible for rating. (Journeys that happened in the past.)
-     *
-     * <p>Note: It can be used to find Journeys for a simple user, but if the username is not defined, it is used to
-     * find every journey that is eligible for rating.</p>
-     *
-     * @return Page of Journeys
-     */
-    public Page<JourneyResponseDTO> getEligibleForRating(User user, int page) {
-        Specification<Journey> spec = JourneySpecificationFactory.findByUser(user)
-                .and(JourneySpecificationFactory.findByDate(null, LocalDateTime.now()));
-
-        return journeyRepository.findAll(spec, PageRequest.of(0, (page + 1) * 5))
-                .map(this::mapToResponse);
-    }
-
     @Transactional
     public void joinRide(Long id, String passengerUsername, String passengerEmail, String passengerFullName) {
         Journey journey = journeyRepository.findById(id).orElseThrow();
@@ -182,6 +181,42 @@ public class JourneyService {
     }
 
     public boolean deleteDrive(Long id, String username) {
+        checkMyJourney(username, id);
+
+        journeyRepository.deleteById(id);
+        return true;
+        // TODO: send emails
+    }
+
+    public boolean updateDrive(Journey drive, String username) {
+        Journey journey = checkMyJourney(username, drive.getId());
+
+        if (StringUtils.isBlank(drive.getCarMake()) || drive.getArrive() == null || drive.getDepart() == null) {
+            log.warn("Some of the fields are empty drive: {}", drive);
+            throw new BadRequestException("You must fill every input");
+        }
+
+        journey.setCarMake(drive.getCarMake());
+        journey.setSeats(drive.getSeats());
+        journey.setArrive(drive.getArrive());
+        journey.setDepart(drive.getDepart());
+
+        var savedJourney = journeyRepository.save(journey);
+        return savedJourney.getArrive() == journey.getArrive() &&
+                savedJourney.getDepart() == journey.getDepart() &&
+                savedJourney.getCarMake().equals(journey.getCarMake()) &&
+                savedJourney.getSeats() == journey.getSeats();
+        // TODO: send emails
+    }
+
+    /**
+     * Checks if the drive is stored and the user from jwt is the driver of the drive.
+     *
+     * @param username user of the jwt
+     * @param id journey id
+     * @return found Journey
+     */
+    public Journey checkMyJourney(String username, Long id) {
         Optional<Journey> journey = journeyRepository.findById(id);
         if (journey.isEmpty()) {
             throw new DriveNotFoundException("No such drive found for user " + username);
@@ -191,43 +226,24 @@ public class JourneyService {
             throw new ForbiddenException("You are not the driver of this drive.");
         }
 
-        journeyRepository.deleteById(id);
-        return true;
-        // TODO: send emails
-    }
-
-    public boolean updateDrive(Journey drive, String username) {
-        Optional<Journey> journey = journeyRepository.findById(drive.getId());
-        if (journey.isEmpty()) {
-            log.warn("No such drive found for user {}", username);
-            throw new DriveNotFoundException("No such drive found for user " + username);
-        }
-
-        if (StringUtils.isBlank(drive.getCarMake()) || drive.getArrive() == null || drive.getDepart() == null) {
-            log.warn("Some of the fields are empty drive: {}", drive);
-            throw new BadRequestException("You must fill every input");
-        }
-
-        Journey updatedJourney = journey.get();
-        updatedJourney.setCarMake(drive.getCarMake());
-        updatedJourney.setSeats(drive.getSeats());
-        updatedJourney.setArrive(drive.getArrive());
-        updatedJourney.setDepart(drive.getDepart());
-
-
-        if (!updatedJourney.getDriver().getUsername().equals(username)) {
-            throw new ForbiddenException("You are not the driver of this drive.");
-        }
-        var savedJourney = journeyRepository.save(updatedJourney);
-        return savedJourney.getArrive() == updatedJourney.getArrive() &&
-                savedJourney.getDepart() == updatedJourney.getDepart() &&
-                savedJourney.getCarMake().equals(updatedJourney.getCarMake()) &&
-                savedJourney.getSeats() == updatedJourney.getSeats();
-        // TODO: send emails
+        return journey.get();
     }
 
     private JourneyResponseDTO mapToResponse(Journey journey) {
         JourneyResponseDTO response = new JourneyResponseDTO();
+        setBasicForResponse(journey, response);
+        return response;
+    }
+
+    private JourneyResponseWithPassengersDTO mapToExtendedResponse(Journey journey, List<User> passengersToRate) {
+        JourneyResponseWithPassengersDTO extendedResponse = new JourneyResponseWithPassengersDTO();
+        setBasicForResponse(journey, extendedResponse);
+
+        extendedResponse.setPassengersToRate(passengersToRate);
+        return extendedResponse;
+    }
+
+    private void setBasicForResponse(Journey journey, JourneyResponseDTO response) {
         response.setId(journey.getId());
         response.setSeats(journey.getSeats());
         response.setPrice(journey.getPassengerPrice());
@@ -246,6 +262,5 @@ public class JourneyService {
         response.setArrive(journey.getArrive());
         response.setDepart(journey.getDepart());
         response.setCarMake(journey.getCarMake());
-        return response;
     }
 }

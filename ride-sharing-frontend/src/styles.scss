@@ -144,6 +144,21 @@ body {
   --p-togglebutton-hover-background: rgba(117, 117, 117, 0.3);
   --p-togglebutton-hover-color: var(--text-hover-color);
 
+  // accordion
+  --p-accordion-content-background: transparent;
+  --p-accordion-header-background: transparent;
+  --p-accordion-header-active-background: transparent;
+  --p-accordion-header-hover-background: var(--card-hover-color);
+  --p-accordion-header-active-hover-background: var(--card-hover-color);
+  --p-accordion-header-hover-color: var(--text-color);
+  --p-accordion-header-color: var(--text-color);
+  --p-accordion-header-active-color: var(--text-color);
+  --p-accordion-header-active-hover-color: var(--text-color);
+
+  // p-dialog
+  --p-button-text-secondary-hover-background: var(--card-hover-color);
+  --p-button-text-secondary-color: var(--text-color);
+
   transition: background-color #{variables.$transition-speed};
 }
 

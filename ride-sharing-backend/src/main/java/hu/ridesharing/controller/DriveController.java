@@ -1,7 +1,7 @@
 package hu.ridesharing.controller;
 
 import hu.ridesharing.dto.request.AddDriveRequest;
-import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
+import hu.ridesharing.dto.response.outgoing.JourneyResponseWithPassengersDTO;
 import hu.ridesharing.dto.response.outgoing.ResponseStatus;
 import hu.ridesharing.entity.User;
 import hu.ridesharing.entity.Journey;
@@ -79,11 +79,6 @@ public class DriveController {
         return Map.of("success", true);
     }
 
-    @GetMapping ("/my-drives")
-    public Page<JourneyResponseDTO> getMyRides(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
-        return journeyService.getMyDrives(jwt.getClaimAsString("preferred_username"), page);
-    }
-
     @GetMapping("/drive-count")
     public int getDriveCountByUsername(@RequestParam String username) {
         return journeyService.getDriveCountByUsername(username);
@@ -97,6 +92,11 @@ public class DriveController {
     @PostMapping("/accept-passenger")
     public ResponseStatus acceptPassenger(@RequestBody Token token) {
         return new ResponseStatus(userService.acceptPassenger(token.token()));
+    }
+
+    @GetMapping ("/my-drives")
+    public Page<JourneyResponseWithPassengersDTO> getMyRides(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
+        return journeyService.getMyDrives(jwt.getClaimAsString("preferred_username"), page);
     }
 
     @DeleteMapping("/my-drive/{driveId}")

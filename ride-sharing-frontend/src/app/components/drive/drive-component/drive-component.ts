@@ -14,7 +14,7 @@ import {CurrencyPipe} from '@angular/common';
 import { MessageService } from 'primeng/api';
 import {PassengerPrice, DriveService} from '../../../services/drive-service';
 import Keycloak from 'keycloak-js';
-import {DriverModel} from '../../../model/driver-model';
+import {UserModel} from '../../../model/user-model';
 import {LoadingService} from '../../../services/loading-service';
 import {finalize} from 'rxjs/operators';
 
@@ -183,7 +183,7 @@ export class DriveComponent implements OnInit {
 
   protected addDrive() {
     this.keycloak.loadUserProfile().then(profile => {
-      let driver = new DriverModel(profile.username ?? "", profile.firstName + " " + profile.lastName,
+      let driver = new UserModel(profile.username ?? "", profile.firstName + " " + profile.lastName,
         profile.email ?? "", 0);
 
 
