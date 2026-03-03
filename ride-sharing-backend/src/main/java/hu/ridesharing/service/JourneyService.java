@@ -257,7 +257,7 @@ public class JourneyService {
         DriverDTO driver = new DriverDTO();
         driver.setUsername(journey.getDriver().getUsername());
         driver.setFullName(journey.getDriver().getFullName());
-        driver.setRating(ratingRepository.findByDriver(journey.getDriver())
+        driver.setRating(ratingRepository.findByDriverRated(journey.getDriver(), Pageable.unpaged())
                 .stream()
                 .mapToDouble(Rating::getValue)
                 .average()

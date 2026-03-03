@@ -1,10 +1,12 @@
 package hu.ridesharing.controller;
 
+import hu.ridesharing.dto.RatingDTO;
 import hu.ridesharing.dto.response.outgoing.ResponseStatus;
 import hu.ridesharing.entity.Rating;
 import hu.ridesharing.service.JourneyService;
 import hu.ridesharing.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -15,19 +17,35 @@ public class RatingController {
 
     private final RatingService ratingService;
 
-    private final JourneyService journeyService;
-
     @Autowired
-    public RatingController(RatingService ratingService, JourneyService journeyService) {
+    public RatingController(RatingService ratingService) {
         this.ratingService = ratingService;
-        this.journeyService = journeyService;
     }
 
     @PostMapping("/add/{driveId}")
-    public ResponseStatus addRating(@PathVariable Long driveId,
-                                    @RequestBody Rating rating,
+    public ResponseStatus addRating(@PathVariable Long driveId, @RequestBody Rating rating,
                                     @AuthenticationPrincipal Jwt jwt) {
 
         return ratingService.rateMyPassenger(driveId, rating, jwt.getClaimAsString("preferred_username"));
+    }
+
+    @GetMapping("/received/passenger")
+    public Page<RatingDTO> getReceivedAsPassenger(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
+        return ratingService.getReceivedAsPassenger(page, jwt.getClaimAsString("preferred_username"));
+    }
+
+    @GetMapping("/received/driver")
+    public Page<RatingDTO> getReceivedAsDriver(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
+        return ratingService.getReceivedAsDriver(page, jwt.getClaimAsString("preferred_username"));
+    }
+
+    @GetMapping("/given/driver")
+    public Page<RatingDTO> getGivenAsDriver(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
+        return ratingService.getGivenAsDriver(page, jwt.getClaimAsString("preferred_username"));
+    }
+
+    @GetMapping("/given/passenger")
+    public Page<RatingDTO> getGivenAsPassenger(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
+        return ratingService.getGivenAsPassenger(page, jwt.getClaimAsString("preferred_username"));
     }
 }

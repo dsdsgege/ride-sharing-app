@@ -209,7 +209,7 @@ export class DrivesTabComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.messageService.add({severity: 'error', summary: 'Error',
-          detail: errorMessage ?? error.message ?? 'An error occurred.'});
+          detail: error.error.message ?? errorMessage});
         this.loadingService.hide();
         return;
       },

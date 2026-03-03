@@ -17,7 +17,7 @@ import {InputText} from 'primeng/inputtext';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {DatePicker} from 'primeng/datepicker';
 import {InputNumber} from 'primeng/inputnumber';
-import {RideFilterModel} from '../../../model/ride/RideFilterModel';
+import {RideFilterModel} from '../../../model/ride/ride-filter-model';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import {Paginator} from 'primeng/paginator';

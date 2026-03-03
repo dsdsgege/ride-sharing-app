@@ -44,4 +44,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleEmailSendingError(EmailSendingError ex) {
         return ResponseEntity.internalServerError().body(Map.of("message", ex.getMessage()));
     }
+
+    @ExceptionHandler(RatingException.class)
+    public ResponseEntity<Map<String, String>> handleRatingException(RatingException ex) {
+        return ResponseEntity.internalServerError().body(Map.of("message", ex.getMessage()));
+    }
 }

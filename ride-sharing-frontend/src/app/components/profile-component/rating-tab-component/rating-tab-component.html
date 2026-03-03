@@ -1,23 +1,43 @@
 <div class="grid grid-cols-2 h-full">
 
-  <div class="ratings-received">
-    <h1>Ratings received</h1>
+  <div class="ratings-given">
+    <h1>Ratings given</h1>
 
     <p-selectbutton class="text-xs"
                     aria-labelledby="basic"
-                    [options]="ratingOptions"
-                    [(ngModel)]="option">
+                    [options]="givenOptions"
+                    [(ngModel)]="givenOption">
     </p-selectbutton>
 
     <ul class=" flex flex-col gap-3 h-full">
 
-      @for (rating of myRatings; track $index) {
-        <li class="profile-select-list text-xs md:text-sm lg:text-lg">
-          <span class="text-xs">
-          </span>
+      @for (rating of givenRatings; track $index) {
+        <li class="rating-list gap-2">
+
+          <div class="flex flex-col gap-1 min-w-0 xl:flex-row xl:gap-3 xl:items-center">
+
+            <p-rating
+              [ngModel]="rating.value"
+              [readonly]="true"
+              [stars]="5"
+              class="shrink-0">
+            </p-rating>
+
+            <p class="truncate w-full min-w-0" pTooltip="{{ rating.comment }}">
+              <span class="opacity-85">Comment:</span>&nbsp;
+              {{ rating.comment }}
+            </p>
+          </div>
+
+          <div class="shrink-0">
+            <span class="text-xs opacity-70">
+              <span>From:</span>&nbsp;
+              {{ rating.rater.fullName }}
+            </span>
+          </div>
         </li>
       }
-      @if (totalItems > (page + 1) * 10) {
+      @if (givenTotal > (givenPage + 1) * 10) {
         <p-button (click)="loadMore()">
           Load more
         </p-button>
@@ -25,18 +45,44 @@
     </ul>
 
   </div>
-  <div class="ratings-given">
-    <h1>Ratings given</h1>
+  <div class="ratings-received">
+    <h1>Ratings received</h1>
+
+    <p-selectbutton class="text-xs"
+                    aria-labelledby="basic"
+                    [options]="receivedOptions"
+                    [(ngModel)]="receivedOption">
+    </p-selectbutton>
 
     <ul class=" flex flex-col gap-3 h-full">
 
-      @for (rating of myRatings; track $index) {
-        <li class="profile-select-list text-xs md:text-sm lg:text-lg">
-          <span class="text-xs">
-          </span>
+      @for (rating of receivedRatings; track $index) {
+        <li class="rating-list gap-2">
+
+          <div class="flex flex-col gap-1 min-w-0 items-start xl:flex-row xl:gap-3 xl:items-center">
+
+            <p-rating
+              [ngModel]="rating.value"
+              [readonly]="true"
+              [stars]="5"
+              class="shrink-0">
+            </p-rating>
+
+            <p class="truncate w-full min-w-0" pTooltip="{{ rating.comment }}">
+              <span class="opacity-85">Comment:</span>&nbsp;
+              {{ rating.comment }}
+            </p>
+          </div>
+
+          <div class="shrink-0 sm:text-end">
+            <span class="text-xs opacity-70">
+              <span>From:</span>&nbsp;
+              {{ rating.rater.fullName }}
+            </span>
+          </div>
         </li>
       }
-      @if (totalItems > (page + 1) * 10) {
+      @if (receivedTotal > (receivedPage + 1) * 10) {
         <p-button (click)="loadMore()">
           Load more
         </p-button>

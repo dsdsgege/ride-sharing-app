@@ -9,6 +9,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public class EmailService {
             throws MessagingException {
 
         User driver = journey.getDriver();
-        double passengerRating = ratingRepository.findByPassenger(passenger).stream()
+        double passengerRating = ratingRepository.findByPassengerRated(passenger, Pageable.unpaged()).stream()
                 .mapToDouble(Rating::getValue)
                 .average()
                 .orElse(0);

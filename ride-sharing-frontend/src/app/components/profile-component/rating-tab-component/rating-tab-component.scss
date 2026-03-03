@@ -5,8 +5,12 @@
   gap: 1rem;
 }
 
-.ratings-received {
+.ratings-given {
   border-right: var(--text-color) 1px solid;
+}
+
+.ratings-received {
+  margin-left: 1.2rem;
 }
 
 @media screen and (max-width: 767px) {
@@ -15,4 +19,10 @@
       font-size: 0.7rem;
     }
   }
+}
+
+.rating-list {
+  justify-content: space-between;
+  padding: 0.5rem;
+  transition: background-color 0.2s ease;
 }

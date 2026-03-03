@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {RideModelResponse} from '../model/ride/ride-model-response';
 import {RideModel} from '../model/ride/ride-model';
-import {RideFilterModel} from '../model/ride/RideFilterModel';
+import {RideFilterModel} from '../model/ride/ride-filter-model';
 
 @Injectable({
   providedIn: 'root'

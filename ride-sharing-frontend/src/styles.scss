@@ -247,7 +247,7 @@ main {
   background-color: var(--card-hover-color);
 }
 
-.profile-select-list {
+.tab-select-list, .rating-list {
   display: flex;
   align-items: center;
   padding: 1rem;
@@ -255,7 +255,7 @@ main {
   background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
 }
 
-.profile-select-list:hover {
+.tab-select-list:hover, .rating-list:hover {
   cursor: pointer;
   background: linear-gradient(to right, rgba(248, 248, 248, 0.45), transparent);
 }

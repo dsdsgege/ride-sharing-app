@@ -4,7 +4,7 @@
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
-.profile-select-list {
+.tab-select-list {
   justify-content: space-between;
 }
 
@@ -28,7 +28,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .profile-select-list {
+  .tab-select-list {
     flex-direction: column;
   }
 

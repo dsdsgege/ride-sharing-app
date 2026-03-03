@@ -2,7 +2,7 @@
 
   <ul class="rides flex flex-col gap-3 h-full">
     @for (ride of rides; track $index) {
-      <li class="profile-select-list relative text-xs md:text-sm lg:text-lg"
+      <li class="tab-select-list relative text-xs md:text-sm lg:text-lg"
           [class.profile-active-select]="ride.id === selectedRide()?.id"
           (click)="selectRide(ride)">
 

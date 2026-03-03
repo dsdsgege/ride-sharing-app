@@ -2,7 +2,7 @@
 
   <ul class="flex flex-col gap-3 h-full">
     @for (partner of partners; track $index) {
-      <li class="profile-select-list text-xs md:text-xl"
+      <li class="tab-select-list text-xs md:text-xl"
            [class.profile-active-select]="partner.username === selectedChatPartner()?.username"
            (click)="chatWithPartner(partner)">
         <fa-icon [icon]="faUser" style="font-size: 1rem;">
