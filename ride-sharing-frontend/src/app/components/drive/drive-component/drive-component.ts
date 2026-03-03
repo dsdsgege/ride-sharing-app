@@ -160,7 +160,8 @@ export class DriveComponent implements OnInit {
             this.dialogVisible = true;
           },
           error: err => {
-            this.messageService.add({severity: 'error', summary: 'Error', detail: err.message});
+            this.messageService.add({severity: 'error', summary: 'Error',
+              detail: err.error.message ?? 'An error occurred.'});
             this.loadingService.hide();
             return;
           }
@@ -194,7 +195,12 @@ export class DriveComponent implements OnInit {
           this.messageService.add({ severity, summary: resp.success ? 'Success' : 'Error', detail});
           this.dialogVisible = false;
         },
-        error: err => alert(err.message)
+        error: err => {
+          this.messageService.add({severity: 'error', summary: 'Error',
+            detail: err.error.message ?? 'An error occurred.'});
+          this.loadingService.hide();
+          return;
+        }
       });
     });
   }

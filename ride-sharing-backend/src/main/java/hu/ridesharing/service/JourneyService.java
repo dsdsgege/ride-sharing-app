@@ -4,6 +4,7 @@ import hu.ridesharing.dto.DriverDTO;
 import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseWithPassengersDTO;
+import hu.ridesharing.dto.response.outgoing.ResponseStatus;
 import hu.ridesharing.entity.*;
 import hu.ridesharing.exception.*;
 import hu.ridesharing.repository.JourneyPassengerRepository;
@@ -144,7 +145,7 @@ public class JourneyService {
     }
 
     @Transactional
-    public void joinRide(Long id, String passengerUsername, String passengerEmail, String passengerFullName) {
+    public ResponseStatus joinRide(Long id, String passengerUsername, String passengerEmail, String passengerFullName) {
         Journey journey = journeyRepository.findById(id).orElseThrow();
 
         var passenger = userRepository.findById(passengerUsername);
@@ -158,6 +159,10 @@ public class JourneyService {
             savedPassenger = userRepository.save(newPassenger);
         } else {
             savedPassenger = passenger.get();
+        }
+
+        if (journeyPassengerRepository.existsByJourneyAndPassenger(journey, savedPassenger)) {
+            throw new JoinRideException("You have already joined this ride.");
         }
 
         // save the relationship (accepted is false by default)
@@ -178,6 +183,8 @@ public class JourneyService {
         } catch (MessagingException e) {
             throw new EmailSendingError("Could not send approve email for driver.");
         }
+
+        return new ResponseStatus(true);
     }
 
     public boolean deleteDrive(Long id, String username) {

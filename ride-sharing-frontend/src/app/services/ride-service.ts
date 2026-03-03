@@ -32,8 +32,8 @@ export class RideService {
     return this.httpClient.get<number>(`${this.apiUrl}/ride-count?username=${username}`);
   }
 
-  public joinRide(id: number, username: string, email: string, fullName: string): Observable<RideModel> {
-    return this.httpClient.post<RideModel>(`${this.apiUrl}/join/${id}`,
+  public joinRide(id: number, username: string, email: string, fullName: string): Observable<ResponseStatus> {
+    return this.httpClient.post<ResponseStatus>(`${this.apiUrl}/join/${id}`,
       {"username": username, "email": email, "fullName": fullName});
   }
 }

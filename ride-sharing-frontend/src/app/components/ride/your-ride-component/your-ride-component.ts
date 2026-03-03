@@ -10,6 +10,7 @@ import {CurrencyPipe, DatePipe} from '@angular/common';
 import {ChatComponent} from '../../chat-component/chat-component';
 import {Button} from 'primeng/button';
 import Keycloak from 'keycloak-js';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-your-ride-component',
@@ -58,7 +59,7 @@ export class YourRideComponent implements OnInit {
       },
       error: err => {
         console.error(err)
-        this.messageService.add({severity: 'error', summary: 'Error', detail: "Your ride could not be found."});
+        this.messageService.add({severity: 'error', summary: 'Error', detail: err.error.message ?? "Your ride could not be found."});
       }
     });
   }
@@ -76,7 +77,20 @@ export class YourRideComponent implements OnInit {
   protected joinRide() {
     this.keycloak.loadUserProfile().then(profile => {
       const fullName = profile.firstName + " " + profile.lastName;
-      this.rideService.joinRide(this.ride.id, profile.username ?? "", profile.email ?? "", fullName).subscribe();
+      this.rideService.joinRide(this.ride.id, profile.username ?? "", profile.email ?? "", fullName).subscribe({
+        next: status => {
+          if (status.success) {
+            this.messageService.add({severity: 'success', summary: 'Success', detail: "You have joined the ride."});
+            return;
+          }
+          this.messageService.add({severity: 'error', summary: 'Error', detail: "Your couldn't join the ride." +
+              " Please try again later."});
+        },
+        error: (error: HttpErrorResponse) => {
+          this.messageService.add({severity: 'error', summary: 'Error', detail:
+          error.error.message ?? "Your couldn't join the ride. Please try again later."});
+        }
+      });
     }).catch(err => {
       this.keycloak.login();
       console.error(err);

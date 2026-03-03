@@ -12,6 +12,8 @@ public interface JourneyPassengerRepository extends JpaRepository<JourneyPasseng
 
     List<JourneyPassenger> findJourneyPassengersByPassenger(User passenger);
 
+    boolean existsByJourneyAndPassenger(Journey journey, User passenger);
+
     @Query("SELECT jp.passenger FROM JourneyPassenger jp WHERE jp.journey = :journey AND jp.accepted = true")
     List<User> findAcceptedPassengersByJourney(Journey journey);
 }

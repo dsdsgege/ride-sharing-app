@@ -3,6 +3,7 @@ package hu.ridesharing.controller;
 import hu.ridesharing.dto.request.JoinRideRequest;
 import hu.ridesharing.dto.request.RideFilterRequest;
 import hu.ridesharing.dto.response.outgoing.JourneyResponseDTO;
+import hu.ridesharing.dto.response.outgoing.ResponseStatus;
 import hu.ridesharing.service.JourneyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,7 +55,7 @@ public class RideController {
     }
 
     @PostMapping("/join/{id}")
-    public void joinRide(@PathVariable Long id, @RequestBody JoinRideRequest request) {
-        this.journeyService.joinRide(id, request.username(), request.email(), request.fullName());
+    public ResponseStatus joinRide(@PathVariable Long id, @RequestBody JoinRideRequest request) {
+        return this.journeyService.joinRide(id, request.username(), request.email(), request.fullName());
     }
 }
