@@ -55,4 +55,8 @@ public class ChatService {
         // reconstruct the Page object
         return new PageImpl<>(reversedContent, messagesPage.getPageable(), messagesPage.getTotalElements());
     }
+
+    public long findMyPartnerCount(String username) {
+        return chatRepository.countChatPartners(username);
+    }
 }

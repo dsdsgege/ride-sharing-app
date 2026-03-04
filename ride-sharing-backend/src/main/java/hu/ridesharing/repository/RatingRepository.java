@@ -83,4 +83,8 @@ public interface RatingRepository extends JpaRepository<Rating, RatingId> {
     @Query("SELECT r.rated FROM Rating r WHERE r.journey = :journey " +
             "AND r.type = hu.ridesharing.entity.RatingType.DRIVER_TO_PASSENGER")
     List<User> findPassengersByJourney(Journey journey);
+
+    long countByRated(User rated);
+
+    long countByRater(User rater);
 }

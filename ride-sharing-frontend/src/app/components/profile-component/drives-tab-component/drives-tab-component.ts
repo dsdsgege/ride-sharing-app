@@ -27,8 +27,6 @@ import {Rating} from 'primeng/rating';
 import {AccordionModule} from 'primeng/accordion';
 import {UserModel} from '../../../model/user-model';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {InputGroup} from 'primeng/inputgroup';
-import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import {RatingService} from '../../../services/rating-service';
 
@@ -52,8 +50,6 @@ import {RatingService} from '../../../services/rating-service';
     Rating,
     AccordionModule,
     FaIconComponent,
-    InputGroup,
-    InputGroupAddon
   ],
 
   templateUrl: './drives-tab-component.html',
@@ -80,6 +76,8 @@ export class DrivesTabComponent implements OnInit {
   protected selectedRide = signal<RideModelWithPassengers | undefined>(undefined);
 
   protected loadingService = inject(LoadingService);
+
+  protected readonly faPaperPlane = faPaperPlane;
 
   protected readonly messageService = inject(MessageService);
 
@@ -215,6 +213,4 @@ export class DrivesTabComponent implements OnInit {
       },
     });
   }
-
-  protected readonly faPaperPlane = faPaperPlane;
 }

@@ -100,6 +100,16 @@ public class JourneyService {
         return journeys.map(this::mapToResponse);
     }
 
+    public Page<JourneyResponseDTO> getMyRides(int page, String username) {
+        User passenger = new User();
+        passenger.setUsername(username);
+
+        return journeyPassengerRepository.findAcceptedJourneyByPassenger(
+                passenger, PageRequest.of(0, (page + 1) * 10)
+        ).map(this::mapToResponse);
+
+    }
+
     public Page<JourneyResponseDTO> getRides(RideFilterRequest filterRequest) {
         var sort = Sort.by(filterRequest.sortBy());
         var pageable = PageRequest.of(filterRequest.page(), filterRequest.pageSize(),
@@ -127,19 +137,19 @@ public class JourneyService {
         return mapToResponse(journey);
     }
 
-    public int getRideCountByUsername(String username) {
+    public long getRideCountByUsername(String username) {
         User passenger = new User();
         passenger.setUsername(username);
 
-        var count = journeyPassengerRepository.findJourneyPassengersByPassenger(passenger).size();
+        var count = journeyPassengerRepository.countByPassengerAccepted(passenger);
         log.debug("Found {} rides for {}", count, username);
         return count;
     }
 
-    public int getDriveCountByUsername(String username) {
+    public long getDriveCountByUsername(String username) {
         User driver = new User();
         driver.setUsername(username);
-        var count = journeyRepository.findByDriver(driver).size();
+        var count = journeyRepository.countByDriver(driver);
         log.debug("Found {} drives for {}", count, username);
         return count;
     }

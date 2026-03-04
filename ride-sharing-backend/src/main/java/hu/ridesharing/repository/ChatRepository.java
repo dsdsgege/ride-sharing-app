@@ -10,16 +10,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ChatRepository extends JpaRepository<ChatMessage, ChatId>, JpaSpecificationExecutor<ChatMessage> {
+     String countQuery = "SELECT count(DISTINCT CASE WHEN m.sender = :username THEN m.receiver ELSE m.sender END) " +
+            "FROM chat_message m " +
+            "WHERE m.sender = :username OR m.receiver = :username";
 
     @Query(value = "SELECT CASE WHEN m.sender = :username THEN m.receiver ELSE m.sender END AS partner " +
             "FROM chat_message m " +
             "WHERE m.sender = :username OR m.receiver = :username " +
             "GROUP BY partner " +
             "ORDER BY MAX(timestamp) DESC",
-            countQuery =
-                    "SELECT count(DISTINCT CASE WHEN m.sender = :username THEN m.receiver ELSE m.sender END) " +
-                    "FROM chat_message m " +
-                    "WHERE m.sender = :username OR m.receiver = :username",
+            countQuery = countQuery,
             nativeQuery = true)
     Page<String> findChatPartners(@Param("username") String username, Pageable pageable);
+
+    @Query(value = countQuery, nativeQuery = true)
+    long countChatPartners(@Param("username") String username);
 }

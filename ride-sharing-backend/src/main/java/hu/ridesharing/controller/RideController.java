@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
@@ -49,8 +51,13 @@ public class RideController {
         return journeyService.getRide(id);
     }
 
+    @GetMapping("/my-rides")
+    public Page<JourneyResponseDTO> getMyRides(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
+        return journeyService.getMyRides(page, jwt.getClaimAsString("preferred_username"));
+    }
+
     @GetMapping("/ride-count")
-    public int getRideCountByUsername(@RequestParam String username) {
+    public long getRideCountByUsername(@RequestParam String username) {
         return journeyService.getRideCountByUsername(username);
     }
 

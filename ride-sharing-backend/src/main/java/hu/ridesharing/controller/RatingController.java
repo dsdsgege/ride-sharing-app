@@ -3,7 +3,6 @@ package hu.ridesharing.controller;
 import hu.ridesharing.dto.RatingDTO;
 import hu.ridesharing.dto.response.outgoing.ResponseStatus;
 import hu.ridesharing.entity.Rating;
-import hu.ridesharing.service.JourneyService;
 import hu.ridesharing.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,5 +46,10 @@ public class RatingController {
     @GetMapping("/given/passenger")
     public Page<RatingDTO> getGivenAsPassenger(@RequestParam int page, @AuthenticationPrincipal Jwt jwt) {
         return ratingService.getGivenAsPassenger(page, jwt.getClaimAsString("preferred_username"));
+    }
+
+    @GetMapping("/my-count")
+    public long getMyRatingCount(@AuthenticationPrincipal Jwt jwt) {
+        return ratingService.getMyRatingCount(jwt.getClaimAsString("preferred_username"));
     }
 }

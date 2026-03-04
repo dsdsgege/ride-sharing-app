@@ -10,10 +10,13 @@ import {DrivesTabComponent} from './drives-tab-component/drives-tab-component';
 import {LoadingService} from '../../services/loading-service';
 import {finalize} from 'rxjs/operators';
 import {RatingTabComponent} from './rating-tab-component/rating-tab-component';
+import {RatingService} from '../../services/rating-service';
+import {ChatService} from '../../services/chat-service';
+import {RidesTabComponent} from './rides-tab-component/rides-tab-component';
 
 @Component({
   selector: 'app-profile-component',
-  imports: [ChatTabComponent, DrivesTabComponent, RatingTabComponent],
+  imports: [ChatTabComponent, DrivesTabComponent, RatingTabComponent, RidesTabComponent],
   templateUrl: './profile-component.html',
   styleUrl: './profile-component.scss'
 })
@@ -23,15 +26,19 @@ export class ProfileComponent implements OnInit {
 
   protected selectedProfileTab: WritableSignal<ProfileTab> = signal(ProfileTab.CHATS);
 
-  protected readonly rideService: RideService = inject(RideService);
-
-  protected readonly driveService: DriveService = inject(DriveService);
-
-  protected readonly keycloak: Keycloak = inject(Keycloak);
-
-  protected readonly loadingService = inject(LoadingService);
-
   protected readonly ProfileTab = ProfileTab;
+
+  private readonly rideService: RideService = inject(RideService);
+
+  private readonly driveService: DriveService = inject(DriveService);
+
+  private readonly ratingService = inject(RatingService);
+
+  private readonly chatService = inject(ChatService);
+
+  private readonly keycloak: Keycloak = inject(Keycloak);
+
+  private readonly loadingService = inject(LoadingService);
 
   ngOnInit(): void {
     this.loadingService.show();
@@ -40,13 +47,16 @@ export class ProfileComponent implements OnInit {
       this.profile.fullName = profile.firstName + ' ' + profile.lastName;
 
       forkJoin({
-        rides: this.rideService.findRideCountByUsername(this.profile.username).pipe(
+        rides: this.rideService.getRideCountByUsername(this.profile.username).pipe(
           catchError(err => of(0))
         ),
         drives: this.driveService.findDriveCountByUsername(this.profile.username).pipe(
           catchError(err => of(0))
         ),
-        rating: this.driveService.findDriverRatingByUsername(this.profile.username).pipe(
+        rating: this.ratingService.getMyRatingCount().pipe(
+          catchError(err => of(0))
+        ),
+        chats: this.chatService.getMyPartnerCount().pipe(
           catchError(err => of(0))
         )
       }).pipe(
@@ -56,6 +66,7 @@ export class ProfileComponent implements OnInit {
           this.profile.rides = res.rides;
           this.profile.drives = res.drives;
           this.profile.rating = res.rating;
+          this.profile.chats = res.chats;
         },
         error: (err) => {
           console.error(err);

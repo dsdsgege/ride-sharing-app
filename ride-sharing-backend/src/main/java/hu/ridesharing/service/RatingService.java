@@ -24,6 +24,12 @@ public class RatingService {
         this.journeyService = journeyService;
     }
 
+    public long getMyRatingCount(String username) {
+        User user = new User();
+        user.setUsername(username);
+        return this.ratingRepository.countByRated(user) + this.ratingRepository.countByRater(user);
+    }
+
     public Page<RatingDTO> getReceivedAsPassenger(int page, String username) {
         User passenger = new User();
         passenger.setUsername(username);

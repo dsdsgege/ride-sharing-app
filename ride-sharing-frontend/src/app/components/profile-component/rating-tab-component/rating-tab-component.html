@@ -23,22 +23,29 @@
               class="shrink-0">
             </p-rating>
 
-            <p class="truncate w-full min-w-0" pTooltip="{{ rating.comment }}">
-              <span class="opacity-85">Comment:</span>&nbsp;
+            <div class="w-full min-w-0 flex items-center gap-1" pTooltip="{{ rating.comment }}">
+              <span class="opacity-85 shrink-0">Comment:</span>
+              <sup class="shrink-0 xl:hidden">
+                <fa-icon [icon]="faInfoCircle" (click)="popover.toggle($event)"></fa-icon>
+              </sup>
+              <span class="truncate">{{ rating.comment }}</span>
+            </div>
+            <p-popover #popover>
               {{ rating.comment }}
-            </p>
+            </p-popover>
+
+            <div class="shrink-0 self-end">
+              <span class="text-xs opacity-70">
+                <span>From:</span>&nbsp;
+                {{ rating.rater.fullName }}
+              </span>
+            </div>
           </div>
 
-          <div class="shrink-0">
-            <span class="text-xs opacity-70">
-              <span>From:</span>&nbsp;
-              {{ rating.rater.fullName }}
-            </span>
-          </div>
         </li>
       }
       @if (givenTotal > (givenPage + 1) * 10) {
-        <p-button (click)="loadMore()">
+        <p-button (click)="loadMoreGiven()">
           Load more
         </p-button>
       }
@@ -59,7 +66,7 @@
       @for (rating of receivedRatings; track $index) {
         <li class="rating-list gap-2">
 
-          <div class="flex flex-col gap-1 min-w-0 items-start xl:flex-row xl:gap-3 xl:items-center">
+          <div class="flex flex-col gap-1 min-w-0 xl:flex-row xl:gap-3 xl:items-center">
 
             <p-rating
               [ngModel]="rating.value"
@@ -68,22 +75,28 @@
               class="shrink-0">
             </p-rating>
 
-            <p class="truncate w-full min-w-0" pTooltip="{{ rating.comment }}">
-              <span class="opacity-85">Comment:</span>&nbsp;
+            <div class="w-full min-w-0 flex items-center gap-1" pTooltip="{{ rating.comment }}">
+              <span class="opacity-85 shrink-0">Comment:</span>
+              <sup class="shrink-0 xl:hidden">
+                <fa-icon [icon]="faInfoCircle" (click)="popover.toggle($event)"></fa-icon>
+              </sup>
+              <span class="truncate">{{ rating.comment }}</span>
+            </div>
+            <p-popover #popover>
               {{ rating.comment }}
-            </p>
-          </div>
+            </p-popover>
 
-          <div class="shrink-0 sm:text-end">
-            <span class="text-xs opacity-70">
-              <span>From:</span>&nbsp;
-              {{ rating.rater.fullName }}
-            </span>
+            <div class="shrink-0 self-end">
+              <span class="text-xs opacity-70">
+                <span>From:</span>&nbsp;
+                {{ rating.rater.fullName }}
+              </span>
+            </div>
           </div>
         </li>
       }
       @if (receivedTotal > (receivedPage + 1) * 10) {
-        <p-button (click)="loadMore()">
+        <p-button (click)="loadMoreReceived()">
           Load more
         </p-button>
       }

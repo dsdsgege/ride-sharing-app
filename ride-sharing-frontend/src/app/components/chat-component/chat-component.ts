@@ -148,7 +148,7 @@ export class ChatComponent implements AfterViewInit {
   private loadHistory(): Promise<void> {
     return this.keycloak.loadUserProfile().then(() => {
       return new Promise<void>((resolve) => {
-        this.chatService.findChatHistoryBetweenUsers(this.otherUsername(), this.page).subscribe({
+        this.chatService.getChatHistoryBetweenUsers(this.otherUsername(), this.page).subscribe({
           next: response => {
             this.messages = response.content ?? [];
             this.totalMessages = response.totalElements;

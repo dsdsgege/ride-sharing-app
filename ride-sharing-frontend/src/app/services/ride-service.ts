@@ -20,6 +20,10 @@ export class RideService {
       `${dateFrom.toISOString()}&date_to=${dateTo.toISOString()}`);
   }
 
+  public findMyRides(page: number): Observable<RideModelResponse> {
+    return this.httpClient.get<RideModelResponse>(`${this.apiUrl}/my-rides?page=${page}`);
+  }
+
   public findByFilter(filter: RideFilterModel): Observable<RideModelResponse> {
     return this.httpClient.post<RideModelResponse>(`${this.apiUrl}/rides/filter`, filter);
   }
@@ -28,7 +32,7 @@ export class RideService {
     return this.httpClient.get<RideModel>(`${this.apiUrl}/${id}`);
   }
 
-  public findRideCountByUsername(username: String) {
+  public getRideCountByUsername(username: String) {
     return this.httpClient.get<number>(`${this.apiUrl}/ride-count?username=${username}`);
   }
 

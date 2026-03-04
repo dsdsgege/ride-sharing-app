@@ -29,17 +29,22 @@ public class ChatRestController {
     }
 
     @GetMapping("/partners")
-    public Page<String> findChatPartnersByUsername(@RequestParam String username,
-                                                   @RequestParam int page) {
+    public Page<String> getChatPartneryByUsername(@RequestParam String username,
+                                                  @RequestParam int page) {
 
         return chatService.findChatPartnersByUsername(username, page);
     }
 
     @GetMapping("/history")
-    public Page<ChatMessage> findMessagesBetweenPartners(@RequestParam(name = "partner") String partner,
-                                                         @RequestParam int page,
-                                                         @AuthenticationPrincipal Jwt jwt) {
+    public Page<ChatMessage> getMessagesBetweenPartners(@RequestParam(name = "partner") String partner,
+                                                        @RequestParam int page,
+                                                        @AuthenticationPrincipal Jwt jwt) {
 
         return chatService.findMessagesBetweenPartners(jwt.getClaimAsString("preferred_username"), partner, page);
+    }
+
+    @GetMapping("/partner-count")
+    public long getMyPartnerCount(@AuthenticationPrincipal Jwt jwt) {
+        return chatService.findMyPartnerCount(jwt.getClaimAsString("preferred_username"));
     }
 }

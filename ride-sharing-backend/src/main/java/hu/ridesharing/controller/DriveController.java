@@ -80,7 +80,7 @@ public class DriveController {
     }
 
     @GetMapping("/drive-count")
-    public int getDriveCountByUsername(@RequestParam String username) {
+    public long getDriveCountByUsername(@RequestParam String username) {
         return journeyService.getDriveCountByUsername(username);
     }
 

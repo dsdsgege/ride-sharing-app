@@ -7,9 +7,12 @@ import {RatingService} from '../../../services/rating-service';
 import {MessageService} from 'primeng/api';
 import {Rating} from 'primeng/rating';
 import {Tooltip} from 'primeng/tooltip';
-import {Observable, window} from 'rxjs';
+import {Observable} from 'rxjs';
 import {RatingResponseModel} from '../../../model/rating-response-model';
 import {HttpErrorResponse} from '@angular/common/http';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import {faInfoCircle} from '@fortawesome/free-solid-svg-icons/faInfoCircle';
+import {Popover} from 'primeng/popover';
 
 @Component({
   selector: 'app-rating-tab-component',
@@ -19,7 +22,9 @@ import {HttpErrorResponse} from '@angular/common/http';
     ReactiveFormsModule,
     SelectButton,
     Rating,
-    Tooltip
+    Tooltip,
+    FaIconComponent,
+    Popover
   ],
   templateUrl: './rating-tab-component.html',
   styleUrl: './rating-tab-component.scss'
@@ -46,6 +51,8 @@ export class RatingTabComponent {
 
   protected receivedTotal: number = 0;
 
+  protected readonly faInfoCircle = faInfoCircle;
+
   private readonly ratingService = inject(RatingService);
 
   private readonly messageService = inject(MessageService);
@@ -53,29 +60,72 @@ export class RatingTabComponent {
   constructor() {
     effect(() => {
       // RECEIVED RATINGS
-      const receivedObs = this.receivedOption() === "Driver"
-        ? this.ratingService.getReceivedAsDriver(this.receivedPage)
-        : this.ratingService.getReceivedAsPassenger(this.receivedPage);
-
-      this.loadRatings(receivedObs, "Could not load received ratings.", (response) => {
-        this.receivedRatings = response.content;
-        this.receivedTotal = response.totalElements;
-      });
+      let receivedObs;
+      if (this.receivedOption() === "Driver") {
+        receivedObs = this.ratingService.getReceivedAsDriver(this.receivedPage);
+      } else if (this.receivedOption() === "Passenger") {
+        receivedObs = this.ratingService.getReceivedAsPassenger(this.receivedPage);
+      }
+      if (receivedObs) {
+        this.loadRatings(receivedObs, "Could not load received ratings.", (response) => {
+          this.receivedRatings = response.content;
+          this.receivedTotal = response.totalElements;
+        });
+      }
 
       // GIVEN RATINGS
-      const givenObs = this.givenOption() === "Driver"
-        ? this.ratingService.getGivenAsDriver(this.givenPage)
-        : this.ratingService.getGivenAsPassenger(this.givenPage);
+      let givenObs;
+      if (this.givenOption() == "Driver") {
+        givenObs = this.ratingService.getGivenAsDriver(this.givenPage);
+      } else if (this.givenOption() == "Passenger") {
+        givenObs = this.ratingService.getGivenAsPassenger(this.givenPage);
+      }
 
-      this.loadRatings(givenObs, "Could not load given ratings.", (response) => {
-        this.givenRatings = response.content;
-        this.givenTotal = response.totalElements;
-      });
+      if (givenObs) {
+        this.loadRatings(givenObs, "Could not load given ratings.", (response) => {
+          this.givenRatings = response.content;
+          this.givenTotal = response.totalElements;
+        });
+      }
     });
   }
 
-  protected loadMore() {
-    console.log("load more");
+  protected loadMoreReceived() {
+    this.receivedPage++;
+    let receivedObs;
+    if (this.receivedOption() === "Driver") {
+      receivedObs = this.ratingService.getReceivedAsDriver(this.receivedPage);
+    } else if (this.receivedOption() === "Passenger") {
+      receivedObs = this.ratingService.getReceivedAsPassenger(this.receivedPage);
+    }
+
+    if (!receivedObs) {
+      return;
+    }
+
+    this.loadRatings(receivedObs, "Could not load received ratings.", (response) => {
+      this.receivedRatings = response.content;
+      this.receivedTotal = response.totalElements;
+    });
+  }
+
+  protected loadMoreGiven() {
+    this.givenPage++;
+    let givenObs;
+    if (this.givenOption() == "Driver") {
+      givenObs = this.ratingService.getGivenAsDriver(this.givenPage);
+    } else if (this.givenOption() == "Passenger") {
+      givenObs = this.ratingService.getGivenAsPassenger(this.givenPage);
+    }
+
+    if (!givenObs) {
+      return;
+    }
+
+    this.loadRatings(givenObs, "Could not load given ratings.", (response) => {
+      this.givenRatings = response.content;
+      this.givenTotal = response.totalElements;
+    });
   }
 
   // callback that will update the ratings...

@@ -61,7 +61,7 @@ export class ChatTabComponent implements OnInit {
 
   private findChatPartners(): Promise<void> {
     return new Promise((resolve) => {
-      this.chatService.findChatPartnersByUsername(this.profile().username, this.page).subscribe(response => {
+      this.chatService.getChatPartnersByUsername(this.profile().username, this.page).subscribe(response => {
         let usernames = response.content ?? [];
 
         this.userService.findUsersByUsernames(usernames).subscribe(response => {

@@ -23,7 +23,8 @@
                           [backgroundTransparent]="true"
                           [isExpanded]="true"
                           [otherUsername]="this.selectedChatPartner()?.username ?? ''"
-                          [otherName]="this.selectedChatPartner()?.fullName ?? ''">
+                          [otherName]="this.selectedChatPartner()?.fullName ?? ''"
+                          (close)="this.selectedChatPartner.set(undefined)">
       </app-chat-component>
     </div>
   } @else {

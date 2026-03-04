@@ -52,11 +52,6 @@ export class DriveService {
     return this.httpClient.get<number>(`${this.apiUrl}/drive-count?username=${username}`);
   }
 
-  public findDriverRatingByUsername(username: String): Observable<number> {
-
-    return this.httpClient.get<number>(`${this.apiUrl}/driver-rating?username=${username}`);
-  }
-
   public findMyDrives(page: number) {
     return this.httpClient.get<RideModelWithPassengersResponse>(`${this.apiUrl}/my-drives?page=${page}`);
   }
