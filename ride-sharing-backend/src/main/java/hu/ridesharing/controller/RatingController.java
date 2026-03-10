@@ -21,11 +21,18 @@ public class RatingController {
         this.ratingService = ratingService;
     }
 
-    @PostMapping("/add/{driveId}")
-    public ResponseStatus addRating(@PathVariable Long driveId, @RequestBody Rating rating,
+    @PostMapping("/add/as-driver/{driveId}")
+    public ResponseStatus addRatingAsDriver(@PathVariable Long driveId, @RequestBody Rating rating,
                                     @AuthenticationPrincipal Jwt jwt) {
 
         return ratingService.rateMyPassenger(driveId, rating, jwt.getClaimAsString("preferred_username"));
+    }
+
+    @PostMapping("/add/as-passenger/{rideId}")
+    public ResponseStatus addRatingAsPassenger(@PathVariable Long rideId, @RequestBody Rating rating,
+                                    @AuthenticationPrincipal Jwt jwt) {
+
+        return ratingService.rateMyDriver(rideId, rating, jwt.getClaimAsString("preferred_username"));
     }
 
     @GetMapping("/received/passenger")

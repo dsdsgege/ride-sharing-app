@@ -6,13 +6,13 @@ import Keycloak from 'keycloak-js';
 import {catchError, forkJoin, of} from 'rxjs';
 import {ProfileTab} from '../../model/profile-tab';
 import {ChatTabComponent} from './chat-tab-component/chat-tab-component';
-import {DrivesTabComponent} from './drives-tab-component/drives-tab-component';
+import {DrivesTabComponent} from './journey-tabs/drives-tab-component/drives-tab-component';
 import {LoadingService} from '../../services/loading-service';
 import {finalize} from 'rxjs/operators';
 import {RatingTabComponent} from './rating-tab-component/rating-tab-component';
 import {RatingService} from '../../services/rating-service';
 import {ChatService} from '../../services/chat-service';
-import {RidesTabComponent} from './rides-tab-component/rides-tab-component';
+import {RidesTabComponent} from './journey-tabs/rides-tab-component/rides-tab-component';
 
 @Component({
   selector: 'app-profile-component',

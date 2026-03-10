@@ -40,4 +40,8 @@ export class RideService {
     return this.httpClient.post<ResponseStatus>(`${this.apiUrl}/join/${id}`,
       {"username": username, "email": email, "fullName": fullName});
   }
+
+  public cancelRide(id: number): Observable<ResponseStatus> {
+    return this.httpClient.delete<ResponseStatus>(`${this.apiUrl}/leave/${id}`);
+  }
 }

@@ -1,0 +1,105 @@
+<div class="grid grid-cols-2 md:grid-cols-3 h-full">
+
+  <ul class="rides flex flex-col gap-3 h-full">
+    @for (ride of rides; track $index) {
+      <li class="tab-select-list relative text-xs md:text-sm lg:text-lg"
+          [class.profile-active-select]="ride.id === selectedRide()?.id"
+          (click)="selectRide(ride)">
+
+        @if (isPast(ride.arrive) && ride.driver.username) {
+
+          <p-badge [value]="1"
+                   severity="danger"
+                   pTooltip="Ratings to make"
+                   tooltipPosition="top"
+                   class="custom-badge-position">
+          </p-badge>
+        }
+
+        {{ ride.fromCity }} to {{ ride.toCity }}
+        <span class="text-xs">
+          {{ ride.depart | date:'short' }}&rightarrow;{{ ride.arrive | date:'short' }}
+        </span>
+      </li>
+    }
+
+    @if (totalItems > (page + 1) * 10) {
+      <p-button (click)="loadMore()">
+        Load more
+      </p-button>
+    }
+  </ul>
+
+  @if (this.selectedRide()) {
+    <div class="md:col-span-2 flex flex-col p-4 rounded-lg">
+
+      <h2 class="text-sm md:text-xl font-bold border-b border-gray-500 pb-1 mb-4">
+        Edit Drive: {{ selectedRide()!.fromCity }} to {{ selectedRide()!.toCity }}
+      </h2>
+
+
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="md:col-span-2 mb-2">
+          <strong>Price:</strong>{{ selectedRide()!.price | currency: "HUF" : "Ft" : "1.0-0" }}
+        </div>
+
+
+        <div class="md:col-span-2 text-center">
+          <p-button class="text-xs md:text-sm lg:text-lg"
+                    (click)="this.dialogVisible = true">
+            Rate driver
+          </p-button>
+        </div>
+
+      </form>
+
+      <div class="flex flex-col items-stretch gap-2 md:flex-row justify-between mt-auto p-3">
+        <button type="button"
+                class="delete-button"
+                (click)="cancelRide()">
+          Cancel ride
+        </button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="md:col-span-2">
+      <h1 class="text-center">Select a drive to manage it</h1>
+    </div>
+  }
+</div>
+@if (selectedRide() && selectedRide()!.driver) {
+  <p-dialog header="Rate driver!"
+            [modal]="true"
+            [draggable]="false"
+            [(visible)]="dialogVisible"
+            [style]="{width: '60vw', 'background-color': 'var(--dialog-bg)', 'backdrop-filter': 'blur(20px)',
+            border: 'none', 'max-height': '60vh', 'overflow-y': 'auto', 'color': 'var(--text-color)'}">
+    <div class="flex flex-col">
+      <p-accordion>
+        <p-accordion-panel value="0">
+          <p-accordion-header>
+            {{ selectedRide()!.driver.fullName }}
+          </p-accordion-header>
+          <p-accordion-content>
+            <div class="accordion-content">
+              <p-rating [(ngModel)]="selectedRide()!.driver.rating"
+                        [stars]="5">
+              </p-rating>
+
+              <input #ratingComment
+                     type="text"
+                     placeholder="Write a comment..."
+                     class="w-full custom-input">
+
+              <button class="success-button"
+                      (click)="sendRating(selectedRide()!.driver, ratingComment.value)">
+                <fa-icon [icon]="faPaperPlane"></fa-icon>&nbsp;Send
+              </button>
+            </div>
+          </p-accordion-content>
+        </p-accordion-panel>
+      </p-accordion>
+    </div>
+  </p-dialog>
+}

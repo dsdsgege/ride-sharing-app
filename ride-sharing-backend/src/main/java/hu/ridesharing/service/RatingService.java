@@ -84,6 +84,33 @@ public class RatingService {
         return new ResponseStatus(true);
     }
 
+    public ResponseStatus rateMyDriver(Long rideId, Rating rating, String username) {
+        if (StringUtils.isBlank(rating.getComment())) {
+            throw new RatingException("Comment must not be empty");
+        }
+
+        Journey journey = journeyService.checkMyJourney(username, rideId);
+
+        User passenger = new User();
+        passenger.setUsername(username);
+
+        RatingId ratingId = new RatingId();
+        ratingId.setRated(journey.getDriver().getUsername());
+        ratingId.setRater(passenger.getUsername());
+        ratingId.setJourney(journey.getId());
+        ratingId.setType(RatingType.PASSENGER_TO_DRIVER);
+
+        if (ratingRepository.existsById(ratingId)) {
+            throw new RatingException("You have already rated this driver.");
+        }
+
+        rating.setJourney(journey);
+        rating.setRater(passenger);
+        rating.setType(RatingType.PASSENGER_TO_DRIVER);
+        ratingRepository.save(rating);
+        return new ResponseStatus(true);
+    }
+
     private RatingDTO mapToDTO(Rating rating) {
         RatingDTO dto = new RatingDTO();
         dto.setValue(rating.getValue());

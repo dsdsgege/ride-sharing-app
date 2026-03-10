@@ -65,4 +65,9 @@ public class RideController {
     public ResponseStatus joinRide(@PathVariable Long id, @RequestBody JoinRideRequest request) {
         return this.journeyService.joinRide(id, request.username(), request.email(), request.fullName());
     }
+
+    @DeleteMapping("leave/{id}")
+    public ResponseStatus cancelRide(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
+        return new ResponseStatus(this.journeyService.cancelRide(id, jwt.getClaimAsString("preferred_username")));
+    }
 }

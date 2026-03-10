@@ -128,6 +128,8 @@ export class RatingTabComponent {
     });
   }
 
+  //TODO: DELETE/EDIT RATING
+
   // callback that will update the ratings...
   private loadRatings(obs: Observable<RatingResponseModel>, errorMessage: string,
                       onSuccess: (data: RatingResponseModel) => void) {

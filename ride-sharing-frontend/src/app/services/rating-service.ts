@@ -27,9 +27,14 @@ export class RatingService {
     return this.httpClient.get<RatingResponseModel>(`${this.url}/given/driver?page=${page}`);
   }
 
-  public addRating(driveId: number, username: string, rating: number, comment: string) {
+  public addRatingAsDriver(driveId: number, username: string, rating: number, comment: string) {
     const model = {rated: {username: username}, value: rating, comment: comment};
-    return this.httpClient.post<ResponseStatus>(`${this.url}/add/${driveId}`, model);
+    return this.httpClient.post<ResponseStatus>(`${this.url}/add/as-driver/${driveId}`, model);
+  }
+
+  public addRatingAsPassenger(rideId: number, username: string, rating: number, comment: string) {
+    const model = {rated: {username: username}, value: rating, comment: comment};
+    return this.httpClient.post<ResponseStatus>(`${this.url}/add/as-passenger/${rideId}`, model);
   }
 
   public getMyRatingCount() {

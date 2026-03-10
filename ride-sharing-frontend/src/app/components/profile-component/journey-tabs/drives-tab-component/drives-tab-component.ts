@@ -11,24 +11,24 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputText} from 'primeng/inputtext';
-import {DriveService} from '../../../services/drive-service';
+import {DriveService} from '../../../../services/drive-service';
 import {DatePicker} from 'primeng/datepicker';
 import {MessageService} from 'primeng/api';
 import {HttpErrorResponse} from '@angular/common/http';
-import {LoadingService} from '../../../services/loading-service';
+import {LoadingService} from '../../../../services/loading-service';
 import {Observable} from 'rxjs';
-import {FormService} from '../../../services/form-service';
+import {FormService} from '../../../../services/form-service';
 import {OverlayBadgeModule} from 'primeng/overlaybadge';
 import {Tooltip} from 'primeng/tooltip';
-import {RideModelWithPassengers} from '../../../model/ride/ride-model-with-passengers';
+import {RideModelWithPassengers} from '../../../../model/ride/ride-model-with-passengers';
 import {Badge} from 'primeng/badge';
 import {Dialog} from 'primeng/dialog';
 import {Rating} from 'primeng/rating';
 import {AccordionModule} from 'primeng/accordion';
-import {UserModel} from '../../../model/user-model';
+import {UserModel} from '../../../../model/user-model';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-import {RatingService} from '../../../services/rating-service';
+import {RatingService} from '../../../../services/rating-service';
 
 
 @Component({
@@ -53,7 +53,7 @@ import {RatingService} from '../../../services/rating-service';
   ],
 
   templateUrl: './drives-tab-component.html',
-  styleUrl: './drives-tab-component.scss'
+  styleUrl: '../journey-tabs.scss'
 })
 export class DrivesTabComponent implements OnInit {
 
@@ -183,7 +183,7 @@ export class DrivesTabComponent implements OnInit {
         detail: 'Please select a drive to rate.'});
       return;
     }
-    this.subscribe(this.ratingService.addRating(ride.id, passenger.username, passenger.rating, ratingComment),
+    this.subscribe(this.ratingService.addRatingAsDriver(ride.id, passenger.username, passenger.rating, ratingComment),
       "Your rating is sent.", "Success", "An error occurred while sending your rating.");
   }
 

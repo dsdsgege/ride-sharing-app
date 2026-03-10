@@ -17,6 +17,8 @@ public interface JourneyPassengerRepository extends JpaRepository<JourneyPasseng
 
     boolean existsByJourneyAndPassenger(Journey journey, User passenger);
 
+    void deleteJourneyPassengersByJourneyAndPassenger(Journey journey, User passenger);
+
     @Query("SELECT jp.passenger FROM JourneyPassenger jp WHERE jp.journey = :journey AND jp.accepted = true")
     List<User> findAcceptedPassengersByJourney(Journey journey);
 

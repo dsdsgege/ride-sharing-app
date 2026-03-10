@@ -197,12 +197,32 @@ public class JourneyService {
         return new ResponseStatus(true);
     }
 
+    @Transactional
     public boolean deleteDrive(Long id, String username) {
         checkMyJourney(username, id);
 
         journeyRepository.deleteById(id);
-        return true;
         // TODO: send emails
+
+        return true;
+    }
+
+    @Transactional
+    public boolean cancelRide(Long id, String username) {
+        Journey journey = new Journey();
+        journey.setId(id);
+
+        User passenger = new User();
+        passenger.setUsername(username);
+
+        if (!journeyPassengerRepository.existsByJourneyAndPassenger(journey, passenger)) {
+            throw new ForbiddenException("No such ride found for user " + username);
+        }
+
+        journeyPassengerRepository.deleteJourneyPassengersByJourneyAndPassenger(journey, passenger);
+        // TODO: send emails
+
+        return true;
     }
 
     public boolean updateDrive(Journey drive, String username) {
