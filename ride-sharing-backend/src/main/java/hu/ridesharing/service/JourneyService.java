@@ -12,11 +12,14 @@ import hu.ridesharing.repository.JourneyRepository;
 import hu.ridesharing.repository.RatingRepository;
 import hu.ridesharing.repository.UserRepository;
 import hu.ridesharing.repository.specification.JourneySpecificationFactory;
+import hu.ridesharing.exception.EmailSendingError;
+
 import io.micrometer.common.util.StringUtils;
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,16 +46,19 @@ public class JourneyService {
 
     private final EmailService emailService;
 
+    private final String adminEmail;
+
     @Autowired
     public JourneyService(JourneyRepository journeyRepository, RatingRepository ratingRepository,
                           EmailService emailService, JourneyPassengerRepository journeyPassengerRepository,
-                          UserRepository userRepository) {
+                          UserRepository userRepository, @Value("${app.admin.email}") String adminEmail) {
 
         this.journeyRepository = journeyRepository;
         this.userRepository = userRepository;
         this.ratingRepository = ratingRepository;
         this.emailService = emailService;
         this.journeyPassengerRepository = journeyPassengerRepository;
+        this.adminEmail = adminEmail;
     }
 
     public Journey addDrive(Journey drive, String username) {
@@ -175,7 +181,7 @@ public class JourneyService {
             throw new JoinRideException("You have already joined this ride.");
         }
 
-        // save the relationship (accepted is false by default)
+        // to save the relationship (accepted is false by default),
         // the driver has to accept the Passenger through email
         String secureToken = UUID.randomUUID().toString();
         JourneyPassenger jp = new JourneyPassenger();
@@ -191,6 +197,7 @@ public class JourneyService {
         try {
             emailService.sendRideAcceptEmail(journey, savedPassenger, secureToken);
         } catch (MessagingException e) {
+            // Here we need to let the user know that the join was unsuccessful!
             throw new EmailSendingError("Could not send approve email for driver.");
         }
 
@@ -199,10 +206,17 @@ public class JourneyService {
 
     @Transactional
     public boolean deleteDrive(Long id, String username) {
-        checkMyJourney(username, id);
+        Journey journey = checkMyJourney(username, id);
 
         journeyRepository.deleteById(id);
-        // TODO: send emails
+
+        journeyPassengerRepository.findAcceptedPassengersByJourney(journey).forEach(passenger -> {
+            try {
+                emailService.sendRideHasBeenCanceledEmail(journey, passenger);
+            } catch (MessagingException e) {
+                sendAdminEmail(journey, e);
+            }
+        });
 
         return true;
     }
@@ -220,7 +234,14 @@ public class JourneyService {
         }
 
         journeyPassengerRepository.deleteJourneyPassengersByJourneyAndPassenger(journey, passenger);
-        // TODO: send emails
+
+        try {
+            emailService.sendPassengerLeftEmail(journey, passenger,
+                    journeyPassengerRepository.findAcceptedPassengersByJourney(journey).size()
+            );
+        } catch (MessagingException e) {
+            sendAdminEmail(journey, e);
+        }
 
         return true;
     }
@@ -233,12 +254,23 @@ public class JourneyService {
             throw new BadRequestException("You must fill every input");
         }
 
+        String oldDepart = journey.getDepart().toString();
+
         journey.setCarMake(drive.getCarMake());
         journey.setSeats(drive.getSeats());
         journey.setArrive(drive.getArrive());
         journey.setDepart(drive.getDepart());
 
         var savedJourney = journeyRepository.save(journey);
+
+        journeyPassengerRepository.findAcceptedPassengersByJourney(journey).forEach(passenger -> {
+            try {
+                emailService.sendRideHasChangedEmail(journey, passenger, oldDepart);
+            } catch (MessagingException e) {
+                sendAdminEmail(journey, e);
+            }
+        });
+
         return savedJourney.getArrive() == journey.getArrive() &&
                 savedJourney.getDepart() == journey.getDepart() &&
                 savedJourney.getCarMake().equals(journey.getCarMake()) &&
@@ -299,5 +331,17 @@ public class JourneyService {
         response.setArrive(journey.getArrive());
         response.setDepart(journey.getDepart());
         response.setCarMake(journey.getCarMake());
+    }
+
+    private void sendAdminEmail(Journey journey, Exception e) {
+        emailService.sendSimpleEmail(adminEmail,
+                """
+                    Dear admin,
+                
+                    We could not send email to some of the passengers/driver of the ride %d.
+                
+                    Error: %s
+                """.formatted(journey.getId(), e.getMessage())
+        );
     }
 }

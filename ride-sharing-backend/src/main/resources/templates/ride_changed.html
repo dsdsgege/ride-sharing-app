@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your ride details have changed</title>
+</head>
+<body>
+<h1>Dear <span th:text="${passenger}"></span>,</h1>
+<br>
+<div>
+    Your ride from
+    <span th:text="${fromCity}"></span>
+    to
+    <span th:text="${toCity}"></span>,
+    on
+    <span th:text="${depart}"></span>
+    with the id of
+    <span th:text="${rideId}"></span>
+    has been updated. Please check the app to review the new details: Profile > My Rides.
+</div>
+
+<br>
+
+<div>
+    <span th:if="passengers > 0">
+        <span th:text="${passengers}"></span> passengers left.
+    </span>
+
+    <span th:unless="passengers > 0">
+        no passengers left.
+    </span>
+</div>
+<br>
+We apologize for the inconvenience.
+<br><br>
+<div style="font-size: 12px; color: #999;">
+    Best wishes,<br>
+    <strong>RideSharingApp Team</strong>
+</div>
+</body>
+</html>

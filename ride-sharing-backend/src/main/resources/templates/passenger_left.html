@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Passenger left</title>
+</head>
+<body>
+    <h1>Dear <span th:text="${driver}"></span>,</h1>
+    <br>
+    <div>
+        Unfortunately one of your passengers has left your ride:
+        <br>
+        <strong><span th:text="${passenger}"></span></strong>
+        with a rating of
+        <span th:if="${passengerRating} > 0">
+            <span th:text="passengerRating"></span>&#10029;
+         </span>
+        <span th:unless="${passengerRating} > 0">
+             0
+        </span>
+    </div>
+
+    <br>
+
+    <div>
+        Your ride from
+        <span th:text="${fromCity}"></span>
+        to
+        <span th:text="${toCity}"></span>,
+        on
+        <span th:text="${depart}"></span> have
+
+        <span th:if="passengers > 0">
+            <span th:text="${passengers}"></span> passengers left.
+        </span>
+
+        <span th:unless="passengers > 0">
+            no passengers left.
+        </span>
+    </div>
+    <br>
+    We are sorry for the inconvenience.
+    <br><br>
+    <div style="font-size: 12px; color: #999;">
+        Best wishes,<br>
+        <strong>RideSharingApp Team</strong>
+    </div>
+</body>
+</html>

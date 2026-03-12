@@ -14,6 +14,7 @@ services:
       - GEOCODING_API_KEY=${GEOCODING_API_KEY}
       - SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}
       - APP_FRONTEND_URL=${APP_FRONTEND_URL}
+      - APP_ADMIN_EMAIL=${APP_ADMIN_EMAIL}
 
     build:
       context: ./ride-sharing-backend
