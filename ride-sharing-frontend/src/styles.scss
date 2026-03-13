@@ -156,8 +156,8 @@ body {
   --p-accordion-header-active-hover-color: var(--text-color);
 
   // p-dialog
-  --p-button-text-secondary-hover-background: var(--card-hover-color);
-  --p-button-text-secondary-color: var(--text-color);
+  --p-button-text-secondary-hover-background: whitesmoke;
+  --p-button-text-secondary-color: var(--card-hover-color);
 
   transition: background-color #{variables.$transition-speed};
 }

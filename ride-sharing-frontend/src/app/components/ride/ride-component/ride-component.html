@@ -40,15 +40,13 @@
       <div class="element">
         <p-datepicker class="custom-form-element w-full"
                       selectionMode="range"
-                      dataType="string"
                       [minDate]="today"
-                      [formControl]="this.dateControl"
-                      [iconDisplay]="'input'"
+                      [formControl]="dateControl"
                       [dateFormat]="'yy/mm/dd'"
                       [showIcon]="true"
+                      [iconDisplay]="'input'"
                       [placeholder]="'Select date range'"
-                      appendTo="body"
-                      iconDisplay="input">
+                      appendTo="body">
         </p-datepicker>
       </div>
 

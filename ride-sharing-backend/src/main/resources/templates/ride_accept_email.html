@@ -9,10 +9,10 @@
      <br>
      <div>
          Passenger <strong><span th:text="${passenger}"></span></strong>
-         <span th:if="${passengerRating} > 0">with a rating of
-            <span th:text="passengerRating"></span>&#10029;
+         <span th:if="${passengerRating} > 0.0">with a rating of
+            <span th:text="${passengerRating}"></span>&#10029;
          </span>
-         <span th:unless="${passengerRating} > 0">
+         <span th:unless="${passengerRating} > 0.0">
              that has no rating yet
          </span>
          wants to join your ride:

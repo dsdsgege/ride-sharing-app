@@ -12,7 +12,7 @@
         <strong><span th:text="${passenger}"></span></strong>
         with a rating of
         <span th:if="${passengerRating} > 0">
-            <span th:text="passengerRating"></span>&#10029;
+            <span th:text="${passengerRating}"></span>&#10029;
          </span>
         <span th:unless="${passengerRating} > 0">
              0

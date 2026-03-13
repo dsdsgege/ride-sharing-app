@@ -108,8 +108,18 @@ export class RidesTabComponent implements OnInit {
         detail: 'Please select a drive to rate.'});
       return;
     }
-    this.subscribe(this.ratingService.addRatingAsDriver(ride.id, driver.username, driver.rating, ratingComment),
+    this.subscribe(this.ratingService.addRatingAsPassenger(ride.id, driver.username, driver.rating, ratingComment),
       "Your rating is sent.", "Success", "An error occurred while sending your rating.");
+  }
+
+  protected isRideReadyToRate(): boolean {
+    const ride = this.selectedRide();
+
+    if (!ride || !ride.depart) return false;
+
+    // Convert the departure to a timestamp and compare it to right now
+    const departTime = new Date(ride.depart).getTime();
+    return departTime < Date.now();
   }
 
   private loadRides() {

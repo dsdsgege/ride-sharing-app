@@ -3,7 +3,10 @@ package hu.ridesharing.service;
 import hu.ridesharing.dto.RatingDTO;
 import hu.ridesharing.dto.response.outgoing.ResponseStatus;
 import hu.ridesharing.entity.*;
+import hu.ridesharing.exception.BadRequestException;
 import hu.ridesharing.exception.RatingException;
+import hu.ridesharing.repository.JourneyPassengerRepository;
+import hu.ridesharing.repository.JourneyRepository;
 import hu.ridesharing.repository.RatingRepository;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +14,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class RatingService {
 
     private final RatingRepository ratingRepository;
 
     private final JourneyService journeyService;
+    private final JourneyRepository journeyRepository;
 
     @Autowired
-    public RatingService(RatingRepository ratingRepository, JourneyService journeyService) {
+    public RatingService(RatingRepository ratingRepository, JourneyService journeyService, JourneyPassengerRepository journeyPassengerRepository, JourneyRepository journeyRepository) {
         this.ratingRepository = ratingRepository;
         this.journeyService = journeyService;
+        this.journeyRepository = journeyRepository;
     }
 
     public long getMyRatingCount(String username) {
@@ -89,7 +96,11 @@ public class RatingService {
             throw new RatingException("Comment must not be empty");
         }
 
-        Journey journey = journeyService.checkMyJourney(username, rideId);
+        Journey journey = journeyRepository.findById(rideId).orElseThrow();
+
+        if (journey.getDepart().isBefore(LocalDateTime.now())) {
+            throw new BadRequestException("You can not rate this driver, because did not happen yet.");
+        }
 
         User passenger = new User();
         passenger.setUsername(username);

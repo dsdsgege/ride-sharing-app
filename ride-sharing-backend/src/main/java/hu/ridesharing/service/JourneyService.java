@@ -27,6 +27,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -208,6 +209,10 @@ public class JourneyService {
     public boolean deleteDrive(Long id, String username) {
         Journey journey = checkMyJourney(username, id);
 
+        if (journey.getDepart().isBefore(LocalDateTime.now())) {
+            throw new BadRequestException("You can not delete this drive.");
+        }
+
         journeyRepository.deleteById(id);
 
         journeyPassengerRepository.findAcceptedPassengersByJourney(journey).forEach(passenger -> {
@@ -223,8 +228,11 @@ public class JourneyService {
 
     @Transactional
     public boolean cancelRide(Long id, String username) {
-        Journey journey = new Journey();
-        journey.setId(id);
+        Journey journey = journeyRepository.findById(id).orElseThrow();
+
+        if (journey.getDepart().isBefore(LocalDateTime.now())) {
+            throw new BadRequestException("You can not cancel this ride as it is in the past.");
+        }
 
         User passenger = new User();
         passenger.setUsername(username);

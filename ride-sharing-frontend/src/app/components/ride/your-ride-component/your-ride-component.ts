@@ -80,7 +80,8 @@ export class YourRideComponent implements OnInit {
       this.rideService.joinRide(this.ride.id, profile.username ?? "", profile.email ?? "", fullName).subscribe({
         next: status => {
           if (status.success) {
-            this.messageService.add({severity: 'success', summary: 'Success', detail: "You have joined the ride."});
+            this.messageService.add({severity: 'success', summary: 'Success', detail: "You have joined the ride." +
+                " The driver has to accept you as a passenger"});
             return;
           }
           this.messageService.add({severity: 'error', summary: 'Error', detail: "Your couldn't join the ride." +

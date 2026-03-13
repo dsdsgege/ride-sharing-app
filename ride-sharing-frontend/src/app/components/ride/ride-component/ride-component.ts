@@ -53,8 +53,6 @@ export class RideComponent implements OnInit {
 
   protected readonly faSearch = faSearch;
 
-  protected readonly Number = Number;
-
   protected readonly geolocation$: GeolocationService = inject(GeolocationService);
 
   private readonly geocodingService: GeocodingService = inject(GeocodingService);
@@ -85,12 +83,18 @@ export class RideComponent implements OnInit {
 
     const storedDateString = localStorage.getItem('date-range');
     if (storedDateString) {
-      const parsedValue = JSON.parse(storedDateString);
+      try {
+        const parsedValue = JSON.parse(storedDateString);
 
-      if (Array.isArray(parsedValue)) {
-        const dateObjects = parsedValue.map(dateStr => new Date(dateStr));
-        // emitEvent: false stops from valuechanges emit
-        this.dateControl.setValue(dateObjects, { emitEvent: false });
+        if (Array.isArray(parsedValue)) {
+          const dateObjects = parsedValue.map(dateStr => dateStr ? new Date(dateStr) : new Date());
+          // emitEvent: false stops from valuechanges emit
+          this.dateControl.setValue(dateObjects, { emitEvent: false });
+        }
+      } catch (error) {
+        // if could not parse, delete the cache
+        console.error("Error reading the localStorage: ", error);
+        localStorage.removeItem('date-range');
       }
     }
 

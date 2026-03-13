@@ -6,16 +6,6 @@
           [class.profile-active-select]="ride.id === selectedRide()?.id"
           (click)="selectRide(ride)">
 
-        @if (isPast(ride.arrive) && ride.driver.username) {
-
-          <p-badge [value]="1"
-                   severity="danger"
-                   pTooltip="Ratings to make"
-                   tooltipPosition="top"
-                   class="custom-badge-position">
-          </p-badge>
-        }
-
         {{ ride.fromCity }} to {{ ride.toCity }}
         <span class="text-xs">
           {{ ride.depart | date:'short' }}&rightarrow;{{ ride.arrive | date:'short' }}
@@ -46,7 +36,8 @@
 
         <div class="md:col-span-2 text-center">
           <p-button class="text-xs md:text-sm lg:text-lg"
-                    (click)="this.dialogVisible = true">
+                    (click)="this.dialogVisible = true"
+                    [disabled]="!isRideReadyToRate()">
             Rate driver
           </p-button>
         </div>

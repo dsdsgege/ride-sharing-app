@@ -56,6 +56,8 @@ public class EmailService {
                 .average()
                 .orElse(0);
 
+        log.warn("RATING: {}",  passengerRating);
+
         Context context = new Context();
         context.setVariable("passenger", passenger.getFullName());
         context.setVariable("passengerRating", passengerRating);
@@ -79,6 +81,8 @@ public class EmailService {
                 .mapToDouble(Rating::getValue)
                 .average()
                 .orElse(0);
+
+        log.warn("RATING: {}",  passengerRating);
 
         Context context = new Context();
         context.setVariable("passenger", passenger.getFullName());
