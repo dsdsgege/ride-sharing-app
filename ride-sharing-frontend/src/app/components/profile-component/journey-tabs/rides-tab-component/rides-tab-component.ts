@@ -1,12 +1,10 @@
 import {ChangeDetectorRef, Component, inject, OnInit, signal} from '@angular/core';
 import {Accordion, AccordionContent, AccordionHeader, AccordionPanel} from "primeng/accordion";
-import {Badge} from "primeng/badge";
 import {Button} from "primeng/button";
 import {CurrencyPipe, DatePipe} from "@angular/common";
 import {Dialog} from "primeng/dialog";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {Rating} from "primeng/rating";
-import {Tooltip} from "primeng/tooltip";
 import {LoadingService} from '../../../../services/loading-service';
 import {MessageService} from 'primeng/api';
 import {RatingService} from '../../../../services/rating-service';
@@ -25,14 +23,12 @@ import {FormsModule} from '@angular/forms';
     AccordionContent,
     AccordionHeader,
     AccordionPanel,
-    Badge,
     Button,
     CurrencyPipe,
     DatePipe,
     Dialog,
     FaIconComponent,
     Rating,
-    Tooltip,
     FormsModule
   ],
   templateUrl: './rides-tab-component.html',

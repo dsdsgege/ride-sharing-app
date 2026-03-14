@@ -4,16 +4,27 @@ import {Observable} from 'rxjs';
 import {RideModelResponse} from '../model/ride/ride-model-response';
 import {RideModel} from '../model/ride/ride-model';
 import {RideFilterModel} from '../model/ride/ride-filter-model';
+import {FormService} from './form-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RideService {
+
   private readonly apiUrl = "/api/ride";
+
   private readonly httpClient: HttpClient = inject(HttpClient);
+
+  private readonly formService = inject(FormService);
 
   public findAll(page: number, pageSize: number, sortBy: string, direction: string, pickupFrom: string,
                  dropOffTo: string, dateFrom: Date, dateTo: Date): Observable<RideModelResponse> {
+
+    // Adjusting date as it will be converted to iso string
+    dateFrom = this.formService.adjustDate(dateFrom) ?? new Date();
+    dateTo = this.formService.adjustDate(dateTo) ?? new Date();
+    dateTo.setHours(dateTo.getHours() + 23);
+    dateTo.setMinutes(dateTo.getMinutes() + 59);
 
     return this.httpClient.get<RideModelResponse>(`${this.apiUrl}/rides?page=${page}&page_size=${pageSize}&` +
       `sort_by=${sortBy}&direction=${direction}&from=${pickupFrom}&to=${dropOffTo}&date_from=` +

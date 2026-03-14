@@ -86,4 +86,13 @@ export class FormService {
       return false;
     });
   }
+
+  public adjustDate(date: Date | null): Date | null {
+    if (!date) {
+      return null;
+    }
+
+    // getTime() returns milliseconds, getTimezoneOffset() returns minutes
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  }
 }

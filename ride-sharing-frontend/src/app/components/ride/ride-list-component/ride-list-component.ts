@@ -21,6 +21,7 @@ import {RideFilterModel} from '../../../model/ride/ride-filter-model';
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import {Paginator} from 'primeng/paginator';
+import {FormService} from '../../../services/form-service';
 
 @Component({
   selector: 'app-ride-list',
@@ -87,6 +88,8 @@ export class RideListComponent implements OnInit {
   private readonly rideService: RideService = inject(RideService)
 
   private readonly messageService = inject(MessageService);
+
+  private readonly formService = inject(FormService);
 
   items: MenuItem[] = [
     {"label": "Search rides", routerLink: "/ride"},
@@ -165,12 +168,20 @@ export class RideListComponent implements OnInit {
       localStorage.setItem("dropoff-city", this.dropoffControl.value);
     }
 
+    // adjusting dates to localtime
+    const adjustedFrom = this.formService.adjustDate(this.dateControl.value?.[0] ?? null);
+    const adjustedTo = this.formService.adjustDate(this.dateControl.value?.[1] ?? null);
+    if (adjustedTo) {
+      adjustedTo.setDate(adjustedTo.getHours() + 23);
+      adjustedTo.setMinutes(adjustedTo.getMinutes() + 59);
+    }
+
     // apply advanced filter
     let filter: RideFilterModel = {
       pickupFrom: this.pickupControl.value,
       dropOffTo: this.dropoffControl.value,
-      dateFrom: this.dateControl.value?.[0],
-      dateTo: this.dateControl.value?.[1],
+      dateFrom: adjustedFrom,
+      dateTo: adjustedTo,
       seats: this.seatsControl.value,
       maxPrice: this.passengerPriceControl.value,
       rating: this.ratingControl.value,
