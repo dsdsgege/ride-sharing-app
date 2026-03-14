@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rate your driver(s)</title>
+</head>
+<body>
+<div>
+    <h1>Dear <span th:text="${user}"></span>,</h1>
+    <br>
+    <div>
+        <p>
+            You have recently used the services of the <a th:href="${frontendUrl}">RideSharing application</a> as a
+            <span th:text="${role}"></span>.
+        </p>
+        <p>
+            Please rate your journey(s) and driver(s).
+        </p>
+    </div>
+    <br>
+    <div>
+        You can make your <strong>rating</strong> on this <a th:href="${rateUrl}">link</a>.
+    </div>
+    <br>
+    <br>
+    <div style="font-size: 12px; color: #999;">
+        Best wishes,<br>
+        <strong>RideSharingApp Team</strong>
+    </div>
+</div>
+</body>
+</html>

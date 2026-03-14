@@ -27,7 +27,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +47,15 @@ public class JourneyService {
     private final EmailService emailService;
 
     private final String adminEmail;
+
+    private static final String ADMIN_TEXT =
+                    """
+                    Dear admin,
+                
+                    We could not send email to some of the passengers/driver of the ride %d.
+                
+                    Error: %s
+                    """;
 
     @Autowired
     public JourneyService(JourneyRepository journeyRepository, RatingRepository ratingRepository,
@@ -209,7 +217,7 @@ public class JourneyService {
     public boolean deleteDrive(Long id, String username) {
         Journey journey = checkMyJourney(username, id);
 
-        if (journey.getDepart().isBefore(LocalDateTime.now())) {
+        if (journey.getDepart().isAfter(LocalDateTime.now())) {
             throw new BadRequestException("You can not delete this drive.");
         }
 
@@ -219,7 +227,10 @@ public class JourneyService {
             try {
                 emailService.sendRideHasBeenCanceledEmail(journey, passenger);
             } catch (MessagingException e) {
-                sendAdminEmail(journey, e);
+                log.error("Could not send cancellation email for passenger {}, journey id: {}",
+                        passenger.getUsername(), journey.getId());
+                emailService.sendAdminEmail(journey, e, adminEmail, ADMIN_TEXT,
+                        "Could not send cancellation email for passenger");
             }
         });
 
@@ -230,7 +241,7 @@ public class JourneyService {
     public boolean cancelRide(Long id, String username) {
         Journey journey = journeyRepository.findById(id).orElseThrow();
 
-        if (journey.getDepart().isBefore(LocalDateTime.now())) {
+        if (journey.getDepart().isAfter(LocalDateTime.now())) {
             throw new BadRequestException("You can not cancel this ride as it is in the past.");
         }
 
@@ -248,7 +259,9 @@ public class JourneyService {
                     journeyPassengerRepository.findAcceptedPassengersByJourney(journey).size()
             );
         } catch (MessagingException e) {
-            sendAdminEmail(journey, e);
+            log.error("Could not send cancellation email for driver, journey id: {}", journey.getId());
+            emailService.sendAdminEmail(journey, e, adminEmail, ADMIN_TEXT,
+                    "Could not send cancellation email for driver");
         }
 
         return true;
@@ -275,7 +288,10 @@ public class JourneyService {
             try {
                 emailService.sendRideHasChangedEmail(journey, passenger, oldDepart);
             } catch (MessagingException e) {
-                sendAdminEmail(journey, e);
+                log.error("Could not send cancellation email for passenger: {}, journey id: {}",
+                        passenger.getUsername(), journey.getId());
+                this.emailService.sendAdminEmail(journey, e, adminEmail, ADMIN_TEXT,
+                        "Could not send update email for passenger");
             }
         });
 
@@ -339,17 +355,5 @@ public class JourneyService {
         response.setArrive(journey.getArrive());
         response.setDepart(journey.getDepart());
         response.setCarMake(journey.getCarMake());
-    }
-
-    private void sendAdminEmail(Journey journey, Exception e) {
-        emailService.sendSimpleEmail(adminEmail,
-                """
-                    Dear admin,
-                
-                    We could not send email to some of the passengers/driver of the ride %d.
-                
-                    Error: %s
-                """.formatted(journey.getId(), e.getMessage())
-        );
     }
 }

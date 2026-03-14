@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class RatingService {
@@ -22,13 +23,19 @@ public class RatingService {
     private final RatingRepository ratingRepository;
 
     private final JourneyService journeyService;
+
     private final JourneyRepository journeyRepository;
 
+    private final JourneyPassengerRepository journeyPassengerRepository;
+
     @Autowired
-    public RatingService(RatingRepository ratingRepository, JourneyService journeyService, JourneyPassengerRepository journeyPassengerRepository, JourneyRepository journeyRepository) {
+    public RatingService(RatingRepository ratingRepository, JourneyService journeyService,
+                         JourneyPassengerRepository journeyPassengerRepository, JourneyRepository journeyRepository) {
+
         this.ratingRepository = ratingRepository;
         this.journeyService = journeyService;
         this.journeyRepository = journeyRepository;
+        this.journeyPassengerRepository = journeyPassengerRepository;
     }
 
     public long getMyRatingCount(String username) {
@@ -98,7 +105,7 @@ public class RatingService {
 
         Journey journey = journeyRepository.findById(rideId).orElseThrow();
 
-        if (journey.getDepart().isBefore(LocalDateTime.now())) {
+        if (journey.getDepart().isAfter(LocalDateTime.now())) {
             throw new BadRequestException("You can not rate this driver, because did not happen yet.");
         }
 
@@ -120,6 +127,14 @@ public class RatingService {
         rating.setType(RatingType.PASSENGER_TO_DRIVER);
         ratingRepository.save(rating);
         return new ResponseStatus(true);
+    }
+
+    public List<User> getDriversEligibleForRatingEmail() {
+        return journeyRepository.findDriversEligibleForRatingEmail(RatingType.DRIVER_TO_PASSENGER);
+    }
+
+    public List<User> getPassengersEligibleForRatingEmail() {
+        return journeyPassengerRepository.findPassengersEligibleForRatingEmail(RatingType.PASSENGER_TO_DRIVER);
     }
 
     private RatingDTO mapToDTO(Rating rating) {
