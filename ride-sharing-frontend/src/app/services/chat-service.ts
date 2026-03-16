@@ -34,7 +34,13 @@ export class ChatService implements OnDestroy {
   }
 
   // STOMP/WEBSOCKET
-  openConnection(username: string): Promise<void>{
+  openConnection(username: string): Promise<void> {
+
+    // do not open a new connection if already connected
+    if (this.stompClient && this.stompClient.connected) {
+      return Promise.resolve();
+    }
+
     this.stompClient = new Client({
       brokerURL: this.webSocketUrl,
       reconnectDelay: 5000, // Auto-reconnect
@@ -61,6 +67,12 @@ export class ChatService implements OnDestroy {
 
       client.activate();
     });
+  }
+
+  closeConnection() {
+    if (this.stompClient && this.stompClient.connected) {
+      void this.stompClient.deactivate();
+    }
   }
 
   sendMessage(message: ChatModel) {

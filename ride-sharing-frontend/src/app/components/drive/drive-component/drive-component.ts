@@ -125,9 +125,6 @@ export class DriveComponent implements OnInit {
   }
 
   protected showDialog() {
-
-
-
     this.everyInputFilled = this.formService.areInputsFilled(this.carControl, this.consumptionControl,
       this.modelYearControl, this.seatsControl, this.fromCityControl, this.toCityControl, this.arriveControl,
       this.departControl, this.carPriceControl
@@ -146,7 +143,6 @@ export class DriveComponent implements OnInit {
 
     if (!this.keycloak.authenticated) {
       setTimeout(() => {
-
       }, 3000)
       this.keycloak.login({
         redirectUri: window.location.origin + window.location.pathname

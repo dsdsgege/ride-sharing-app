@@ -5,7 +5,7 @@ import {
   ElementRef,
   inject,
   input,
-  model,
+  model, OnDestroy,
   output,
   ViewChild
 } from '@angular/core';
@@ -35,7 +35,7 @@ import {Button} from 'primeng/button';
   templateUrl: './chat-component.html',
   styleUrl: './chat-component.scss'
 })
-export class ChatComponent implements AfterViewInit {
+export class ChatComponent implements AfterViewInit, OnDestroy {
 
   public otherName = input.required<string>();
 
@@ -85,6 +85,10 @@ export class ChatComponent implements AfterViewInit {
         this.loadHistory();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.chatService.closeConnection();
   }
 
   ngAfterViewInit(): void {
