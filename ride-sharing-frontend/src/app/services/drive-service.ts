@@ -18,15 +18,14 @@ export class DriveService {
   private readonly httpClient = inject(HttpClient);
 
   public getPrice(pickupFrom: string | null, dropOffTo: string | null, seats: number | null,
-                  consumption: number | null, makeYear: number | null, carPrice: number | null
+                  trimId: number | null, carPrice: number | null
   ): Observable<PassengerPrice> {
 
     let params = new HttpParams()
       .set('pickup_from', pickupFrom ?? '')
       .set('drop_off_to', dropOffTo ?? '')
-      .set('seats', seats?.toString() ?? '0')
-      .set('consumption', consumption?.toString() ?? '0')
-      .set('make_year', makeYear?.toString() ?? '')
+      .set('given_seats', seats?.toString() ?? '0')
+      .set('trim_id', trimId?.toString() ?? '0')
       .set('car_price', carPrice?.toString() ?? '0');
 
     return this.httpClient.get<PassengerPrice>(`${this.apiUrl}/price`, {params});
@@ -47,12 +46,12 @@ export class DriveService {
     return this.httpClient.post<AddResponseModel>(`${this.apiUrl}/add_drive`, {drive: driveData, driver: driver});
   }
 
-  public findDriveCountByUsername(username: String): Observable<number> {
+  public getDriveCountByUsername(username: String): Observable<number> {
 
     return this.httpClient.get<number>(`${this.apiUrl}/drive-count?username=${username}`);
   }
 
-  public findMyDrives(page: number) {
+  public getMyDrives(page: number) {
     return this.httpClient.get<RideModelWithPassengersResponse>(`${this.apiUrl}/my-drives?page=${page}`);
   }
 

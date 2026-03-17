@@ -11,7 +11,7 @@ export class UserService {
 
   protected readonly apiUrl = "/api/user";
 
-  findUsersByUsernames(usernames: string[]) {
+  getUsersByUsername(usernames: string[]) {
     return this.httpClient.post<UsersResponseModel>(`${this.apiUrl}/find/full-names`, {usernames: usernames});
   }
 }

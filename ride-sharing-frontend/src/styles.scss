@@ -118,11 +118,13 @@ body {
   --p-progressbar-border-radius: 0;
 
   // p-select
-  --p-select-background: none;
-  --p-select-border-color: gray;
+  --p-select-background: var(--input-bg);
   --p-select-focus-border-color: var(--text-color);
   --p-select-focus-ring-color: var(--text-color);
   --p-select-color: var(--text-color);
+  --p-select-placeholder-color: var(--text-color);
+  --p-select-option-focus-background: var(--card-hover-color);
+  --p-select-option-background: var(--input-bg);
 
   // paginator
   --p-paginator-background: none;
@@ -167,8 +169,12 @@ body {
     margin-top: 2.4rem;
   }
 
-  input, .p-inputnumber, .p-datepicker, .p-button, .p-togglebutton {
+  input, .p-inputnumber, .p-datepicker, .p-button, .p-togglebutton, .p-select {
     height: 2rem;
+  }
+
+  .p-select .p-select-label {
+    padding-top: 0.25rem;
   }
 
   body {

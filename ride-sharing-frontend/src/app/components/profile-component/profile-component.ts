@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
         rides: this.rideService.getRideCountByUsername(this.profile.username).pipe(
           catchError(err => of(0))
         ),
-        drives: this.driveService.findDriveCountByUsername(this.profile.username).pipe(
+        drives: this.driveService.getDriveCountByUsername(this.profile.username).pipe(
           catchError(err => of(0))
         ),
         rating: this.ratingService.getMyRatingCount().pipe(

@@ -188,7 +188,7 @@ export class DrivesTabComponent implements OnInit {
   }
 
   private loadDrives() {
-    this.driveService.findMyDrives(this.page).subscribe(response => {
+    this.driveService.getMyDrives(this.page).subscribe(response => {
       this.rides = response.content;
       this.totalItems = response.totalElements;
     });

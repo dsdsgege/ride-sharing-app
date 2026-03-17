@@ -44,16 +44,15 @@ public class DriveController {
     @GetMapping("/price")
     public Map<String, Integer> getPrice(@RequestParam("pickup_from") String from,
                                          @RequestParam("drop_off_to") String to,
-                                         @RequestParam("seats") int seats,
-                                         @RequestParam("consumption") int consumption,
-                                         @RequestParam("car_price") int price,
-                                         @RequestParam("make_year") int makeYear) {
+                                         @RequestParam("trim_id") Long trimId,
+                                         @RequestParam("given_seats") int givenSeats,
+                                         @RequestParam("car_price") int price) {
 
         GeocodingResponse fromResponse = geocodingApiService.getGeocoding(from)[0];
         GeocodingResponse toResponse = geocodingApiService.getGeocoding(to)[0];
 
         return Map.of("price", priceCalculatorService.getPrice(from, to, fromResponse.getLat(),
-                fromResponse.getLon(), toResponse.getLat(), toResponse.getLon(), seats, consumption, price, makeYear));
+                fromResponse.getLon(), toResponse.getLat(), toResponse.getLon(), trimId, price, givenSeats));
     }
 
     @Transactional(rollbackOn = SQLException.class)

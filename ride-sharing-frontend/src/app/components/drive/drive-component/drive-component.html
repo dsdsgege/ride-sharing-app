@@ -26,10 +26,41 @@
                              (onChange)="onCarMakesChange($event)"
                              (onBlur)="this.showCarMakes = false"
                              (keydown.esc)="this.showCarMakes = false"
+                             optionLabel="name"
                              class="w-full"/>
                 }
               </div>
             </div>
+          </div>
+
+          <div class="element">
+            <p-select class="custom-form-element w-full"
+              [options]="models"
+              [formControl]="modelControl"
+              optionLabel="name"
+              placeholder="Select a model"
+              inputId="car-model">
+            </p-select>
+          </div>
+
+          <div class="element">
+            <p-select class="custom-form-element w-full"
+                      [options]="generations"
+                      [formControl]="generationControl"
+                      optionLabel="name"
+                      placeholder="Select a generation"
+                      inputId="car-model">
+            </p-select>
+          </div>
+
+          <div class="element">
+            <p-select class="custom-form-element w-full"
+                      [options]="trims"
+                      [formControl]="trimControl"
+                      optionLabel="trim"
+                      placeholder="Select a type"
+                      inputId="car-model">
+            </p-select>
           </div>
 
           <div class="element">
@@ -44,36 +75,6 @@
                              [min]="0">
               </p-inputnumber>
               <label for="car-price">Price of your car</label>
-            </p-floatlabel>
-          </div>
-
-          <div class="element">
-            <p-floatlabel class="custom-form-element w-full">
-              <p-inputnumber inputId="model-year"
-                             class="w-full"
-                             [inputStyle]="{ width: '100%' }"
-                             [formControl]="modelYearControl"
-                             [useGrouping]="false"
-                             [min]="1980"
-                             [max]="2025">
-              </p-inputnumber>
-              <label for="model-year">Model Year</label>
-            </p-floatlabel>
-          </div>
-
-          <div class="element">
-            <p-floatlabel class="custom-form-element w-full">
-              <p-inputnumber [formControl]="consumptionControl"
-                             [inputStyle]="{ width: '100%' }"
-                             [showButtons]="true"
-                             [min]="0"
-                             [max]="100"
-                             class="w-full"
-                             mode="decimal"
-                             suffix=" liter"
-                             inputId="mileage">
-              </p-inputnumber>
-              <label for="mileage">Mileage (liter/100km)</label>
             </p-floatlabel>
           </div>
 

@@ -119,7 +119,7 @@ export class RidesTabComponent implements OnInit {
   }
 
   private loadRides() {
-    this.rideService.findMyRides(this.page).subscribe(response => {
+    this.rideService.getMyRides(this.page).subscribe(response => {
       this.rides = response.content;
       this.totalItems = response.totalElements;
     });

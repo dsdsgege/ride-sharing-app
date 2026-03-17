@@ -21,11 +21,11 @@
 <br>
 
 <div>
-    <span th:if="passengers > 0">
+    <span th:if="${passengers} > 0">
         <span th:text="${passengers}"></span> passengers left.
     </span>
 
-    <span th:unless="passengers > 0">
+    <span th:unless="${passengers} > 0">
             no passengers left.
     </span>
 </div>

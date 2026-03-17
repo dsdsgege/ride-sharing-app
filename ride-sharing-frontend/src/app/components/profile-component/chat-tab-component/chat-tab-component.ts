@@ -64,7 +64,7 @@ export class ChatTabComponent implements OnInit {
       this.chatService.getChatPartnersByUsername(this.profile().username, this.page).subscribe(response => {
         let usernames = response.content ?? [];
 
-        this.userService.findUsersByUsernames(usernames).subscribe(response => {
+        this.userService.getUsersByUsername(usernames).subscribe(response => {
           this.partners = response.users;
           resolve();
         });

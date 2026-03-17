@@ -2,7 +2,9 @@ package hu.ridesharing.service;
 
 import hu.ridesharing.entity.Route;
 import hu.ridesharing.entity.RouteId;
+import hu.ridesharing.exception.BadRequestException;
 import hu.ridesharing.repository.RouteRepository;
+import hu.ridesharing.service.external.RapidApiCarService;
 import hu.ridesharing.service.external.RouteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +21,28 @@ public class PriceCalculatorService {
 
     private final RouteService routeService;
     private final RouteRepository routeRepository;
+    private final RapidApiCarService rapidApiCarService;
 
     @Autowired
-    public PriceCalculatorService(RouteService routeService, RouteRepository routeRepository) {
+    public PriceCalculatorService(RouteService routeService, RouteRepository routeRepository,
+                                  RapidApiCarService rapidApiCarService) {
 
         this.routeService = routeService;
         this.routeRepository = routeRepository;
+        this.rapidApiCarService = rapidApiCarService;
     }
 
     public int getPrice(String cityA, String cityB, double latitudeFrom, double longitudeFrom, double latitudeTo,
-                        double longitudeTo, int seats, int consumption, int price, int make_year) {
+                        double longitudeTo, long trimId, int price, int givenSeats) {
+
+        var trim = rapidApiCarService.fetchAndSaveTrimSpecs(trimId);
+
+        if (trim.getNumberOfSeats() - 1 < givenSeats) {
+            throw new BadRequestException("Your car can not carry that many passengers.");
+        }
 
         // the average km driven per year is 10800km in EU
-        int carAge = Year.now().getValue() - make_year;
+        int carAge = Year.now().getValue() - Integer.parseInt(trim.getGeneration().getYearFrom());
 
         double valueNow = price * (1 - getDeprecation(carAge));
         double valueNextYear = price * (1 - getDeprecation(carAge + 1));
@@ -69,7 +80,11 @@ public class PriceCalculatorService {
         }
 
         return (int) Math.round(
-                (costPerKm * distanceInKm + (distanceInKm / 100) * consumption * GAS_PRICE_IN_HUF) / seats
+                (costPerKm * distanceInKm
+                        + (distanceInKm / 100)
+                        * trim.getMixedFuelConsumptionPer100KmL()
+                        * GAS_PRICE_IN_HUF
+                ) / trim.getNumberOfSeats()
         );
     }
 
@@ -82,9 +97,8 @@ public class PriceCalculatorService {
      * After 4 Years	51%	$23,582
      * After 5 Years	60%	$19,200
      * @param age age of the car
-     * @return
+     * @return deprecation
      */
-    //TODO: amortizáció régebbi autóknál is
     private double getDeprecation(int age) {
         return switch (age) {
             case 0 -> 0.1;

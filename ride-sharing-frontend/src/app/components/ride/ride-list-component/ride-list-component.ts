@@ -195,7 +195,7 @@ export class RideListComponent implements OnInit {
 
     this.loading.set(true);
 
-    this.rideService.findByFilter(filter).subscribe(response => {
+    this.rideService.getByFilter(filter).subscribe(response => {
       this.rides = response.content;
       this.totalRecords = response.totalElements;
 

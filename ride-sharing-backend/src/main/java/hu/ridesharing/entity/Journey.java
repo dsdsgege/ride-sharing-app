@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@ToString(exclude = {"driver", "passengers", "ratings"})
+@ToString(exclude = {"driver", "passengers"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Journey {
 
@@ -38,8 +38,6 @@ public class Journey {
     private LocalDateTime arrive;
 
     private String carMake;
-
-    private String modelYear;
 
     private int seats;
 

@@ -31,15 +31,15 @@ export class RideService {
       `${dateFrom.toISOString()}&date_to=${dateTo.toISOString()}`);
   }
 
-  public findMyRides(page: number): Observable<RideModelResponse> {
+  public getMyRides(page: number): Observable<RideModelResponse> {
     return this.httpClient.get<RideModelResponse>(`${this.apiUrl}/my-rides?page=${page}`);
   }
 
-  public findByFilter(filter: RideFilterModel): Observable<RideModelResponse> {
+  public getByFilter(filter: RideFilterModel): Observable<RideModelResponse> {
     return this.httpClient.post<RideModelResponse>(`${this.apiUrl}/rides/filter`, filter);
   }
 
-  public findById(id: number): Observable<RideModel> {
+  public getById(id: number): Observable<RideModel> {
     return this.httpClient.get<RideModel>(`${this.apiUrl}/${id}`);
   }
 

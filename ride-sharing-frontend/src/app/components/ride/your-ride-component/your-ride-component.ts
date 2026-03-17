@@ -55,7 +55,7 @@ export class YourRideComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe({
       next: params => {
-        this.rideService.findById(params["id"]).subscribe(ride => this.ride = ride);
+        this.rideService.getById(params["id"]).subscribe(ride => this.ride = ride);
       },
       error: err => {
         console.error(err)

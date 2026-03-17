@@ -83,7 +83,7 @@ export class FormService {
         return formValue > 0;
       }
 
-      return false;
+      return typeof formValue === 'object';
     });
   }
 
