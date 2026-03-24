@@ -24,23 +24,7 @@ git clone https://github.com/dsdsgege/ride-sharing-app.git
 cd ride-sharing-app
 ```
 
-3. Create a new environment file
-
-On Windows:
-```powershell
-Copy-Item -ItemType File -Path "ride-sharing-frontend/src/environments/environments.development.ts"
-```
-
-On Linux/macOS:
-```sh
-cp ride-sharing-frontend/src/environments/environment.development.example.ts ride-sharing-frontend/src/environments/environment.development.ts
-```
-
-Now you need to configure the environment.development.ts file. 
-This includes giving an api key for openweathermap's API, 
-further information in the environment file's documentation.
-
-4. Create a .env file for the backend
+3. Create a .env file for the backend
 
 On Windows:
 ```powershell

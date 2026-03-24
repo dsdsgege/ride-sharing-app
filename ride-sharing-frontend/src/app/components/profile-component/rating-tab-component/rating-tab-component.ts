@@ -27,6 +27,7 @@ import {Popover} from 'primeng/popover';
     Popover
   ],
   templateUrl: './rating-tab-component.html',
+  standalone: true,
   styleUrl: './rating-tab-component.scss'
 })
 export class RatingTabComponent {
@@ -127,8 +128,6 @@ export class RatingTabComponent {
       this.givenTotal = response.totalElements;
     });
   }
-
-  //TODO: DELETE/EDIT RATING
 
   // callback that will update the ratings...
   private loadRatings(obs: Observable<RatingResponseModel>, errorMessage: string,

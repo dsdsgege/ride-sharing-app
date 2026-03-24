@@ -99,7 +99,7 @@ public class EmailService {
         String to = driver.getEmailAddress();
         to = "gellerr.vrabely@gmail.com";
 
-        this.sendEmailHelper("passenger_left_email", context, to, LEFT_SUBJECT);
+        this.sendEmailHelper("passenger_left", context, to, LEFT_SUBJECT);
     }
 
     public void sendRideHasBeenCanceledEmail(Journey journey, User passenger) throws MessagingException {
@@ -134,7 +134,7 @@ public class EmailService {
 
     public void sendDriverRatingsToMakeEmail(User driver) throws MessagingException {
         Context context = new Context();
-        context.setVariable("passenger", driver.getFullName());
+        context.setVariable("user", driver.getFullName());
         context.setVariable("frontendUrl", frontendUrl);
         context.setVariable("ratingUrl", frontendUrl + "/profile/drives");
         context.setVariable("role", "driver");
@@ -147,7 +147,7 @@ public class EmailService {
 
     public void sendPassengerRatingsToMakeEmail(User passenger) throws MessagingException {
         Context context = new Context();
-        context.setVariable("passenger", passenger.getFullName());
+        context.setVariable("user", passenger.getFullName());
         context.setVariable("frontendUrl", frontendUrl);
         context.setVariable("ratingUrl", frontendUrl + "/profile/rides");
         context.setVariable("role", "passenger");

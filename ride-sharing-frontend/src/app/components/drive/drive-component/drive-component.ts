@@ -198,13 +198,18 @@ export class DriveComponent implements OnInit {
     this.driveService.getPrice(this.fromCityControl.value, this.toCityControl.value, this.seatsControl.value,
       this.trimControl.value?.id ?? 0, this.carPriceControl.value).pipe(finalize(
       () => this.loadingService.hide()
-    )).subscribe(
-      price => {
+    )).subscribe({
+      next : price => {
         this.passengerPrice = price;
         this.dialogVisible = true;
+      },
+      error: err => {
+        this.messageService.add({severity: 'error', summary: 'Error',
+          detail: err.error.message ?? 'An error occurred.'});
         this.loadingService.hide();
+        return;
       }
-    );
+    });
   }
 
   protected addDrive() {

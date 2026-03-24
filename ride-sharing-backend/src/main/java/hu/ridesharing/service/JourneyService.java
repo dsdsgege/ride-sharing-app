@@ -217,7 +217,7 @@ public class JourneyService {
     public boolean deleteDrive(Long id, String username) {
         Journey journey = checkMyJourney(username, id);
 
-        if (journey.getDepart().isAfter(LocalDateTime.now())) {
+        if (journey.getDepart().isBefore(LocalDateTime.now())) {
             throw new BadRequestException("You can not delete this drive.");
         }
 
@@ -241,7 +241,7 @@ public class JourneyService {
     public boolean cancelRide(Long id, String username) {
         Journey journey = journeyRepository.findById(id).orElseThrow();
 
-        if (journey.getDepart().isAfter(LocalDateTime.now())) {
+        if (journey.getDepart().isBefore(LocalDateTime.now())) {
             throw new BadRequestException("You can not cancel this ride as it is in the past.");
         }
 
@@ -299,7 +299,6 @@ public class JourneyService {
                 savedJourney.getDepart() == journey.getDepart() &&
                 savedJourney.getCarMake().equals(journey.getCarMake()) &&
                 savedJourney.getSeats() == journey.getSeats();
-        // TODO: send emails
     }
 
     /**

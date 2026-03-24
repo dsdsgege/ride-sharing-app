@@ -43,7 +43,6 @@ public class ChatService {
     public Page<ChatMessage> findMessagesBetweenPartners(String firstPartner, String secondPartner, int page) {
         Specification<ChatMessage> spec = ChatSpecificationFactory.messagesBetweenPartners(firstPartner, secondPartner);
 
-        //TODO: INCREMENTAL FETCH INSTEAD OF FETCHING ALWAY ALL OF (page + 1) * 10
         var messagesPage = chatRepository.findAll(
                 spec, PageRequest.of(0, (page + 1) * 10, Sort.by("timestamp").descending())
         );

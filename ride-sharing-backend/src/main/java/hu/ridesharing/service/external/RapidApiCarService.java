@@ -146,14 +146,14 @@ public class RapidApiCarService {
             if (specs.containsKey("numberOfSeats")) {
                 trim.setNumberOfSeats(Integer.parseInt(specs.get("numberOfSeats")));
             } else {
-                log.warn("No number of seats found for trim ID: {}", trim.getId());
+                log.error("No number of seats found for trim ID: {}", trim.getId());
             }
             if (specs.containsKey("mixedFuelConsumptionPer100KmL")) {
                 trim.setMixedFuelConsumptionPer100KmL(Double.parseDouble(
                         specs.get("mixedFuelConsumptionPer100KmL").split("l")[0].trim()
                 ));
             } else {
-                log.warn("No mixed fuel consumption found for trim ID: {}", trim.getId());
+                log.error("No mixed fuel consumption found for trim ID: {}", trim.getId());
             }
             return carTrimRepository.save(trim);
         }

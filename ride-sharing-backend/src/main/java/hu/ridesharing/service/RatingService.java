@@ -105,7 +105,7 @@ public class RatingService {
 
         Journey journey = journeyRepository.findById(rideId).orElseThrow();
 
-        if (journey.getDepart().isAfter(LocalDateTime.now())) {
+        if (journey.getDepart().isBefore(LocalDateTime.now())) {
             throw new BadRequestException("You can not rate this driver, because did not happen yet.");
         }
 
