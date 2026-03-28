@@ -59,6 +59,7 @@ public class DriveController {
     @PostMapping("add_drive")
     public Map<String, Boolean> addDrive(@RequestBody AddDriveRequest addDriveRequest,
                                          @AuthenticationPrincipal Jwt jwt) throws SQLException {
+                                            
         User driver = addDriveRequest.driver();
         userService.saveUser(driver);
 

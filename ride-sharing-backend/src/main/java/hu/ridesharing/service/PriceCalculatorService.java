@@ -41,8 +41,10 @@ public class PriceCalculatorService {
             throw new BadRequestException("Your car can not carry that many passengers.");
         }
 
-        // the average km driven per year is 10800km in EU
-        int carAge = Year.now().getValue() - Integer.parseInt(trim.getGeneration().getYearFrom());
+        // If still manufactured (yearTo == null), calculate with current year
+        int to = (trim.getGeneration().getYearTo() != null) ?
+            Integer.parseInt(trim.getGeneration().getYearTo()) : 
+            currentYear;
 
         double valueNow = price * (1 - getDeprecation(carAge));
         double valueNextYear = price * (1 - getDeprecation(carAge + 1));
@@ -61,7 +63,7 @@ public class PriceCalculatorService {
             log.debug("Found in cache: {}", route.get());
         } else {
             RouteService.ORSRespone response = routeService
-                    .getDistance(longitudeFrom, latitudeFrom, longitudeTo, latitudeTo);
+                    .getResponse(longitudeFrom, latitudeFrom, longitudeTo, latitudeTo);
 
             distanceInKm = response.getDistances()[0][1] / 1000;
             double duration = response.getDurations()[0][1];
@@ -89,24 +91,9 @@ public class PriceCalculatorService {
     }
 
     /**
-     * Initial Value	0%	$48,000
-     * After 1 Month	10%	$43,200
-     * After 1 Year	    20%	$38,400
-     * After 2 Years	32%	$32,640
-     * After 3 Years	42%	$27,744
-     * After 4 Years	51%	$23,582
-     * After 5 Years	60%	$19,200
-     * @param age age of the car
-     * @return deprecation
+     * Refer to "On the depreciation of automobiles: An international comparison"
      */
     private double getDeprecation(int age) {
-        return switch (age) {
-            case 0 -> 0.1;
-            case 1 -> 0.2;
-            case 2 -> 0.32;
-            case 3 -> 0.43;
-            case 4 -> 0.51;
-            default -> 0.6;
-        };
+        return 1 - Math.exp(-0.31 * age);
     }
 }

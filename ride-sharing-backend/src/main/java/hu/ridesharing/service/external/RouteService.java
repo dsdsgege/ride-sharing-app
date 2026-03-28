@@ -24,7 +24,7 @@ public class RouteService {
         this.API_KEY = apiKey;
     }
 
-    public ORSRespone getDistance(double longitudeFrom, double latitudeFrom, double longitudeTo, double latitudeTo) {
+    public ORSRespone getResponse(double longitudeFrom, double latitudeFrom, double longitudeTo, double latitudeTo) {
         ORSRequest request = new ORSRequest();
         request.locations = new double[][]{{ longitudeFrom, latitudeFrom }, { longitudeTo, latitudeTo }};
         request.metrics = List.of("duration", "distance");
