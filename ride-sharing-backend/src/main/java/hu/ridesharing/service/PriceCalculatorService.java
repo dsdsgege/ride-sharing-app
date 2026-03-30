@@ -17,7 +17,7 @@ import java.util.Optional;
 @Slf4j
 public class PriceCalculatorService {
     private static final int AVG_KM_PER_YEAR = 10_800;
-    private static final int GAS_PRICE_IN_HUF = 590;
+    private static final int GAS_PRICE_IN_HUF = 615;
 
     private final RouteService routeService;
     private final RouteRepository routeRepository;
