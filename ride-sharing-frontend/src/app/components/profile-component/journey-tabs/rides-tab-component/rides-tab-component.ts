@@ -13,8 +13,9 @@ import {Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
 import {RideModel} from '../../../../model/ride/ride-model';
 import {RideService} from '../../../../services/ride-service';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import {faComment, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import {FormsModule} from '@angular/forms';
+import {ChatComponent} from '../../../chat-component/chat-component';
 
 @Component({
   selector: 'app-rides-tab-component',
@@ -29,7 +30,8 @@ import {FormsModule} from '@angular/forms';
     Dialog,
     FaIconComponent,
     Rating,
-    FormsModule
+    FormsModule,
+    ChatComponent
   ],
   templateUrl: './rides-tab-component.html',
   styleUrl: '../journey-tabs.scss'
@@ -45,6 +47,12 @@ export class RidesTabComponent implements OnInit {
   protected dialogVisible: boolean = false;
 
   protected selectedRide = signal<RideModel | undefined>(undefined);
+
+  protected isChatVisible = signal<boolean>(false);
+
+  protected isContactClicked = signal<boolean>(false);
+
+  protected isChatExpanded = signal<boolean>(false);
 
   protected loadingService = inject(LoadingService);
 
@@ -118,6 +126,12 @@ export class RidesTabComponent implements OnInit {
     return departTime < Date.now();
   }
 
+  protected openChat() {
+    this.isChatVisible.set(true);
+    this.isContactClicked.set(true);
+    this.isChatExpanded.set(true);
+  }
+
   private loadRides() {
     this.rideService.getMyRides(this.page).subscribe(response => {
       this.rides = response.content;
@@ -144,4 +158,6 @@ export class RidesTabComponent implements OnInit {
       },
     });
   }
+
+  protected readonly faComment = faComment;
 }

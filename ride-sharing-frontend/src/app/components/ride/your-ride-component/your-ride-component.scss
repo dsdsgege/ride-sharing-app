@@ -8,23 +8,6 @@
   color: var(--secondary);
 }
 
-.message-container {
-  display: flex;
-  position: fixed;
-  bottom: 5px;
-  right: 5px;
-  animation: slide-in ease-in-out 0.4s both;
-  animation-delay: 2000ms;
-}
-
-.message-container.chat-is-open {
-  height: 20rem;
-}
-
-.no-animation-delay {
-  animation-delay: 0ms !important;
-}
-
 @keyframes slide-in {
   from {
     transform: translateY(100%);

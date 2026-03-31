@@ -115,6 +115,27 @@
         </button>
       </div>
 
+      <div class="md:col-span-2 mt-4 mb-2">
+        <h3 class="text-sm md:text-lg font-bold border-b border-gray-500 pb-1 mb-3">Passengers</h3>
+
+        @if (selectedRide()!.passengersToRate && selectedRide()!.passengersToRate.length > 0) {
+          <ul class="flex flex-col gap-2">
+            @for (passenger of selectedRide()!.passengersToRate; track $index) {
+              <li class="flex justify-between items-center p-2 bg-black/10 border border-white/10 rounded-lg">
+                <span>{{ passenger.fullName }}</span>
+                <button type="button"
+                        class="message-button"
+                        (click)="openChat(passenger)">
+                  <fa-icon [icon]="faComment"></fa-icon>&nbsp;Message
+                </button>
+              </li>
+            }
+          </ul>
+        } @else {
+          <p class="text-sm italic opacity-70">No passengers have joined this drive yet.</p>
+        }
+      </div>
+
     </div>
   } @else {
     <div class="md:col-span-2">
@@ -158,4 +179,18 @@
       }
     </div>
   </p-dialog>
+}
+
+@if (isChatVisible() && chatTarget()) {
+  <div class="message-container"
+       [class.chat-is-open]="isChatExpanded()">
+    <app-chat-component [class.expanded-mode]="isChatExpanded()"
+                        [class.hide]="!isChatExpanded()"
+                        [otherName]="chatTarget()!.fullName"
+                        [otherUsername]="chatTarget()!.username"
+                        [(isExpanded)]="isChatExpanded"
+                        (click)="isChatExpanded.set(true)"
+                        (close)="this.isChatVisible.set(false)">
+    </app-chat-component>
+  </div>
 }

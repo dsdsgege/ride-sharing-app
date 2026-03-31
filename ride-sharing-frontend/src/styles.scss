@@ -306,3 +306,34 @@ main {
     top: 50px !important;
   }
 }
+
+.message-container {
+  display: flex;
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+  animation: slide-in ease-in-out 0.4s both;
+  animation-delay: 2000ms;
+}
+
+.message-container.chat-is-open {
+  height: 20rem;
+}
+
+.no-animation-delay {
+  animation-delay: 0ms !important;
+}
+
+.message-button {
+  background-color: #2563eb;
+  color: whitesmoke;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.message-button:hover {
+  cursor: pointer;
+  background-color: #3b82f6;
+}
+

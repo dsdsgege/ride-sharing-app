@@ -41,10 +41,13 @@ public class PriceCalculatorService {
             throw new BadRequestException("Your car can not carry that many passengers.");
         }
 
+        int from = Integer.parseInt(trim.getGeneration().getYearFrom());
         // If still manufactured (yearTo == null), calculate with current year
         int to = (trim.getGeneration().getYearTo() != null) ?
             Integer.parseInt(trim.getGeneration().getYearTo()) : 
-            currentYear;
+            Year.now().getValue();
+
+        int carAge = (to - from) / 2;
 
         double valueNow = price * (1 - getDeprecation(carAge));
         double valueNextYear = price * (1 - getDeprecation(carAge + 1));

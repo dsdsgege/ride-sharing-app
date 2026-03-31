@@ -27,8 +27,9 @@ import {Rating} from 'primeng/rating';
 import {AccordionModule} from 'primeng/accordion';
 import {UserModel} from '../../../../model/user-model';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import {faComment, faPaperPlane} from '@fortawesome/free-solid-svg-icons';
 import {RatingService} from '../../../../services/rating-service';
+import {ChatComponent} from '../../../chat-component/chat-component';
 
 
 @Component({
@@ -50,6 +51,7 @@ import {RatingService} from '../../../../services/rating-service';
     Rating,
     AccordionModule,
     FaIconComponent,
+    ChatComponent,
   ],
 
   templateUrl: './drives-tab-component.html',
@@ -74,6 +76,14 @@ export class DrivesTabComponent implements OnInit {
   protected dialogVisible: boolean = false;
 
   protected selectedRide = signal<RideModelWithPassengers | undefined>(undefined);
+
+  protected isChatVisible = signal<boolean>(false);
+
+  protected isContactClicked = signal<boolean>(false);
+
+  protected isChatExpanded = signal<boolean>(false);
+
+  protected chatTarget = signal<UserModel | undefined>(undefined);
 
   protected loadingService = inject(LoadingService);
 
@@ -187,6 +197,12 @@ export class DrivesTabComponent implements OnInit {
       "Your rating is sent.", "Success", "An error occurred while sending your rating.");
   }
 
+  protected openChat(passenger: UserModel) {
+    this.chatTarget.set(passenger);
+    this.isChatVisible.set(true);
+    this.isChatExpanded.set(true);
+  }
+
   private loadDrives() {
     this.driveService.getMyDrives(this.page).subscribe(response => {
       this.rides = response.content;
@@ -213,4 +229,6 @@ export class DrivesTabComponent implements OnInit {
       },
     });
   }
+
+  protected readonly faComment = faComment;
 }

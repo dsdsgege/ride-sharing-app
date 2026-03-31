@@ -50,6 +50,12 @@
                 (click)="cancelRide()">
           Cancel ride
         </button>
+
+        <button type="button"
+                class="message-button"
+                (click)="openChat()">
+          <fa-icon [icon]="faComment"></fa-icon>&nbsp;Message
+        </button>
       </div>
 
     </div>
@@ -93,4 +99,19 @@
       </p-accordion>
     </div>
   </p-dialog>
+}
+
+@if (this.isChatVisible()) {
+  <div class="message-container"
+       (transitionend)="this.isContactClicked.set(false)"
+       [class.no-animation-delay]="this.isContactClicked()"
+       [class.chat-is-open]="isChatExpanded()">
+    <app-chat-component [class.expanded-mode]="isChatExpanded()"
+                        [otherName]="this.selectedRide()!.driver.fullName"
+                        [otherUsername]="this.selectedRide()!.driver.username"
+                        [(isExpanded)]="isChatExpanded"
+                        (click)="isChatExpanded.set(true)"
+                        (close)="this.isChatVisible.set(false)">
+    </app-chat-component>
+  </div>
 }

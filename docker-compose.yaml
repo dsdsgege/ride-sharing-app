@@ -17,6 +17,8 @@ services:
       - APP_ADMIN_EMAIL=${APP_ADMIN_EMAIL}
       - RAPID_API_KEY=${RAPID_API_KEY}
       - RAPID_API_URL=${RAPID_API_URL}
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://localhost:8090/realms/ride-sharing-app
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak:8080/realms/ride-sharing-app/protocol/openid-connect/certs
 
     build:
       context: ./ride-sharing-backend
