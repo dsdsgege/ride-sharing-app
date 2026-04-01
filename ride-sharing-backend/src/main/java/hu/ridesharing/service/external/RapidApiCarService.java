@@ -124,13 +124,22 @@ public class RapidApiCarService {
         }
     }
 
+    /**
+     * When calculating the consumption refer to:
+     * <a href=https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A52024DC0122>this link.</a>
+     *
+     * @param trimId
+     * @return
+     */
     // We ONLY need to call this when we are calculating the price for a specific journey
     public CarTrim fetchAndSaveTrimSpecs(Long trimId) {
         // fetch the REAL object from DB so we don't lose the Generation link
         CarTrim trim = carTrimRepository.findById(trimId)
                 .orElseThrow(() -> new IllegalArgumentException("Trim not found for ID: " + trimId));
 
-        if (trim.getNumberOfSeats() != null && trim.getMixedFuelConsumptionPer100KmL() != null) {
+        if (trim.getNumberOfSeats() != null && trim.getMixedFuelConsumptionPer100KmL() != null
+                && trim.getEngineType() != null) {
+
             return trim; // Already cached
         }
 
@@ -148,13 +157,32 @@ public class RapidApiCarService {
             } else {
                 log.error("No number of seats found for trim ID: {}", trim.getId());
             }
+            if (specs.containsKey("engineType")) {
+                trim.setEngineType(specs.get("engineType"));
+            } else {
+                log.error("No engine type found for trim ID: {}", trim.getId());
+            }
             if (specs.containsKey("mixedFuelConsumptionPer100KmL")) {
                 trim.setMixedFuelConsumptionPer100KmL(Double.parseDouble(
-                        specs.get("mixedFuelConsumptionPer100KmL").split("l")[0].trim()
+                        specs.get("mixedFuelConsumptionPer100KmL").split("l")[0].trim().replace(",", ".")
                 ));
             } else {
-                log.error("No mixed fuel consumption found for trim ID: {}", trim.getId());
+                log.error("No mixed fuel consumption found for trim ID: {}...\n Falling back to average",
+                        trim.getId()
+                );
+
+                // (7.89 + 6.88 + 7.44 + 5.97 + 5.83 + 5.94) / 6
+                double defaultConsumption = 6.6583;
+                if (trim.getEngineType() != null) {
+                    defaultConsumption = switch (trim.getEngineType()) {
+                        case "Petrol" -> 7.89;
+                        case "Diesel" -> 6.88;
+                        default -> defaultConsumption;
+                    };
+                }
+                trim.setMixedFuelConsumptionPer100KmL(defaultConsumption);
             }
+
             return carTrimRepository.save(trim);
         }
         return trim;

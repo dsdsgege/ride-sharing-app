@@ -36,8 +36,13 @@ public class PriceCalculatorService {
                         double longitudeTo, long trimId, int price, int givenSeats) {
 
         var trim = rapidApiCarService.fetchAndSaveTrimSpecs(trimId);
+        System.out.println(trim.getNumberOfSeats());
 
-        if (trim.getNumberOfSeats() - 1 < givenSeats) {
+
+        // If the API has no information about the seats, we are falling back to the user's input
+        if (trim.getNumberOfSeats() == null || trim.getNumberOfSeats() == 0) {
+            trim.setNumberOfSeats(givenSeats + 1);
+        } else if (trim.getNumberOfSeats() - 1 < givenSeats) {
             throw new BadRequestException("Your car can not carry that many passengers.");
         }
 
@@ -47,7 +52,9 @@ public class PriceCalculatorService {
             Integer.parseInt(trim.getGeneration().getYearTo()) : 
             Year.now().getValue();
 
-        int carAge = (to - from) / 2;
+        int currentYear = Year.now().getValue();
+        int estimatedManufactureYear = from + ((to - from) / 2);
+        int carAge = currentYear - estimatedManufactureYear;
 
         double valueNow = price * (1 - getDeprecation(carAge));
         double valueNextYear = price * (1 - getDeprecation(carAge + 1));

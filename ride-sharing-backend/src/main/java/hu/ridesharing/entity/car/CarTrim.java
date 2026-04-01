@@ -21,6 +21,8 @@ public class CarTrim {
 
     private Double mixedFuelConsumptionPer100KmL;
 
+    private String engineType;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "generation_id")
     @JsonIgnore // there is generation in the response too with string value...
