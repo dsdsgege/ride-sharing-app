@@ -12,7 +12,14 @@ export class ThemeService {
   constructor(rendererFactory: RendererFactory2) {
     this.renderer = rendererFactory.createRenderer(null, null);
 
-    if(this.isDark) {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      this.isDark = savedTheme === 'dark';
+    } else {
+      this.isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    if (this.isDark) {
       this.renderer.addClass(document.body, DARK_THEME_CLASS);
     }
   }
@@ -21,7 +28,7 @@ export class ThemeService {
     this.isDark = !this.isDark;
     localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
 
-    if(this.isDark) {
+    if (this.isDark) {
       this.renderer.addClass(document.body, DARK_THEME_CLASS);
     } else {
       this.renderer.removeClass(document.body, DARK_THEME_CLASS);
