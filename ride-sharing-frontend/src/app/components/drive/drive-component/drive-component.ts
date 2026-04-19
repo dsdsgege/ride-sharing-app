@@ -115,26 +115,24 @@ export class DriveComponent implements OnInit {
       this.searchCar(search ?? '');
     });
 
-    // --- Model to Generations ---
+    // model to Generations
     this.modelControl.valueChanges.pipe(
       startWith(this.modelControl.value),
-      // 1. Block empty values and 0
+
       filter(model => model !== null && model.id !== undefined && model.id !== 0),
       switchMap(model => this.carsService.getCarGenerations(model!.id).pipe(
-        // 2. Catch errors so the stream doesn't die!
         catchError(() => of([]))
       ))
     ).subscribe(gens => {
       this.generations = gens;
     });
 
-    // --- Generation to Trims ---
+    // generation to trim
     this.generationControl.valueChanges.pipe(
       startWith(this.generationControl.value),
-      // 1. Block empty values and 0
+      // block empty values and 0
       filter(gen => gen !== null && gen.id !== undefined && gen.id !== 0),
       switchMap(gen => this.carsService.getCarTrim(gen!.id).pipe(
-        // 2. Catch errors so the stream doesn't die!
         catchError(() => of([]))
       ))
     ).subscribe(trims => {

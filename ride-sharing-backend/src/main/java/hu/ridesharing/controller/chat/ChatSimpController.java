@@ -32,12 +32,25 @@ public class ChatSimpController {
             chat.setTimestamp(System.currentTimeMillis());
         }
 
-        // this way we do not need to make complex url's on the frontend
-        messagingTemplate.convertAndSend("/topic/private-messages/" + chat.getReceiver(), chat);
-
-        // sending it to the sender as well, so they both see the sent message
-        messagingTemplate.convertAndSend("/topic/private-messages/" + chat.getSender(), chat);
+        // sending it to the common topic
+        messagingTemplate.convertAndSend("/topic/private-messages/" +
+                getRoomName(chat.getReceiver(), chat.getSender()), chat);
 
         chatService.save(chat);
+    }
+
+    /**
+     * This method creates a determinstic room name for the two users.
+     *
+     * @param user1
+     * @param user2
+     * @return
+     */
+    private String getRoomName(String user1, String user2) {
+        if (user1.compareTo(user2) < 0) {
+            return user1 + "-" + user2;
+        } else {
+            return user2 + "-" + user1;
+        }
     }
 }

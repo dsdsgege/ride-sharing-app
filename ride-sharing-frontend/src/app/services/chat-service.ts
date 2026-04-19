@@ -34,7 +34,7 @@ export class ChatService implements OnDestroy {
   }
 
   // STOMP/WEBSOCKET
-  openConnection(username: string): Promise<void> {
+  openConnection(roomName: string): Promise<void> {
 
     // do not open a new connection if already connected
     if (this.stompClient && this.stompClient.connected) {
@@ -52,9 +52,8 @@ export class ChatService implements OnDestroy {
       // defining the callback on connection
       client.onConnect = (frame) => {
 
-
         // The client only subscribes to their own topic as backend sends the message to both topic
-        this.stompClient?.subscribe(`/topic/private-messages/${username}`, (message: Message) => {
+        this.stompClient?.subscribe(`/topic/private-messages/${roomName}`, (message: Message) => {
           if (message.body) {
             const parsedMessage: ChatModel = JSON.parse(message.body);
             this.messageSubject.next(parsedMessage);

@@ -136,7 +136,7 @@ export class ChatComponent implements AfterViewInit, OnDestroy {
     this.keycloak.loadUserProfile().then( async (profile) => {
       this.username = profile.username ?? "";
       await this.loadHistory();
-      await this.chatService.openConnection(this.username);
+      await this.chatService.openConnection(this.getRoomName(this.username, this.otherUsername()),);
     }).catch( err => {
       this.keycloak.login();
       console.error(err);
@@ -174,5 +174,9 @@ export class ChatComponent implements AfterViewInit, OnDestroy {
 
   private scrollToBottom(): void {
     this.scrollBar.nativeElement.scrollTop = this.scrollBar.nativeElement.scrollHeight;
+  }
+
+  private getRoomName(user1: string, user2: string): string {
+    return [user1, user2].sort((a, b) => a.localeCompare(b)).join('-');
   }
 }
