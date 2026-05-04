@@ -73,7 +73,9 @@ export class DrivesTabComponent implements OnInit {
 
   protected departControl: FormControl<Date | null> = new FormControl(null);
 
-  protected dialogVisible: boolean = false;
+  protected rateDialogVisible: boolean = false;
+
+  protected messageDialogVisible: boolean = false;
 
   protected selectedRide = signal<RideModelWithPassengers | undefined>(undefined);
 

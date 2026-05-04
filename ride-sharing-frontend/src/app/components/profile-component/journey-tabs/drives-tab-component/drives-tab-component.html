@@ -32,7 +32,7 @@
   </ul>
 
   @if (this.selectedRide()) {
-    <div class="md:col-span-2 flex flex-col p-4 rounded-lg">
+    <div class="md:col-span-2 flex flex-col p-4 rounded-lg h-[550px] overflow-hidden">
 
       <h2 class="text-sm md:text-xl font-bold border-b border-gray-500 pb-1 mb-4">
         Edit Drive: {{ selectedRide()!.fromCity }} to {{ selectedRide()!.toCity }}
@@ -91,17 +91,23 @@
           </p-datepicker>
         </div>
 
-        <div class="md:col-span-2 text-center">
+        <div class="md:col-span-2 text-center flex flex-col md:flex-row justify-center gap-2">
           <p-button class="text-xs md:text-sm lg:text-lg"
                     [disabled]="isPassengersUndefinedOrEmpty(selectedRide()!.passengersToRate)"
-                    (click)="this.dialogVisible = true">
+                    (click)="this.rateDialogVisible = true">
             Rate passenger(s)
+          </p-button>
+
+          <p-button class="text-xs md:text-sm lg:text-lg"
+                    [disabled]="isPassengersUndefinedOrEmpty(selectedRide()!.passengersToRate)"
+                    (click)="this.messageDialogVisible = true">
+            Message passenger(s)
           </p-button>
         </div>
 
       </form>
 
-      <div class="flex flex-col items-stretch gap-2 md:flex-row justify-between mt-auto p-3">
+      <div class="flex flex-col items-stretch gap-2 md:flex-row justify-between p-3">
         <button type="button"
                 class="delete-button"
                 (click)="deleteDrive()">
@@ -114,28 +120,6 @@
           Edit
         </button>
       </div>
-
-      <div class="md:col-span-2 mt-4 mb-2">
-        <h3 class="text-sm md:text-lg font-bold border-b border-gray-500 pb-1 mb-3">Passengers</h3>
-
-        @if (selectedRide()!.passengersToRate && selectedRide()!.passengersToRate.length > 0) {
-          <ul class="flex flex-col gap-2">
-            @for (passenger of selectedRide()!.passengersToRate; track $index) {
-              <li class="flex justify-between items-center p-2 bg-black/10 border border-white/10 rounded-lg">
-                <span>{{ passenger.fullName }}</span>
-                <button type="button"
-                        class="message-button"
-                        (click)="openChat(passenger)">
-                  <fa-icon [icon]="faComment"></fa-icon>&nbsp;Message
-                </button>
-              </li>
-            }
-          </ul>
-        } @else {
-          <p class="text-sm italic opacity-70">No passengers have joined this drive yet.</p>
-        }
-      </div>
-
     </div>
   } @else {
     <div class="md:col-span-2">
@@ -147,7 +131,7 @@
   <p-dialog header="Rate passenger(s)!"
             [modal]="true"
             [draggable]="false"
-            [(visible)]="dialogVisible"
+            [(visible)]="rateDialogVisible"
             [style]="{width: '60vw', 'background-color': 'var(--dialog-bg)', 'backdrop-filter': 'blur(20px)',
             border: 'none', 'max-height': '60vh', 'overflow-y': 'auto', 'color': 'var(--text-color)'}">
     <div class="flex flex-col">
@@ -180,6 +164,34 @@
     </div>
   </p-dialog>
 }
+
+<p-dialog header="message passenger(s)!"
+          [modal]="true"
+          [draggable]="false"
+          [(visible)]="messageDialogVisible"
+          [style]="{width: '60vw', 'background-color': 'var(--dialog-bg)', 'backdrop-filter': 'blur(20px)',
+            border: 'none', 'max-height': '60vh', 'overflow-y': 'auto', 'color': 'var(--text-color)'}">
+  <div class="mt-4 flex flex-col flex-1 min-h-0">
+    <h3 class="text-sm md:text-lg font-bold pb-1 mb-3">Passengers</h3>
+
+    <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+      @if (selectedRide()!.passengersToRate && selectedRide()!.passengersToRate.length > 0) {
+        <ul class="flex flex-col gap-2">
+          @for (passenger of selectedRide()!.passengersToRate; track $index) {
+            <li class="flex justify-between items-center p-2 bg-black/10 border border-white/10 rounded-lg">
+              <span>{{ passenger.fullName }}</span>
+              <button type="button" class="message-button" (click)="openChat(passenger)">
+                <fa-icon [icon]="faComment"></fa-icon>&nbsp;Message
+              </button>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="text-sm italic opacity-70">No passengers have joined this drive yet.</p>
+      }
+    </div>
+  </div>
+</p-dialog>
 
 @if (isChatVisible() && chatTarget()) {
   <div class="message-container"
