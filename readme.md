@@ -7,7 +7,7 @@ to see your passenger's or driver's live location on it.
 
 ## Tech Stack:
  - Frontend: Angular 20
- - Backend: Java 17, Java Spring Boot
+ - Backend: Java 21, Java Spring Boot
  - Database: Postgresql
  - Authentication: Keycloak
 
