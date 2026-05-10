@@ -22,6 +22,7 @@
   --card-hover-color: #{variables.$color-light-card-hover};
 
   --dialog-bg: #{variables.$dialog-bg-light};
+  --p-dialog-color: #{variables.$color-light-text};
 
   --background: linear-gradient(#9fd1d3, #b5ade3);
 
@@ -48,6 +49,7 @@ body.dark-theme {
   --primary-color: #0f7569;
 
   --dialog-bg: #{variables.$dialog-bg-dark};
+  --p-dialog-color: #{variables.$color-dark-text};
 
   color-scheme: dark;
 }
@@ -312,6 +314,8 @@ main {
   position: fixed;
   bottom: 5px;
   right: 5px;
+  width: 20rem;
+  max-width: calc(100vw - 10px);
   animation: slide-in ease-in-out 0.4s both;
   animation-delay: 2000ms;
 }
